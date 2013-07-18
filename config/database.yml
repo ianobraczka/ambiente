@@ -1,0 +1,26 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: ambiente_development
+  host: localhost
+  pool: 5
+  username: postgres
+  password: respondeai
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: ambiente_test
+  host: localhost
+  pool: 5
+  username: postgres
+  password: respondeai
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: ambiente_production
+  host: localhost
+  pool: 5
+  username: postgres
+  password: respondeai
