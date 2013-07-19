@@ -1,14 +1,23 @@
 <h1>Programas</h1>
+<br>
+<br>
 
-<table>
-  <tr>
-    <th>Name</th>
-  </tr>
 
 <% @programs.each do |program| %>
   <tr>
-    <td><%= program.name %></td>
+    <td>Nome: <%= program.name %></td>
+    <br>
+    <td>Preço: <%= program.price %></td>
+    <br>
+  	<td>HH: <%= program.hh %></td>
+  	<br>
+  	<td>%: <%= program.percentage %></td>
+  	<br>
+  	<td>$: <%= program.value %></td>
+  	<br>
   </tr>
+  <br>
+  <br>
 <% end %>
 </table>
 
