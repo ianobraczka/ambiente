@@ -1,8 +1,13 @@
 Ambiente::Application.routes.draw do
 
+  resources :programs
+
+
   get "program/index"
 
   get "program/show"
+
+  get "program/new"
 
   get "program/edit"
 

@@ -12,4 +12,14 @@ class ProgramController < ApplicationController
 
   def delete
   end
+
+  def new
+    @program = Program.new
+
+    respond_to do |format|
+      format.html # new.html.erb
+      format.json { render json: @program }
+    end
+  end
+
 end
