@@ -1,0 +1,30 @@
+
+  <h1><%= @program.name %></h1>
+<p>
+  <b>Preço:</b>
+  R$ <%= @program.price %>
+</p>
+
+<br>
+<h4>Ponderadores:</h4>
+
+<p>
+  <b>HH:</b>
+  <%= @program.hh %>
+</p>
+
+<p>
+  <b>Valor:</b>
+  R$ <%= @program.value %>
+</p>
+
+<p>
+  <b>Porcentagem:</b>
+  <%= @program.percentage %> %
+</p>
+<br>
+
+
+
+<%= link_to 'Editar', edit_program_path(@program) %> |
+<%= link_to 'Voltar para programas', programs_path %>

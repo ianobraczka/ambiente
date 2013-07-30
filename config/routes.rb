@@ -2,7 +2,7 @@ Ambiente::Application.routes.draw do
 
   resources :programs
 
-
+=begin
   get "program/index"
 
   get "program/show"
@@ -13,9 +13,16 @@ Ambiente::Application.routes.draw do
 
   get "program/delete"
 
-  match "program" => "program#index"
+  post 'program/create'
 
-  root :to => "program#index"
+  post 'program/new'
+=end
+
+  get "info/help"
+
+  match "programs" => "programs#index"
+
+  root :to => "programs#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

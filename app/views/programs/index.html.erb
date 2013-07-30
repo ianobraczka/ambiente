@@ -1,0 +1,27 @@
+
+<h1>Programas</h1>
+
+<br>
+(<%= link_to 'Novo Programa', "programs/new" %>)
+
+<br><br><br>
+
+
+<% @programs.each do |program| %>
+  <tr>
+    <td><h4><%= program.name %></h4></td>
+    <td>Preço: <%= program.price %></td>
+    <br>
+  	<td>HH: <%= program.hh %></td>
+  	<br>
+  	<td>%: <%= program.percentage %></td>
+  	<br>
+  	<td>$: <%= program.value %></td>
+  	<br>
+  </tr>
+  <br>
+  <br>
+<% end %>
+</table>
+
+<br />
