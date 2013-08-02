@@ -5,13 +5,23 @@ class ProgramsController < ApplicationController
 
   def show
   	@program = Program.find(params[:id])
+    @enterprises = Program.find(params[:id]).enterprises
+    @enterprises_count = Program.find(params[:id]).enterprises.count
+    @i = 2
   end
 
   def edit
     @program = Program.find(params[:id])
   end
 
-  def delete
+  def destroy
+    @program = Program.find(params[:id])
+    @program.destroy
+
+    respond_to do |format|
+      format.html { redirect_to programs_url }
+      format.json { head :no_content }
+    end
   end
 
   def update

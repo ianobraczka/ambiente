@@ -1,6 +1,20 @@
 Ambiente::Application.routes.draw do
 
+  get "enterprise/index"
+
+  get "enterprise/show"
+
+  get "enterprise/destroy"
+
+  get "enterprise/edit"
+
+  get "enterprise/create"
+
+  get "enterprise/new"
+
   resources :programs
+
+  resources :enterprises
 
 =begin
   get "program/index"

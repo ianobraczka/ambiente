@@ -1,0 +1,25 @@
+
+<h1>Empreendimentos</h1>
+
+<br><br>
+
+<% @enterprises.each do |enterprise| %>
+  <tr>
+    <td><h4><%= enterprise.name %></h4></td>
+    <td> Programa: <%=link_to enterprise.program.name, enterprise.program %></td>
+    <br>
+    <td>Preço: <%= enterprise.price %></td>
+    <br>
+  	<td>HH: <%= enterprise.hh %></td>
+  	<br>
+  	<td>%: <%= enterprise.percentage %></td>
+  	<br>
+  	<td>$: <%= enterprise.value %></td>
+    <p>
+    <td><%= button_to "Deletar", enterprise, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse empreendimento?' } %></td></p>
+  	<br>
+  </tr>
+<% end %>
+</table>
+
+<br />

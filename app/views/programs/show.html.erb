@@ -24,6 +24,20 @@
 </p>
 <br>
 
+<p>
+  <b>Lista de empreendimentos:</b>
+  <br>
+  <p><%= @enterprises.each do |enterprise| %>
+  <%= link_to(enterprise) do %>
+  <strong><%= enterprise.name %></strong>
+  <br>
+<% end %>
+ <% end %>
+ </p>
+
+</p>
+<br>
+
 
 
 <%= link_to 'Editar', edit_program_path(@program) %> |

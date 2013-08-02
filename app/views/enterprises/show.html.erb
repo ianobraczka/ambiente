@@ -1,0 +1,41 @@
+
+  <h1><%= @enterprise.name %></h1>
+<p>
+<b>Programa:</b>
+  <%= link_to @enterprise.program.name, @enterprise.program %>
+  <br>
+  <b>Preço:</b>
+  R$ <%= @enterprise.price %>
+</p>
+
+<br>
+<h4>Ponderadores:</h4>
+
+<p>
+  <b>HH:</b>
+  <%= @enterprise.hh %>
+</p>
+
+<p>
+  <b>Valor:</b>
+  R$ <%= @enterprise.value %>
+</p>
+
+<p>
+  <b>Porcentagem:</b>
+  <%= @enterprise.percentage %> %
+</p>
+<br>
+
+<p>
+  <b>Lista de Áreas:</b>
+  <br>
+  <p>
+ </p>
+
+</p>
+<br>
+
+
+
+<%= link_to 'Editar', edit_enterprise_path(@enterprise) %>
