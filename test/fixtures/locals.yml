@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  subarea_id: 1
+  name: MyString
+  price: 1.5
+  hh: 1
+  percentage: 1
+  value: 1.5
+
+two:
+  subarea_id: 1
+  name: MyString
+  price: 1.5
+  hh: 1
+  percentage: 1
+  value: 1.5

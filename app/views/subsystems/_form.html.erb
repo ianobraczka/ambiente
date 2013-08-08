@@ -1,0 +1,38 @@
+<%= form_for(@subsystem) do |f| %>
+  <% if @subsystem.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@subsystem.errors.count, "error") %> prohibited this subsystem from being saved:</h2>
+
+      <ul>
+      <% @subsystem.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label "Nome" %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label "Preço" %>
+    <%= f.text_field :price %>
+  </div>
+  <div class="field">
+    <%= f.label "hh" %>
+    <%= f.number_field :hh %>
+  </div>
+  <div class="field">
+    <%= f.label "Porcentagem (%)" %>
+    <%= f.number_field :percentage %>
+  </div>
+  <div class="field">
+    <%= f.label "Valor" %>
+    <%= f.number_field :value %>
+  </div>
+  <br>
+  <div class="actions">
+    <%= f.submit "OK" %>
+  </div>
+<% end %>

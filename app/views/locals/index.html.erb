@@ -1,0 +1,25 @@
+
+<h1>Locais</h1>
+
+<br><br>
+
+<% @locals.each do |local| %>
+  <tr>
+    <td><h4><%= local.name %></h4></td>
+    <td> Programa: <%=link_to local.subarea.name, local.subarea %></td>
+    <br>
+    <td>Preço: <%= local.price %></td>
+    <br>
+  	<td>HH: <%= local.hh %></td>
+  	<br>
+  	<td>%: <%= local.percentage %></td>
+  	<br>
+  	<td>$: <%= local.value %></td>
+    <p>
+    <td><%= button_to "Deletar", local, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse local?' } %></td></p>
+  	<br>
+  </tr>
+<% end %>
+</table>
+
+<br />

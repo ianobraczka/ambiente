@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  system_id: 1
+  name: MyString
+  price: 1.5
+  total_quantity: 1.5
+  unity: MyString
+  hh: 1
+  percentage: 1
+  value: 1.5
+
+two:
+  system_id: 1
+  name: MyString
+  price: 1.5
+  total_quantity: 1.5
+  unity: MyString
+  hh: 1
+  percentage: 1
+  value: 1.5

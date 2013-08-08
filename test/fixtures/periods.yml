@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  subsubsystem_id: 1
+  subsystem_id: 1
+  system_id: 1
+  number: 1
+  quantity: 1.5
+  unity: MyString
+  init_date: 2013-08-05 11:29:51
+  end_date: 2013-08-05 11:29:51
+
+two:
+  subsubsystem_id: 1
+  subsystem_id: 1
+  system_id: 1
+  number: 1
+  quantity: 1.5
+  unity: MyString
+  init_date: 2013-08-05 11:29:51
+  end_date: 2013-08-05 11:29:51

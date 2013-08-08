@@ -5,9 +5,6 @@ class ProgramsController < ApplicationController
 
   def show
   	@program = Program.find(params[:id])
-    @enterprises = Program.find(params[:id]).enterprises
-    @enterprises_count = Program.find(params[:id]).enterprises.count
-    @i = 2
   end
 
   def edit

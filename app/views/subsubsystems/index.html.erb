@@ -1,0 +1,29 @@
+
+<h1>Subsubsistemas</h1>
+
+<br>
+(<%= link_to 'Novo Subsubsistema', "subsubsystems/new" %>)
+
+<br><br><br>
+
+<% @subsubsystems.each do |subsubsystem| %>
+  <tr>
+    <td><h4><%= link_to subsubsystem.name, subsubsystem %></h4></td>
+    <td>Preço: <%= subsubsystem.price %></td>
+    <br>
+  	<td>HH: <%= subsubsystem.hh %></td>
+  	<br>
+  	<td>%: <%= subsubsystem.percentage %></td>
+  	<br>
+  	<td>$: <%= subsubsystem.value %></td>
+    <br>
+    <p>
+    <td><%= button_to "Deletar", subsubsystem, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse subsubsistema?' } %> </td></p>
+  	<br>
+  </tr>
+  <br>
+  <br>
+<% end %>
+</table>
+
+<br />

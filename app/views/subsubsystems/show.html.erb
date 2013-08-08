@@ -1,0 +1,31 @@
+
+  <h1><%= @subsubsystem.name %></h1>
+<p>
+  <b>Preço:</b>
+  R$ <%= @subsubsystem.price %>
+</p>
+
+<br>
+<h4>Ponderadores:</h4>
+
+<p>
+  <b>HH:</b>
+  <%= @subsubsystem.hh %>
+</p>
+
+<p>
+  <b>Valor:</b>
+  R$ <%= @subsubsystem.value %>
+</p>
+
+<p>
+  <b>Porcentagem:</b>
+  <%= @subsubsystem.percentage %> %
+</p>
+<br>
+<br>
+
+
+
+<%= link_to 'Editar', edit_subsubsystem_path(@subsubsystem) %> |
+<%= link_to 'Voltar para subsubsystemas', subsubsystems_path %>

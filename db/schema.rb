@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130716122548) do
+ActiveRecord::Schema.define(:version => 20130805152832) do
+
+  create_table "areas", :force => true do |t|
+    t.integer  "enterprise_id"
+    t.string   "name"
+    t.float    "price"
+    t.integer  "hh"
+    t.integer  "percentage"
+    t.float    "value"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
   create_table "enterprises", :force => true do |t|
     t.integer  "program_id"
@@ -24,6 +35,39 @@ ActiveRecord::Schema.define(:version => 20130716122548) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "locals", :force => true do |t|
+    t.integer  "subarea_id"
+    t.string   "name"
+    t.float    "price"
+    t.integer  "hh"
+    t.integer  "percentage"
+    t.float    "value"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "periods", :force => true do |t|
+    t.integer  "subsubsystem_id"
+    t.integer  "subsystem_id"
+    t.integer  "system_id"
+    t.integer  "number"
+    t.float    "quantity"
+    t.string   "unity"
+    t.datetime "init_date"
+    t.datetime "end_date"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  create_table "plannings", :force => true do |t|
+    t.integer  "system_id"
+    t.integer  "subsystem_id"
+    t.integer  "subsubsystem_id"
+    t.integer  "period_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
   create_table "programs", :force => true do |t|
     t.string   "name"
     t.float    "price"
@@ -32,6 +76,58 @@ ActiveRecord::Schema.define(:version => 20130716122548) do
     t.float    "value"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "subareas", :force => true do |t|
+    t.integer  "area_id"
+    t.string   "name"
+    t.float    "price"
+    t.integer  "hh"
+    t.integer  "percentage"
+    t.float    "value"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "subsubsystems", :force => true do |t|
+    t.integer  "subsystem_id"
+    t.string   "name"
+    t.float    "price"
+    t.float    "total_quantity"
+    t.string   "unity"
+    t.integer  "hh"
+    t.integer  "percentage"
+    t.float    "value"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "subsystems", :force => true do |t|
+    t.integer  "system_id"
+    t.string   "name"
+    t.float    "price"
+    t.float    "total_quantity"
+    t.string   "unity"
+    t.integer  "hh"
+    t.integer  "percentage"
+    t.float    "value"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "systems", :force => true do |t|
+    t.integer  "area_id"
+    t.integer  "subarea_id"
+    t.integer  "local_id"
+    t.string   "name"
+    t.float    "price"
+    t.float    "total_quantity"
+    t.string   "unity"
+    t.integer  "hh"
+    t.integer  "percentage"
+    t.float    "value"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
 end

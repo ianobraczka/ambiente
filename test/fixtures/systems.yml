@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  area_id: 1
+  subarea_id: 1
+  local_id: 1
+  name: MyString
+  price: 1.5
+  total_quantity: 1.5
+  unity: MyString
+  hh: 1
+  percentage: 1
+  value: 1.5
+
+two:
+  area_id: 1
+  subarea_id: 1
+  local_id: 1
+  name: MyString
+  price: 1.5
+  total_quantity: 1.5
+  unity: MyString
+  hh: 1
+  percentage: 1
+  value: 1.5

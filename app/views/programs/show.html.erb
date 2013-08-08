@@ -27,12 +27,14 @@
 <p>
   <b>Lista de empreendimentos:</b>
   <br>
-  <p><%= @enterprises.each do |enterprise| %>
+  <p><%= @program.enterprises.each do |enterprise| %>
   <%= link_to(enterprise) do %>
   <strong><%= enterprise.name %></strong>
   <br>
 <% end %>
  <% end %>
+
+ <b> <%=link_to 'novo empreendimento', new_enterprise_path%>
  </p>
 
 </p>

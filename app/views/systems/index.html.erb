@@ -1,0 +1,25 @@
+
+<h1>Sistemas</h1>
+
+<br><br>
+
+<% @systems.each do |system| %>
+  <tr>
+    <td><h4><%= system.name %></h4></td>
+    <td> Área: <%=link_to system.area.name, system.area %></td>
+    <br>
+    <td>Preço: <%= system.price %></td>
+    <br>
+  	<td>HH: <%= system.hh %></td>
+  	<br>
+  	<td>%: <%= system.percentage %></td>
+  	<br>
+  	<td>$: <%= system.value %></td>
+    <p>
+    <td><%= button_to "Deletar", system, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse sistema?' } %></td></p>
+  	<br>
+  </tr>
+<% end %>
+</table>
+
+<br />

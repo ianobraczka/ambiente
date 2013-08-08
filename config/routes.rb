@@ -1,5 +1,65 @@
 Ambiente::Application.routes.draw do
 
+  get "areas/index"
+
+  get "areas/show"
+
+  get "areas/edit"
+
+  get "areas/create"
+
+  get "areas/new"
+
+  get "subareas/index"
+
+  get "subareas/show"
+
+  get "subareas/edit"
+
+  get "subareas/create"
+
+  get "subareas/new"
+
+  get "locals/index"
+
+  get "locals/show"
+
+  get "locals/edit"
+
+  get "locals/create"
+
+  get "locals/new"
+
+  get "systems/index"
+
+  get "systems/show"
+
+  get "systems/edit"
+
+  get "systems/create"
+
+  get "systems/new"
+
+  get "subsystems/index"
+
+  get "subsystems/show"
+
+  get "subsystems/edit"
+
+  get "subsystems/create"
+
+  get "subsystems/new"
+
+  get "subsubsystems/index"
+
+  get "subsubsystems/show"
+
+  get "subsubsystems/edit"
+
+  get "subsubsystems/create"
+
+  get "subsubsystems/destroy"
+
   get "enterprise/index"
 
   get "enterprise/show"
@@ -15,6 +75,18 @@ Ambiente::Application.routes.draw do
   resources :programs
 
   resources :enterprises
+
+  resources :subsubsystems
+
+  resources :subsystems
+
+  resources :systems
+
+  resources :locals
+
+  resources :subareas
+
+  resources :areas
 
 =begin
   get "program/index"
@@ -35,6 +107,18 @@ Ambiente::Application.routes.draw do
   get "info/help"
 
   match "programs" => "programs#index"
+
+  match "subsubsystems" => "subsubsystems#index"
+
+  match "subsystems" => "subsystems#index"
+
+  match "systems" => "systems#index"
+
+  match "locals" => "locals#index"
+
+  match "subareas" => "subareas#index"
+
+  match "areas" => "areas#index"
 
   root :to => "programs#index"
 
