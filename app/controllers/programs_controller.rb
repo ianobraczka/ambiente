@@ -1,10 +1,21 @@
 class ProgramsController < ApplicationController
+  
   def index
   	@programs = Program.all
+    for program in @programs
+      program.price = 0
+      for enterprise in program.enterprises
+        program.price = program.price + enterprise.price
+      end
+    end
   end
 
   def show
   	@program = Program.find(params[:id])
+    @program.price = 0
+    @program.enterprises.each do |enterprise|
+      @program.price = @program.price + enterprise.price
+    end
   end
 
   def edit

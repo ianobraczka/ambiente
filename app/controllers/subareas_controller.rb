@@ -1,4 +1,6 @@
 class SubareasController < ApplicationController
+  @@area_id = 1
+
   def index
     @subareas = Subarea.all
   end
@@ -37,7 +39,9 @@ class SubareasController < ApplicationController
 
 
   def new
-    @subarea = Subarea.new
+    @area = Area.find(params[:area_id])
+    @subarea = @area.subareas.build
+    @@area_id = @area.id
 
     respond_to do |format|
       format.html # new.html.erb
@@ -46,7 +50,9 @@ class SubareasController < ApplicationController
   end
 
   def create
-    @subarea = Subarea.new(params[:subarea])
+    @area = Area.find(@@area_id)
+    @subarea = @area.subareas.build(params[:subarea])
+    @subarea.price = 0
 
     respond_to do |format|
       if @subarea.save

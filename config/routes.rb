@@ -60,33 +60,49 @@ Ambiente::Application.routes.draw do
 
   get "subsubsystems/destroy"
 
-  get "enterprise/index"
+  get "enterprises/index"
 
-  get "enterprise/show"
+  get "enterprises/show"
 
-  get "enterprise/destroy"
+  get "enterprises/destroy"
 
-  get "enterprise/edit"
+  get "enterprises/edit"
 
-  get "enterprise/create"
+  get "enterprises/create"
 
-  get "enterprise/new"
+  get "enterprises/new"
 
-  resources :programs
+  resources :programs do
+    resources :enterprises
+  end
 
-  resources :enterprises
+  resources :enterprises do
+    resources :areas
+  end
 
   resources :subsubsystems
 
-  resources :subsystems
+  resources :subsystems do
+    resources :subsubsystems
+  end
 
-  resources :systems
+  resources :systems do
+    resources :subsystems
+  end
 
-  resources :locals
+  resources :locals do
+    resources :systems
+  end
 
-  resources :subareas
+  resources :subareas do
+    resources :locals
+    resources :systems
+  end
 
-  resources :areas
+  resources :areas do
+    resources :subareas
+    resources :systems
+  end
 
 =begin
   get "program/index"

@@ -5,8 +5,8 @@
 
 <% @enterprises.each do |enterprise| %>
   <tr>
-    <td><h4><%= enterprise.name %></h4></td>
-    <td> Programa: <%=link_to enterprise.program.name, enterprise.program %></td>
+    <td><h4><%=link_to enterprise.name, enterprise %></h4></td>
+    <td>Programa: <%= link_to enterprise.program.name, enterprise.program %></td>
     <br>
     <td>Preço: <%= enterprise.price %></td>
     <br>

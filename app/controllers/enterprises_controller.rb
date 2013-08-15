@@ -1,10 +1,22 @@
 class EnterprisesController < ApplicationController
+  @@program_id = 1
+
   def index
     @enterprises = Enterprise.all
+    for enterprise in @enterprises
+      enteprise.price = 0
+      for area in enterprise.areas
+        enterprise.price = enterprise.price + area.price
+      end
+    end
   end
 
   def show
     @enterprise = Enterprise.find(params[:id])
+    @enterprise.price = 0
+    @enterprise.areas.each do |area|
+      @enterprise.price = @enterprise.price + area.price
+    end
   end
 
   def edit
@@ -37,8 +49,9 @@ class EnterprisesController < ApplicationController
 
 
   def new
-    @enterprise = Enterprise.new
-
+    @program = Program.find(params[:program_id])
+    @enterprise = @program.enterprises.build
+    @@program_id = @program.id
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @enterprise }
@@ -46,11 +59,13 @@ class EnterprisesController < ApplicationController
   end
 
   def create
-    @enterprise = Enterprise.new(params[:enterprise])
+    @program = Program.find(@@program_id)
+    @enterprise = @program.enterprises.build(params[:enterprise])
+    @enterprise.price = 0
 
     respond_to do |format|
       if @enterprise.save
-        format.html { redirect_to @enterprise, notice: ' O enterprisea foi criado com sucesso! ' }
+        format.html { redirect_to @enterprise, notice: ' O empreendimento foi criado com sucesso! ' }
         format.json { render json: @enterprise, status: :created, location: @enterprise }
       else
         format.html { render action: "new" }

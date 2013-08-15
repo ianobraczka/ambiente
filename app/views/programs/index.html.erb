@@ -4,26 +4,18 @@
 <br>
 (<%= link_to 'Novo Programa', "programs/new" %>)
 
-<br><br><br>
+<br><br>
 
 <% @programs.each do |program| %>
   <tr>
     <td><h4><%= link_to program.name, program %></h4></td>
     <td>Preço: <%= program.price %></td>
     <br>
-  	<td>HH: <%= program.hh %></td>
-  	<br>
-  	<td>%: <%= program.percentage %></td>
-  	<br>
-  	<td>$: <%= program.value %></td>
     <br>
-    <p>
     <td><%= button_to "Deletar", program, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse programa?' } %> </td></p>
-  	<br>
   </tr>
-  <br>
   <br>
 <% end %>
 </table>
 
-<br />
+<br/>

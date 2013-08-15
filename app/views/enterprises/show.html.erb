@@ -1,15 +1,24 @@
+<br>
+<style>
+.large_font
+{
+  font-size: 30pt;
+}
 
-  <h1><%= @enterprise.name %></h1>
+.small_font
+{
+  font-size: 15pt;
+}
+</style>
+
+  <span class="small_font"><%= link_to @enterprise.program.name, @enterprise.program %></span> > <span class="large_font"><%= @enterprise.name %></h1> </span>
 <p>
-<b>Programa:</b>
-  <%= link_to @enterprise.program.name, @enterprise.program %>
-  <br>
+<br>
   <b>Preço:</b>
   R$ <%= @enterprise.price %>
 </p>
 
 <br>
-<h4>Ponderadores:</h4>
 
 <p>
   <b>HH:</b>
@@ -28,9 +37,16 @@
 <br>
 
 <p>
-  <b>Lista de Áreas:</b>
+  <b>Lista de areas:</b>
   <br>
-  <p>
+  <p><%= @enterprise.areas.each do |area| %>
+  <%= link_to(area) do %>
+  <strong><%= area.name %></strong>
+  <br>
+<% end %>
+ <% end %>
+
+ <b> <%= link_to "nova area", new_enterprise_area_path(@enterprise) %>
  </p>
 
 </p>
@@ -38,4 +54,5 @@
 
 
 
-<%= link_to 'Editar', edit_enterprise_path(@enterprise) %>
+<%= link_to 'Editar', edit_enterprise_path(@enterprise) %> |
+<%= link_to 'Voltar para empreendimentos', enterprises_path %>

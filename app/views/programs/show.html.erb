@@ -1,40 +1,29 @@
 
   <h1><%= @program.name %></h1>
 <p>
-  <b>Preço:</b>
-  R$ <%= @program.price %>
+  <h4>Preço: R$ <%= @program.price %></h4>
 </p>
 
 <br>
-<h4>Ponderadores:</h4>
 
 <p>
-  <b>HH:</b>
-  <%= @program.hh %>
-</p>
-
-<p>
-  <b>Valor:</b>
-  R$ <%= @program.value %>
-</p>
-
-<p>
-  <b>Porcentagem:</b>
-  <%= @program.percentage %> %
-</p>
-<br>
-
-<p>
-  <b>Lista de empreendimentos:</b>
+  <b>Empreendimentos:</b>
+  <br>
   <br>
   <p><%= @program.enterprises.each do |enterprise| %>
-  <%= link_to(enterprise) do %>
-  <strong><%= enterprise.name %></strong>
+  <strong><%= link_to enterprise.name, enterprise %></strong>
   <br>
-<% end %>
- <% end %>
+  Porcentagem: <%= enterprise.percentage %>%
+  <br>
+  Valor: R$<%= enterprise.value %>
+  <br>
+  HH: <%=enterprise.hh %>  
+  <br><br><br>
+  <% end %>
+  <br>
+  <br>
 
- <b> <%=link_to 'novo empreendimento', new_enterprise_path%>
+ <b> <%= button_to "novo empreendimento", new_program_enterprise_path(@program), :method => "get" %>
  </p>
 
 </p>

@@ -1,2 +1,63 @@
-<h1>Areas#show</h1>
-<p>Find me in app/views/areas/show.html.erb</p>
+<br>
+<style>
+.large_font
+{
+  font-size: 30pt;
+}
+
+.small_font
+{
+  font-size: 15pt;
+}
+</style>
+
+  <span class="small_font"><%= link_to @area.enterprise.program.name, @area.enterprise.program %> > <%= link_to @area.enterprise.name, @area.enterprise %></span> > <span class="large_font"><%= @area.name %></h1> </span>
+<p>
+<br>
+  <b>Preço:</b>
+  R$ <%= @area.price %>
+</p>
+
+<br>
+
+<p>
+  <b>HH:</b>
+  <%= @area.hh %>
+</p>
+
+<p>
+  <b>Valor:</b>
+  R$ <%= @area.value %>
+</p>
+
+<p>
+  <b>Porcentagem:</b>
+  <%= @area.percentage %> %
+</p>
+<br>
+<% if @area.subareas.empty? && @area.systems.empty? then %>
+  Essa área não tem subareas ou sistemas
+  <%= button_to "criar subarea", new_area_subarea_path(@area), :method => "get"  %>
+  <%= button_to "criar sistema", new_area_system_path(@area), :method => "get"  %>
+<%end%>
+
+<p>
+  <b>Lista de subareas:</b>
+  <br>
+  <p><%= @area.subareas.each do |subarea| %>
+  <%= link_to(subarea) do %>
+  <strong><%= subarea.name %></strong>
+  <br>
+<% end %>
+ <% end %>
+
+ <b> <%= link_to "nova subarea", new_area_subarea_path(@area) %>
+ </p>
+
+</p>
+<br>
+
+
+
+<%= link_to 'Editar', edit_area_path(@area) %> |
+<%= link_to 'Voltar para areas', areas_path %>

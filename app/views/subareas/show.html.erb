@@ -1,2 +1,65 @@
-<h1>Subareas#show</h1>
-<p>Find me in app/views/subareas/show.html.erb</p>
+
+  <h1><%= @subarea.name %></h1>
+<p>
+  <h4>Preço: R$ <%= @subarea.price %></h4>
+</p>
+
+<br>
+<% if @subarea.locals.empty? && @subarea.systems.empty? %>
+	Essa subarea nao tem sistemas ou locais!
+	<%= button_to "criar local", new_subarea_local_path(@subarea), :method => "get"  %>
+ 	<%= button_to "criar sistema", new_subarea_system_path(@subarea), :method => "get"  %>
+<%end%>
+<% if @subarea.locals.empty? && !(@subarea.systems.empty?) %>
+	<p>
+	  <b>Sistemas:</b>
+	  <br>
+	  <br>
+	  <p><%= @subarea.systems.each do |system| %>
+	  <strong><%= link_to system.name, system %></strong>
+	  <br>
+	  Porcentagem: <%= system.percentage %>%
+	  <br>
+	  Valor: R$<%= system.value %>
+	  <br>
+	  HH: <%=system.hh %>  
+	  <br><br><br>
+	  <% end %>
+	  <br>
+	  <br>
+
+	 <b> <%= button_to "novo sistema", new_subarea_system_path(@subarea), :method => "get" %>
+	 </p>
+	</p>
+	<br>
+<% end %>
+
+<% if @subarea.systems.empty? && !(@subarea.locals.empty?) %>
+	<p>
+	  <b>Locais:</b>
+	  <br>
+	  <br>
+	  <p><%= @subarea.locals.each do |local| %>
+	  <strong><%= link_to local.name, local %></strong>
+	  <br>
+	  Porcentagem: <%= local.percentage %>%
+	  <br>
+	  Valor: R$<%= local.value %>
+	  <br>
+	  HH: <%=local.hh %>  
+	  <br><br><br>
+	  <% end %>
+	  <br>
+	  <br>
+
+	 <b> <%= button_to "novo local", new_subarea_local_path(@subarea), :method => "get" %>
+	 </p>
+	</p>
+	<br>
+<% end %>
+
+
+
+
+<%= link_to 'Editar', edit_subarea_path(@subarea) %> |
+<%= link_to 'Voltar para subareas', subareas_path %>
