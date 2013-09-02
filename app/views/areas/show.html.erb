@@ -11,53 +11,33 @@
 }
 </style>
 
-  <span class="small_font"><%= link_to @area.enterprise.program.name, @area.enterprise.program %> > <%= link_to @area.enterprise.name, @area.enterprise %></span> > <span class="large_font"><%= @area.name %></h1> </span>
+<span class="large_font"><%= @area.name %> </span>
 <p>
 <br>
   <b>Preço:</b>
   R$ <%= @area.price %>
 </p>
-
 <br>
-
-<p>
-  <b>HH:</b>
-  <%= @area.hh %>
-</p>
-
-<p>
-  <b>Valor:</b>
-  R$ <%= @area.value %>
-</p>
-
-<p>
-  <b>Porcentagem:</b>
-  <%= @area.percentage %> %
-</p>
-<br>
-<% if @area.subareas.empty? && @area.systems.empty? then %>
-  Essa área não tem subareas ou sistemas
-  <%= button_to "criar subarea", new_area_subarea_path(@area), :method => "get"  %>
-  <%= button_to "criar sistema", new_area_system_path(@area), :method => "get"  %>
+  <h4>Sistemas:</h4><br>
+  <% @area.systems.each do |system| %>
+    <strong><h4><%= link_to  system.name, system %></h4></strong>
+    Preço: <%= system.price %><br>
+    Porcentagem: <%= system.percentage %>%<br>
+    Valor: R$<%= system.value %><br>
+    HH: <%= system.hh %><br>
+    <br>
+  <br>
 <%end%>
-
-<p>
-  <b>Lista de subareas:</b>
-  <br>
-  <p><%= @area.subareas.each do |subarea| %>
-  <%= link_to(subarea) do %>
-  <strong><%= subarea.name %></strong>
-  <br>
-<% end %>
- <% end %>
-
- <b> <%= link_to "nova subarea", new_area_subarea_path(@area) %>
- </p>
-
-</p>
 <br>
+  <h4>Subáreas:</h4>
+  <% @area.subareas.each do |subarea| %>
+    <strong><%= link_to  subarea.name, subarea %></strong><br>
+    Preço: <%= subarea.price %><br>
+    Porcentagem: <%= subarea.percentage %>%<br>
+    Valor: R$<%= subarea.value %><br>
+    HH: <%= subarea.hh %><br>
+    <br>
+  <%end%>
 
-
-
-<%= link_to 'Editar', edit_area_path(@area) %> |
-<%= link_to 'Voltar para areas', areas_path %>
+<br>
+<%= link_to 'Voltar para áreas', areas_path %>

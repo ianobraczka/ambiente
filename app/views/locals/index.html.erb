@@ -1,7 +1,12 @@
 
 <h1>Locais</h1>
 
-<br><br>
+<br>
+<% if @locals.empty? then %>
+  <strong> O Ambiente ainda não possui nenhum local. Para criar um, vá em alguma subárea e crie a partir dela.</strong>
+  <br>
+<% end %>
+<br>
 
 <% @locals.each do |local| %>
   <tr>

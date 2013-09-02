@@ -1,7 +1,14 @@
 
 <h1>Áreas</h1>
 
-<br><br>
+<br>
+
+<% if @areas.empty? then %>
+  <strong> O sistema ainda não possui nenhuma área </strong>
+  <br>
+<% end %>
+
+<br>
 
 <% @areas.each do |area| %>
   <tr>
@@ -20,6 +27,9 @@
   	<br>
   </tr>
 <% end %>
+
+<%= button_to "Criar área", new_area_path, :method => "get" %>
+
 </table>
 
 <br />

@@ -3,6 +3,10 @@
 
 <br><br>
 
+<% if @enterprises.empty? then %>
+<strong>O sistema ainda não possui empreendimentos. Para criar um, vá em um programa e crie a partir dele.</strong>
+<%end%>
+
 <% @enterprises.each do |enterprise| %>
   <tr>
     <td><h4><%=link_to enterprise.name, enterprise %></h4></td>
@@ -21,5 +25,4 @@
   </tr>
 <% end %>
 </table>
-
-<br />
+<br>

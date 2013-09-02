@@ -36,18 +36,27 @@
 </p>
 <br>
 
-<p>
-  <b>Lista de areas:</b>
+<% if @enterprise.systems.empty? then %>
+  <strong><font color = "red"> Esse empreendimento ainda não possui nenhum sistema. </strong></font>
   <br>
-  <p><%= @enterprise.areas.each do |area| %>
-  <%= link_to(area) do %>
-  <strong><%= area.name %></strong>
   <br>
-<% end %>
- <% end %>
+<%end%>
 
- <b> <%= link_to "nova area", new_enterprise_area_path(@enterprise) %>
- </p>
+<% if !(@enterprise.systems.empty?) then %>
+  <p>
+  <h4>Sistemas:</h4><br>
+  <p><% @enterprise.systems.each do |system| %>
+    <h4><%= link_to system.name, system %></h4>
+    Preço: R$<%= system.price %><br>
+    Porcentagem: <%= system.percentage %>%<br>
+    Valor: R$<%= system.value %><br>
+    HH: <%= system.hh %>
+  <% end %>
+<%end%>
+<br>
+<br>
+<b> <%= button_to "Criar sistema", new_enterprise_system_path(@enterprise), :method => "get" %>
+</p>
 
 </p>
 <br>

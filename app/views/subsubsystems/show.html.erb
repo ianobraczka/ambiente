@@ -1,12 +1,24 @@
+<br>
+<style>
+.large_font
+{
+  font-size: 30pt;
+}
 
-  <h1><%= @subsubsystem.name %></h1>
+.small_font
+{
+  font-size: 15pt;
+}
+</style>
+
+  <span class="small_font"><%= link_to @subsubsystem.subsystem.system.enterprise.program.name, @subsubsystem.subsystem.system.enterprise.program %> > <%= link_to @subsubsystem.subsystem.system.enterprise.name, @subsubsystem.subsystem.system.enterprise %> > <%= link_to @subsubsystem.subsystem.system.name, @subsubsystem.subsystem.system %> > <%=link_to @subsubsystem.subsystem.name, @subsubsystem.subsystem %> > </span>  <span class="large_font"><%= @subsubsystem.name %></h1> </span>
 <p>
+<br>
   <b>Preço:</b>
   R$ <%= @subsubsystem.price %>
 </p>
 
 <br>
-<h4>Ponderadores:</h4>
 
 <p>
   <b>HH:</b>
@@ -23,9 +35,37 @@
   <%= @subsubsystem.percentage %> %
 </p>
 <br>
+<%= button_to 'Editar valores', edit_subsubsystem_path(@subsubsystem), :method => "get" %>
 <br>
 
 
+<%= form_for(@subsubsystem) do |f| %>
+	<% if @subsubsystem.errors.any? %>
+    	<div id="error_explanation">
+       	<h2><%= pluralize(@subsubsystem.errors.count, "error") %> prohibited this product from being saved:</h2>
+		<ul>
+        <% @subsubsystem.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-<%= link_to 'Editar', edit_subsubsystem_path(@subsubsystem) %> |
-<%= link_to 'Voltar para subsubsystemas', subsubsystems_path %>
+    <div class="field">
+      <%= f.label "Preço" %>
+      <%= f.number_field :price %>
+    </div>
+    <div class="field">
+      <%= f.label "Quantidade total do subsubsistema" %>
+      <%= f.number_field :total_quantity %>
+    </div>
+    <div class="field">
+      <%= f.label "Unidade" %>
+      <%= f.text_field :unity %>
+    </div>
+    <div class="actions">
+    <%= f.submit "OK" %>
+  </div>
+<% end %>
+<br>
+<%= link_to 'Ver subsubsistemas', subsubsystems_path %>

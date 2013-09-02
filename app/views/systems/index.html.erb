@@ -1,12 +1,18 @@
 
 <h1>Sistemas</h1>
 
-<br><br>
+<br>
+<% if @systems.empty? then %>
+  <strong> O Ambiente ainda não possui nenhum sistema cadastrado. Para criar um, vá em algum empreendimento e crie a partir dele.</strong>
+  <br>
+<% end %>
+<br>
 
 <% @systems.each do |system| %>
   <tr>
-    <td><h4><%= system.name %></h4></td>
-    <td> Área: <%=link_to system.area.name, system.area %></td>
+    <td><h4><%= link_to system.name, system %></h4></td>
+    <br>
+    <td>Empreendimento: <%=link_to system.enterprise.name, system.enterprise %>
     <br>
     <td>Preço: <%= system.price %></td>
     <br>

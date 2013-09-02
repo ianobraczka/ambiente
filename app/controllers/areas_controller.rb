@@ -1,29 +1,12 @@
 class AreasController < ApplicationController
 
-  @@enterprise_id = 1
 
   def index
     @areas = Area.all
-    for area in @areas
-      area.price = 0
-      for subarea in area.subareas
-        area.price = area.price + subarea.price
-      end
-      for system in area.systems
-        area.price = area.price + system.price
-      end
-    end
   end
 
   def show
     @area = Area.find(params[:id])
-    @area.price = 0
-    for subarea in @area.subareas
-      @area.price = @area.price + subarea.price
-    end
-    for system in @area.systems
-      @area.price = @area.price + system.price
-    end
   end
 
   def edit
@@ -56,9 +39,7 @@ class AreasController < ApplicationController
 
 
   def new
-    @enterprise = Enterprise.find(params[:enterprise_id])
-    @area = @enterprise.areas.build
-    @@enterprise_id = @enterprise.id
+    @area = Area.new
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @enterprise }
@@ -66,10 +47,7 @@ class AreasController < ApplicationController
   end
 
   def create
-    @enterprise = Enterprise.find(@@enterprise_id)
-    @area = @enterprise.areas.build(params[:area])
-    @area.price = 0
-
+    @area = Area.new(params[:area])
     respond_to do |format|
       if @area.save
         format.html { redirect_to @area, notice: 'A area foi criada com sucesso! ' }

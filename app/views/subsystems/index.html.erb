@@ -1,11 +1,16 @@
 
 <h1>Subsistemas</h1>
 
-<br><br>
+<br>
+<% if @subsystems.empty? then %>
+  <strong> O Ambiente ainda não possui nenhum subsistema. Para criar um, vá em algum sistema e crie a partir dele.</strong>
+  <br>
+<% end %>
+<br>
 
 <% @subsystems.each do |subsystem| %>
   <tr>
-    <td><h4><%= subsystem.name %></h4></td>
+    <td><h4><%=link_to subsystem.name, subsystem %></h4></td>
     <td> Sistema: <%=link_to subsystem.system.name, subsystem.system %></td>
     <br>
     <td>Preço: <%= subsystem.price %></td>

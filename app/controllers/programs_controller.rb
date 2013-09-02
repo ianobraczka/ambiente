@@ -1,21 +1,13 @@
 class ProgramsController < ApplicationController
   
+
+
   def index
   	@programs = Program.all
-    for program in @programs
-      program.price = 0
-      for enterprise in program.enterprises
-        program.price = program.price + enterprise.price
-      end
-    end
   end
 
   def show
   	@program = Program.find(params[:id])
-    @program.price = 0
-    @program.enterprises.each do |enterprise|
-      @program.price = @program.price + enterprise.price
-    end
   end
 
   def edit
@@ -58,7 +50,6 @@ class ProgramsController < ApplicationController
 
   def create
     @program = Program.new(params[:program])
-
     respond_to do |format|
       if @program.save
         format.html { redirect_to @program, notice: ' O programa foi criado com sucesso! ' }

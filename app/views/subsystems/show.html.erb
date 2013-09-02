@@ -1,2 +1,91 @@
-<h1>Subsystems#show</h1>
-<p>Find me in app/views/subsystems/show.html.erb</p>
+<br>
+<style>
+.large_font
+{
+  font-size: 30pt;
+}
+
+.small_font
+{
+  font-size: 15pt;
+}
+</style>
+
+  <span class="small_font"><%= link_to @subsystem.system.enterprise.program.name, @subsystem.system.enterprise.program %> > <%= link_to @subsystem.system.enterprise.name, @subsystem.system.enterprise %> > <%= link_to @subsystem.system.name, @subsystem.system %> > </span>  <span class="large_font"><%= @subsystem.name %></h1> </span>
+<p>
+<br>
+  <b>Preço:</b>
+  R$ <%= @subsystem.price %>
+</p>
+
+<br>
+
+<p>
+  <b>HH:</b>
+  <%= @subsystem.hh %>
+</p>
+
+<p>
+  <b>Valor:</b>
+  R$ <%= @subsystem.value %>
+</p>
+
+<p>
+  <b>Porcentagem:</b>
+  <%= @subsystem.percentage %> %
+</p>
+<br>
+<%= button_to 'Editar valores', edit_subsystem_path(@subsystem), :method => "get" %>
+<br>
+
+<% if @subsystem.has_desagregation? then %>
+  <h4>Subsubsistemas:</h4>
+  <br>
+  <% @subsystem.subsubsystems.each do |subsubsystem| %>
+    <strong><h4><%= link_to  subsubsystem.name, subsubsystem %></h4></strong>
+    Preço: <%= subsubsystem.price %>
+    <br>
+    Quantidade: <%=subsubsystem.total_quantity%>
+    <br>
+  <%end%>
+  <br>
+  <%= button_to 'Criar subsubsistema', new_subsystem_subsubsystem_path(@subsystem), :method => "get" %>
+  <br>
+<%end%>
+
+
+<% if !@subsystem.has_desagregation? then %>
+
+  <%= form_for(@subsystem) do |f| %>
+    <% if @subsystem.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@subsystem.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+        <ul>
+        <% @subsystem.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label "Preço" %>
+      <%= f.number_field :price %>
+    </div>
+    <div class="field">
+      <%= f.label "Quantidade total do subsistema" %>
+      <%= f.number_field :total_quantity %>
+    </div>
+    <div class="field">
+      <%= f.label "Unidade" %>
+      <%= f.text_field :unity %>
+    </div>
+    <div class="actions">
+    <%= f.submit "OK" %>
+  </div>
+  <% end %>
+  <%= button_to 'Criar subsubsistema', new_subsystem_subsubsystem_path(@subsystem), :method => "get" %>
+<% end %>
+<br>
+<%= link_to 'Ver subsistemas', subsystems_path %>

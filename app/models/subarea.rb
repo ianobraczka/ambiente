@@ -1,6 +1,6 @@
 class Subarea < ActiveRecord::Base
-  attr_accessible :area_id, :hh, :name, :percentage, :price, :value
+  attr_accessible :area_id, :name, :price
   belongs_to :area
-  has_many :locals
-  has_many :systems
+  has_many :locals, :dependent => :destroy
+  belongs_to :system
 end

@@ -1,4 +1,6 @@
 class SubsystemsController < ApplicationController
+  @@system_id = 1
+
   def index
     @subsystems = Subsystem.all
   end
@@ -37,7 +39,9 @@ class SubsystemsController < ApplicationController
 
 
   def new
-    @subsystem = Subsystem.new
+    @system = System.find(params[:system_id])
+    @subsystem = @system.subsystems.build
+    @@system_id = @system.id
 
     respond_to do |format|
       format.html # new.html.erb
@@ -46,7 +50,9 @@ class SubsystemsController < ApplicationController
   end
 
   def create
-    @subsystem = Subsystem.new(params[:subsystem])
+    @system = System.find(@@system_id)
+    @subsystem = @system.subsystems.build(params[:subsystem])
+    @subsystem.price = 0
 
     respond_to do |format|
       if @subsystem.save

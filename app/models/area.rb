@@ -1,6 +1,12 @@
 class Area < ActiveRecord::Base
-  attr_accessible :enterprise_id, :hh, :name, :percentage, :price, :value
-  belongs_to :enterprise
-  has_many :subareas
-  has_many :systems
+  attr_accessible :name, :price
+  has_many :subareas, :dependent => :destroy
+
+ 	def price
+ 		value = 0
+		self.systems.each do |system|
+			value += system.price
+		end
+		value
+	end
 end

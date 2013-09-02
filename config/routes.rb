@@ -1,5 +1,17 @@
 Ambiente::Application.routes.draw do
 
+  get "plannings/new"
+
+  get "plannings/create"
+
+  get "plannings/index"
+
+  get "plannings/show"
+
+  get "plannings/destroy"
+
+  get "plannings/edit"
+
   get "areas/index"
 
   get "areas/show"
@@ -40,6 +52,12 @@ Ambiente::Application.routes.draw do
 
   get "systems/new"
 
+  get "systems/edit_price"
+
+  get "systems/define"
+
+  post "systems/define"
+
   get "subsystems/index"
 
   get "subsystems/show"
@@ -77,7 +95,7 @@ Ambiente::Application.routes.draw do
   end
 
   resources :enterprises do
-    resources :areas
+    resources :systems
   end
 
   resources :subsubsystems
@@ -90,18 +108,12 @@ Ambiente::Application.routes.draw do
     resources :subsystems
   end
 
-  resources :locals do
-    resources :systems
-  end
-
   resources :subareas do
     resources :locals
-    resources :systems
   end
 
   resources :areas do
     resources :subareas
-    resources :systems
   end
 
 =begin

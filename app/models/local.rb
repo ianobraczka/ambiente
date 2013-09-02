@@ -1,5 +1,5 @@
 class Local < ActiveRecord::Base
-  attr_accessible :hh, :name, :percentage, :price, :subarea_id, :value
+  attr_accessible :name, :price, :subarea_id
   belongs_to :subarea
-  has_many :systems
+  belongs_to :system
 end

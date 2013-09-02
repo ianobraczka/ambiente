@@ -3,20 +3,10 @@ class EnterprisesController < ApplicationController
 
   def index
     @enterprises = Enterprise.all
-    for enterprise in @enterprises
-      enteprise.price = 0
-      for area in enterprise.areas
-        enterprise.price = enterprise.price + area.price
-      end
-    end
   end
 
   def show
     @enterprise = Enterprise.find(params[:id])
-    @enterprise.price = 0
-    @enterprise.areas.each do |area|
-      @enterprise.price = @enterprise.price + area.price
-    end
   end
 
   def edit
@@ -61,8 +51,6 @@ class EnterprisesController < ApplicationController
   def create
     @program = Program.find(@@program_id)
     @enterprise = @program.enterprises.build(params[:enterprise])
-    @enterprise.price = 0
-
     respond_to do |format|
       if @enterprise.save
         format.html { redirect_to @enterprise, notice: ' O empreendimento foi criado com sucesso! ' }

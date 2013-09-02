@@ -1,10 +1,13 @@
 
 <h1>Subsubsistemas</h1>
 
-<br>
-(<%= link_to 'Novo Subsubsistema', "subsubsystems/new" %>)
 
-<br><br><br>
+<br>
+<% if @subsubsystems.empty? then %>
+  <strong> O Ambiente ainda não possui nenhum subsubsistema. Para criar um, vá em algum subsistema e crie a partir dele.</strong>
+  <br>
+<% end %>
+<br>
 
 <% @subsubsystems.each do |subsubsystem| %>
   <tr>

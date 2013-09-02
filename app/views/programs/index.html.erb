@@ -1,11 +1,11 @@
 
 <h1>Programas</h1>
-
 <br>
-(<%= link_to 'Novo Programa', "programs/new" %>)
-
-<br><br>
-
+<% if @programs.empty? then %>
+	<strong> O sistema ainda não possui nenhum programa</strong>
+	<br>
+<% end %>
+<br>
 <% @programs.each do |program| %>
   <tr>
     <td><h4><%= link_to program.name, program %></h4></td>
@@ -16,6 +16,7 @@
   </tr>
   <br>
 <% end %>
-</table>
 
-<br/>
+<%= button_to 'Novo Programa', "programs/new", :method => "get" %>
+
+<br>

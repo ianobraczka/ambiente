@@ -1,2 +1,90 @@
-<h1>Systems#show</h1>
-<p>Find me in app/views/systems/show.html.erb</p>
+<br>
+<style>
+.large_font
+{
+  font-size: 30pt;
+}
+
+.small_font
+{
+  font-size: 15pt;
+}
+</style>
+
+  <span class="small_font"><%= link_to @system.enterprise.program.name, @system.enterprise.program %> > <%= link_to @system.enterprise.name, @system.enterprise %> > </span> <span class="large_font"><%= @system.name %></h1> </span>
+<p>
+<br>
+  <b>Preço:</b>
+  R$ <%= @system.price %>
+</p>
+
+<br>
+
+<p>
+  <b>HH:</b>
+  <%= @system.hh %>
+</p>
+
+<p>
+  <b>Valor:</b>
+  R$ <%= @system.value %>
+</p>
+
+<p>
+  <b>Porcentagem:</b>
+  <%= @system.percentage %> %
+</p>
+<br>
+<%= button_to 'Editar valores', edit_system_path(@system), :method => "get" %>
+<br>
+
+<% if @system.has_desagregation? then %>
+  <h4>Subsistemas:</h4>
+  <% @system.subsystems.each do |subsystem| %>
+    <br>
+    <strong><h4><%= link_to  subsystem.name, subsystem %></h4></strong>
+    Preço: <%= subsystem.price %>
+    <br>
+    Quantidade: <%=subsystem.total_quantity%>
+    <br>
+  <%end%>
+  <br>
+  <%= button_to 'Criar subsistema', new_system_subsystem_path(@system), :method => "get" %>
+  <br>
+<%end%>
+
+<% if !@system.has_desagregation? then %>
+
+  <%= form_for(@system) do |f| %>
+    <% if @system.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@system.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+        <ul>
+        <% @system.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label "Preço" %>
+      <%= f.number_field :price %>
+    </div>
+    <div class="field">
+      <%= f.label "Quantidade total do sistema" %>
+      <%= f.number_field :total_quantity %>
+    </div>
+    <div class="field">
+      <%= f.label "Unidade" %>
+      <%= f.text_field :unity %>
+    </div>
+    <div class="actions">
+    <%= f.submit "OK" %>
+  </div>
+  <% end %>
+  <%= button_to 'Criar subsistema', new_system_subsystem_path(@system), :method => "get" %>
+<% end %>
+<br>
+<%= link_to 'Ver sistemas', systems_path %>

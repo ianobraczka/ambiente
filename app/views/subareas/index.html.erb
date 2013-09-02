@@ -1,7 +1,12 @@
 
 <h1>Subáreas</h1>
 
-<br><br>
+<br>
+<% if @subareas.empty? then %>
+  <strong> O Ambiente ainda não possui nenhuma subárea. Para criar uma, vá em alguma área e crie a partir dela.</strong>
+  <br>
+<% end %>
+<br>
 
 <% @subareas.each do |subarea| %>
   <tr>

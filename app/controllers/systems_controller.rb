@@ -1,4 +1,7 @@
 class SystemsController < ApplicationController
+  
+  @@enterprise_id = 1
+
   def index
     @systems = System.all
   end
@@ -8,6 +11,10 @@ class SystemsController < ApplicationController
   end
 
   def edit
+    @system = System.find(params[:id])
+  end
+
+  def define
     @system = System.find(params[:id])
   end
 
@@ -37,7 +44,11 @@ class SystemsController < ApplicationController
 
 
   def new
-    @system = System.new
+    @enterprise = Enterprise.find(params[:enterprise_id])
+    @system = @enterprise.systems.build
+    @@enterprise_id = @enterprise.id
+    @system.price = 0
+    @system.save
 
     respond_to do |format|
       format.html # new.html.erb
@@ -46,8 +57,10 @@ class SystemsController < ApplicationController
   end
 
   def create
-    @system = System.new(params[:system])
-
+    @enterprise = Enterprise.find(@@enterprise_id)
+    @system = @enterprise.systems.build(params[:system])
+    @system.price = 0
+    @system.save
     respond_to do |format|
       if @system.save
         format.html { redirect_to @system, notice: ' O Sistema foi criado com sucesso! ' }

@@ -5,13 +5,21 @@
 </p>
 
 <br>
+<% if @program.enterprises.empty? then %>
+  <strong> Esse programa ainda não possui empreendimentos</strong>
+  <br>
+  <br>
+<% end %>
 
+<% if !(@program.enterprises.empty?) then %>
 <p>
   <b>Empreendimentos:</b>
   <br>
   <br>
-  <p><%= @program.enterprises.each do |enterprise| %>
+  <p><% @program.enterprises.each do |enterprise| %>
   <strong><%= link_to enterprise.name, enterprise %></strong>
+  <br>
+  Preço: R$<%= enterprise.price %>
   <br>
   Porcentagem: <%= enterprise.percentage %>%
   <br>
@@ -20,10 +28,9 @@
   HH: <%=enterprise.hh %>  
   <br><br><br>
   <% end %>
-  <br>
-  <br>
+<%end%>
 
- <b> <%= button_to "novo empreendimento", new_program_enterprise_path(@program), :method => "get" %>
+ <b> <%= button_to "Criar empreendimento", new_program_enterprise_path(@program), :method => "get" %>
  </p>
 
 </p>

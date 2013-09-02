@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130805152832) do
+ActiveRecord::Schema.define(:version => 20130827152418) do
 
   create_table "areas", :force => true do |t|
     t.integer  "enterprise_id"
@@ -66,6 +66,9 @@ ActiveRecord::Schema.define(:version => 20130805152832) do
     t.integer  "period_id"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.date     "period_begin"
+    t.date     "period_end"
+    t.float    "quantity"
   end
 
   create_table "programs", :force => true do |t|
@@ -126,8 +129,10 @@ ActiveRecord::Schema.define(:version => 20130805152832) do
     t.integer  "hh"
     t.integer  "percentage"
     t.float    "value"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.boolean  "has_desagragations"
+    t.integer  "enterprise_id"
   end
 
 end
