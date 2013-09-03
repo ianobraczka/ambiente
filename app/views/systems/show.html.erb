@@ -16,75 +16,57 @@
 <br>
   <b>Preço:</b>
   R$ <%= @system.price %>
-</p>
-
-<br>
-
-<p>
+  <br>
+  <br>
   <b>HH:</b>
   <%= @system.hh %>
-</p>
-
-<p>
+  <br>
   <b>Valor:</b>
   R$ <%= @system.value %>
-</p>
-
-<p>
+  <br>
   <b>Porcentagem:</b>
   <%= @system.percentage %> %
 </p>
 <br>
-<%= button_to 'Editar valores', edit_system_path(@system), :method => "get" %>
-<br>
 
-<% if @system.has_desagregation? then %>
-  <h4>Subsistemas:</h4>
-  <% @system.subsystems.each do |subsystem| %>
-    <br>
-    <strong><h4><%= link_to  subsystem.name, subsystem %></h4></strong>
-    Preço: <%= subsystem.price %>
-    <br>
-    Quantidade: <%=subsystem.total_quantity%>
-    <br>
-  <%end%>
+<% if !@system.has_desagregation? && @system.price == 0 then %>
   <br>
+  <strong> <font color = "red">Seu sistema nao possui nenhum subsistema cadastrado.
+  <br> Para prosseguir, voce deve decidir se esse é o nível mais desagregado (caso seja, clique em definir valores) ou se o sistema se desagrega em um ou mais subsistemas (clique em criar subsistema).</strong></font>
+  <br><br>
+
+  <%= button_to "Definir valores", edit_system_path(@system), :method => "get" %>
   <%= button_to 'Criar subsistema', new_system_subsystem_path(@system), :method => "get" %>
-  <br>
+
 <%end%>
 
-<% if !@system.has_desagregation? then %>
+<% if !@system.has_desagregation? && @system.price != 0 then %>
 
-  <%= form_for(@system) do |f| %>
-    <% if @system.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@system.errors.count, "error") %> prohibited this product from being saved:</h2>
-
-        <ul>
-        <% @system.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <div class="field">
-      <%= f.label "Preço" %>
-      <%= f.number_field :price %>
-    </div>
-    <div class="field">
-      <%= f.label "Quantidade total do sistema" %>
-      <%= f.number_field :total_quantity %>
-    </div>
-    <div class="field">
-      <%= f.label "Unidade" %>
-      <%= f.text_field :unity %>
-    </div>
-    <div class="actions">
-    <%= f.submit "OK" %>
-  </div>
+  <%= button_to "Editar valores", edit_system_path(@system), :method => "get" %>
+  <% if @system.plannings.empty? then %>
+    <br>
+    <strong><font color = "red"> Seu sistema é o nível mais desagregado e ainda não possui nenhum planejamento. </strong></font>
+    <br>
+    <br>
+    <%= button_to "Criar planejamento", new_system_planning_path(@system), :method => "get" %>
+    <br>
+  <%end%>
+  <% if !@system.plannings.empty? then %>
+    <br>
+    <%= link_to "Ver planejamento atual", @system.plannings.last %>
+    <br>
   <% end %>
-  <%= button_to 'Criar subsistema', new_system_subsystem_path(@system), :method => "get" %>
-<% end %>
-<br>
-<%= link_to 'Ver sistemas', systems_path %>
+<%end%>
+
+<% if @system.has_desagregation? then %>
+  
+  <strong> Subsistemas: </strong>
+  <br>
+  <br>
+  <% @system.subsystems.each do |subsystem| %>
+    <strong><%= link_to subsystem.name, subsystem %></strong>
+    <br>
+  <%end%>
+<%end%>
+
+

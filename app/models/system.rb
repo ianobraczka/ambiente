@@ -23,32 +23,29 @@ class System < ActiveRecord::Base
   end
 
   def hh
-    if self.has_desagregation? then
-      hh = 0
-      self.subsystems.each do |subsystem|
-        hh = hh + subsystem.hh
-      end
-      hh
+    subsystems = self.subsystems
+    if subsystems.empty? 
+      self.attributes["hh"] 
+    else
+      self.subsystems.map(&:hh).sum
     end
   end
 
   def percentage
-    if self.has_desagregation? then
-      percentage = 0
-      self.subsystems.each do |subsystem|
-        percentage = percentage + subsystem.percentage
-      end
-      percentage
+    subsystems = self.subsystems
+    if subsystems.empty? 
+      self.attributes["percentage"] 
+    else
+      self.subsystems.map(&:percentage).sum
     end
   end
 
   def value
-    if self.has_desagregation? then
-      value = 0
-      self.subsystems.each do |subsystem|
-        value = value + subsystem.value
-      end
-      value
+    subsystems = self.subsystems
+    if subsystems.empty? 
+      self.attributes["value"] 
+    else
+      self.subsystems.map(&:value).sum
     end
   end
 

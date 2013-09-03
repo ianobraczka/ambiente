@@ -20,72 +20,55 @@
 
 <br>
 
-<p>
   <b>HH:</b>
   <%= @subsystem.hh %>
-</p>
+  <br>
 
-<p>
   <b>Valor:</b>
-  R$ <%= @subsystem.value %>
-</p>
+  R$ <%= @subsystem.value %><br>
 
-<p>
   <b>Porcentagem:</b>
   <%= @subsystem.percentage %> %
-</p>
-<br>
-<%= button_to 'Editar valores', edit_subsystem_path(@subsystem), :method => "get" %>
 <br>
 
-<% if @subsystem.has_desagregation? then %>
-  <h4>Subsubsistemas:</h4>
+<% if !@subsystem.has_desagregation? && @subsystem.price == 0 then %>
   <br>
-  <% @subsystem.subsubsystems.each do |subsubsystem| %>
-    <strong><h4><%= link_to  subsubsystem.name, subsubsystem %></h4></strong>
-    Preço: <%= subsubsystem.price %>
+  <strong> <font color = "red">Seu subsistema não possui nenhum subsubsistema cadastrado.
+  <br> Para prosseguir, voce deve decidir se esse é o nível mais desagregado (caso seja, clique em definir valores) ou se o subsistema se desagrega em um ou mais subsubsistemas (clique em criar subsubsistema).</strong></font>
+  <br><br>
+
+  <%= button_to "Definir valores", edit_subsystem_path(@subsystem), :method => "get" %>
+  <%= button_to 'Criar subsubsistema', new_subsystem_subsubsystem_path(@subsystem), :method => "get" %>
+
+<%end%>
+
+<% if !@subsystem.has_desagregation? && @subsystem.price != 0 then %>
+
+  <%= button_to "Editar valores", edit_subsystem_path(@subsystem), :method => "get" %>
+  <% if @subsystem.plannings.empty? then %>
     <br>
-    Quantidade: <%=subsubsystem.total_quantity%>
+    <strong><font color = "red"> Seu subsistema é o nível mais desagregado e ainda não possui nenhum planejamento. </strong></font>
+    <br>
+    <br>
+    <%= button_to "Criar planejamento", new_subsystem_planning_path(@subsystem), :method => "get" %>
     <br>
   <%end%>
+  <% if !@subsystem.plannings.empty? then %>
+    <br>
+    <%= link_to "Ver planejamento atual", @subsystem.plannings.last %>
+    <br>
+  <% end %>
+<%end%>
+
+<% if @subsystem.has_desagregation? then %>
+  
+  <strong> Subsubsistemas: </strong>
   <br>
-  <%= button_to 'Criar subsubsistema', new_subsystem_subsubsystem_path(@subsystem), :method => "get" %>
   <br>
+  <% @subsystem.subsubsystems.each do |subsubsystem| %>
+    <strong><%= link_to subsubsystem.name, subsubsystem %></strong>
+    <br>
+  <%end%>
 <%end%>
 
 
-<% if !@subsystem.has_desagregation? then %>
-
-  <%= form_for(@subsystem) do |f| %>
-    <% if @subsystem.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@subsystem.errors.count, "error") %> prohibited this product from being saved:</h2>
-
-        <ul>
-        <% @subsystem.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <div class="field">
-      <%= f.label "Preço" %>
-      <%= f.number_field :price %>
-    </div>
-    <div class="field">
-      <%= f.label "Quantidade total do subsistema" %>
-      <%= f.number_field :total_quantity %>
-    </div>
-    <div class="field">
-      <%= f.label "Unidade" %>
-      <%= f.text_field :unity %>
-    </div>
-    <div class="actions">
-    <%= f.submit "OK" %>
-  </div>
-  <% end %>
-  <%= button_to 'Criar subsubsistema', new_subsystem_subsubsystem_path(@subsystem), :method => "get" %>
-<% end %>
-<br>
-<%= link_to 'Ver subsistemas', subsystems_path %>
