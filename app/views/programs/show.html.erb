@@ -1,12 +1,12 @@
 
   <h1><%= @program.name %></h1>
-<p>
-  <h4>Preço: R$ <%= @program.price %></h4>
-</p>
-
+  <strong>Preço: R$ <%= @program.price %><br>
+    <font color="red"><%= @program.completed %>%</font> completo </strong>
+<br>
+<br>
 <br>
 <% if @program.enterprises.empty? then %>
-  <strong> Esse programa ainda não possui empreendimentos</strong>
+  <strong><font color="red">  Esse programa ainda não possui empreendimentos</strong></font>
   <br>
   <br>
 <% end %>
@@ -15,18 +15,20 @@
 <p>
   <b>Empreendimentos:</b>
   <br>
-  <br>
   <p><% @program.enterprises.each do |enterprise| %>
   <strong><%= link_to enterprise.name, enterprise %></strong>
   <br>
   Preço: R$<%= enterprise.price %>
   <br>
-  Porcentagem: <%= enterprise.percentage %>%
+  <font color="red"><%= enterprise.completed %>%</font> completo
+  <br>
+  HH: <%=enterprise.hh %> 
   <br>
   Valor: R$<%= enterprise.value %>
   <br>
-  HH: <%=enterprise.hh %>  
-  <br><br><br>
+  Porcentagem: <%= enterprise.percentage %>%
+  <br>
+  <br>
   <% end %>
 <%end%>
 
@@ -39,4 +41,4 @@
 
 
 <%= link_to 'Editar', edit_program_path(@program) %> |
-<%= link_to 'Voltar para programas', programs_path %>
+<%= link_to "Deletar programa", @program, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse programa?' } %>

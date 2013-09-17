@@ -7,6 +7,7 @@ class EnterprisesController < ApplicationController
 
   def show
     @enterprise = Enterprise.find(params[:id])
+    @ponderators = ["HH", "Percentagem", "Valor"]
   end
 
   def edit

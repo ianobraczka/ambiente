@@ -12,33 +12,29 @@
 </style>
 
   <span class="small_font"><%= link_to @enterprise.program.name, @enterprise.program %></span> > <span class="large_font"><%= @enterprise.name %></h1> </span>
-<p>
+<br>
 <br>
   <b>Preço:</b>
   R$ <%= @enterprise.price %>
-</p>
+<br><strong><font color = "red"> <%= @enterprise.completed %>%</font> completo<br></strong>
 
 <br>
-
-<p>
   <b>HH:</b>
   <%= @enterprise.hh %>
-</p>
-
-<p>
+  <br>
   <b>Valor:</b>
   R$ <%= @enterprise.value %>
-</p>
-
-<p>
+  <br>
   <b>Porcentagem:</b>
   <%= @enterprise.percentage %> %
-</p>
 <br>
+<br>
+Escolha o ponderador:
+  <%= select('email_setting',  [['Daily', 1],['Immediately', 2]], {}, :class=>'fl-space2 required size-120') %>
 
 <% if @enterprise.systems.empty? then %>
+<br>
   <strong><font color = "red"> Esse empreendimento ainda não possui nenhum sistema. </strong></font>
-  <br>
   <br>
 <%end%>
 
@@ -47,13 +43,15 @@
   <h4>Sistemas:</h4><br>
   <p><% @enterprise.systems.each do |system| %>
     <h4><%= link_to system.name, system %></h4>
+    <font color="red"><%= system.completed%>% </font>completo<br>
     Preço: R$<%= system.price %><br>
-    Porcentagem: <%= system.percentage %>%<br>
+    HH: <%= system.hh %><br>
     Valor: R$<%= system.value %><br>
-    HH: <%= system.hh %>
+    Porcentagem: <%= system.percentage %>%
+    <br>
+    <br>
   <% end %>
 <%end%>
-<br>
 <br>
 <b> <%= button_to "Criar sistema", new_enterprise_system_path(@enterprise), :method => "get" %>
 </p>
@@ -61,7 +59,5 @@
 </p>
 <br>
 
-
-
 <%= link_to 'Editar', edit_enterprise_path(@enterprise) %> |
-<%= link_to 'Voltar para empreendimentos', enterprises_path %>
+<%= link_to "Deletar empreendimento", @enterprise, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse empreendimento?' } %>

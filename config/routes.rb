@@ -120,6 +120,16 @@ Ambiente::Application.routes.draw do
     resources :plannings
   end
 
+  resources :subsystems do
+    resources :plannings
+  end
+
+  resources :subsubsystems do
+    resources :plannings
+  end
+
+  resources :plannings
+
 =begin
   get "program/index"
 

@@ -16,26 +16,30 @@
 <br>
   <b>Preço:</b>
   R$ <%= @subsystem.price %>
-</p>
-
-<br>
-
+  <br>
+  <strong> <font color= "red"><%=@subsystem.completed%>% </font> </strong>completo
+  <br>
+  <b>Quantidade total planejada:</b>
+    <%= @subsystem.total_quantity %> <%=@subsystem.unity%>
+  <br>
+  <br>
   <b>HH:</b>
   <%= @subsystem.hh %>
   <br>
-
   <b>Valor:</b>
-  R$ <%= @subsystem.value %><br>
-
+  R$ <%= @subsystem.value %>
+  <br>
   <b>Porcentagem:</b>
   <%= @subsystem.percentage %> %
+</p>
 <br>
 
 <% if !@subsystem.has_desagregation? && @subsystem.price == 0 then %>
   <br>
-  <strong> <font color = "red">Seu subsistema não possui nenhum subsubsistema cadastrado.
-  <br> Para prosseguir, voce deve decidir se esse é o nível mais desagregado (caso seja, clique em definir valores) ou se o subsistema se desagrega em um ou mais subsubsistemas (clique em criar subsubsistema).</strong></font>
-  <br><br>
+  <strong> <font color = "red">Seu sistema nao possui nenhum subsistema cadastrado. Para prosseguir, voce deve decidir se: <br><br>
+  -Esse é o nível mais desagregado (caso seja, clique em definir valores) ou;<br>
+  -Se o sistema se desagrega em um ou mais subsistemas (clique em criar subsistema).</strong></font>
+  <br><br><br>
 
   <%= button_to "Definir valores", edit_subsystem_path(@subsystem), :method => "get" %>
   <%= button_to 'Criar subsubsistema', new_subsystem_subsubsystem_path(@subsystem), :method => "get" %>
@@ -45,18 +49,37 @@
 <% if !@subsystem.has_desagregation? && @subsystem.price != 0 then %>
 
   <%= button_to "Editar valores", edit_subsystem_path(@subsystem), :method => "get" %>
+  <br>
+  <br>
+
   <% if @subsystem.plannings.empty? then %>
+    <strong><font color = "red"> Seu sistema é o nível mais desagregado e ainda não possui nenhuma entrada (período). </strong></font>
     <br>
-    <strong><font color = "red"> Seu subsistema é o nível mais desagregado e ainda não possui nenhum planejamento. </strong></font>
     <br>
-    <br>
-    <%= button_to "Criar planejamento", new_subsystem_planning_path(@subsystem), :method => "get" %>
+    <%= button_to "Entrar com dados do período", new_subsystem_planning_path(@subsystem), :method => "get" %>
     <br>
   <%end%>
   <% if !@subsystem.plannings.empty? then %>
+    <b>Quantidade realizada até o período:</b>
+    <%= @subsystem.accomplished_quantity %> <%=@subsystem.unity%> (<b><font color = "red"><%=@subsystem.quantity_percentage%>%</font></b>)
     <br>
-    <%= link_to "Ver planejamento atual", @subsystem.plannings.last %>
+    <b>Quantidade planejada até o período:</b>
+    <%= @subsystem.planned_quantity %> <%=@subsystem.unity%>
     <br>
+    <br>
+    <b>Quantidade planejada no período:</b> <%= @subsystem.plannings.last.planned_quantity %> <%=@subsystem.unity%> <br>
+    <b>Quantidade realizada no período:</b> <%= @subsystem.plannings.last.quantity %> <%=@subsystem.unity%> (<b><font color = "red"><%= @subsystem.plannings.last.quantity_percentage %>%</font></b>)
+    <br>
+    <br>
+    <% if @subsystem.current_planning.days_left != -1 then %>
+      O atual período é o <%= @subsystem.plannings.count %>o e <b><font color="red">faltam <%= @subsystem.current_planning.days_left %> dias</b></font> para o término dele.
+    <%end%>
+    <% if @subsystem.current_planning.days_left == -1 then %>
+      <b><font color="red"> O <%= @subsystem.plannings.count %>o período terminou, crie um novo período: </font></b>
+      <Br>
+      <br>
+      <%= button_to "Novo período", new_subsystem_planning_path(@subsystem), :method => "get" %>
+    <% end %>
   <% end %>
 <%end%>
 

@@ -33,5 +33,17 @@ class Program < ActiveRecord::Base
   	end
   	value
   end
+
+  def completed
+    if !self.enterprises.empty? then
+      perc = 0
+      self.enterprises.each do |enterprise|
+        perc = perc + enterprise.completed
+      end
+      perc = perc/(self.enterprises.count)
+    else
+      perc = 0
+    end
+  end
   
 end

@@ -1,2 +1,25 @@
-<h1>Plannings#show</h1>
-<p>Find me in app/views/plannings/show.html.erb</p>
+<br>
+<style>
+.large_font
+{
+  font-size: 30pt;
+}
+
+.small_font
+{
+  font-size: 15pt;
+}
+</style>
+
+  <span class="small_font"><%= link_to @planning.plannable.name, @planning.plannable %> >  </span> <span class="large_font"> Período<%= @planning.plannable.plannings.count %></h1> </span>
+  <br>
+  <br>
+  <br>
+  <b> Quantidade planejada a ser realizada: <%= @planning.planned_quantity %> 
+  <br>
+      Quantidade realizada: <%= @planning.quantity %>
+  <br>
+  <br>
+      Início do período: <%= @planning.period_begin.to_formatted_s(:rfc822) %>
+      <br>
+      Fim do período: <%= @planning.period_end.to_formatted_s(:rfc822) %>

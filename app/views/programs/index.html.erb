@@ -2,14 +2,15 @@
 <h1>Programas</h1>
 <br>
 <% if @programs.empty? then %>
-	<strong> O sistema ainda não possui nenhum programa</strong>
+	<strong><font color="red"> O sistema ainda não possui nenhum programa</strong></font>
 	<br>
 <% end %>
 <br>
 <% @programs.each do |program| %>
   <tr>
     <td><h4><%= link_to program.name, program %></h4></td>
-    <td>Preço: <%= program.price %></td>
+    <td>Preço: R$<%= program.price %></td>
+    <br><font color="red"><%=program.completed%>%</font> completo
     <br>
     <br>
     <td><%= button_to "Deletar", program, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse programa?' } %> </td></p>

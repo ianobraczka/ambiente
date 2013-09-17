@@ -1,2 +1,4 @@
-<h1>Plannings#new</h1>
-<p>Find me in app/views/plannings/new.html.erb</p>
+<h2>Planejamento do <%=@plannable.plannings.count+1%>º período</h2>
+<br>
+<%= render 'form' %>
+<%= link_to 'Cancelar', controller: "systems" %>

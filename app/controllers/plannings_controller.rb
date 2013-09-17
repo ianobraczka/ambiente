@@ -1,11 +1,14 @@
 class PlanningsController < ApplicationController
 
+  @@plannable_id = 1
+
   def index
     @plannings = Planning.all
   end
 
   def show
     @planning = Planning.find(params[:id])
+    @plannable = find_plannable
   end
 
   def edit
@@ -38,9 +41,9 @@ class PlanningsController < ApplicationController
 
 
   def new
-    @system = System.find(params[:system_id])
-    @planning = @system.plannings.build
-    @@system_id = @system.id
+    @plannable = find_plannable
+    @planning = @plannable.plannings.build
+    @@plannable_id = @plannable.id
 
     respond_to do |format|
       format.html # new.html.erb
@@ -49,18 +52,26 @@ class PlanningsController < ApplicationController
   end
 
   def create
-    @system = System.find(@@system_id)
-    @planning = @enterprise.plannings.build(params[:planning])
-    @planning.price = 0
-    @planning.save
+    @plannable = find_plannable
+    @planning = @plannable.plannings.build(params[:planning])
     respond_to do |format|
       if @planning.save
         format.html { redirect_to @planning, notice: ' O Sistema foi criado com sucesso! ' }
-        format.json { render json: @planning, status: :created, location: @planning }
+        format.json { render json: @planning, status: :created, location: @planning.plannable }
       else
         format.html { render action: "new" }
         format.json { render json: @planning.errors, status: :unprocessable_entity }
       end
     end
   end
+
+  def find_plannable
+  params.each do |name, value|
+    if name =~ /(.+)_id$/
+      return $1.classify.constantize.find(value)
+    end
+  end
+  nil
+end
+
 end

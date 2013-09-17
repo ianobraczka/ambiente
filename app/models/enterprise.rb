@@ -14,7 +14,9 @@ class Enterprise < ActiveRecord::Base
   def hh
     value = 0
     self.systems.each do |system|
-      value= value + system.hh
+      if system.hh != nil then
+        value = value + system.hh
+      end
     end
     value
   end
@@ -22,7 +24,9 @@ class Enterprise < ActiveRecord::Base
   def percentage
     value = 0
     self.systems.each do |system|
-      value= value + system.percentage
+      if system.percentage != nil
+        value= value + system.percentage
+      end
     end
     value
   end
@@ -30,9 +34,24 @@ class Enterprise < ActiveRecord::Base
   def value
     value = 0
     self.systems.each do |system|
-      value= value + system.value
+      if system.value != nil then
+        value= value + system.value
+      end
     end
     value
+  end
+
+  def completed
+    if !self.systems.empty? then
+      perc = 0
+      self.systems.each do |system|
+        perc = perc + system.completed
+      end
+      perc = perc/(self.systems.count)
+      perc
+    else
+      perc = 0
+    end
   end
 
 end

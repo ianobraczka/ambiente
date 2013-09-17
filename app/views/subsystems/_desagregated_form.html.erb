@@ -1,20 +1,16 @@
-<%= form_for(@subsubsystem) do |f| %>
-  <% if @subsubsystem.errors.any? %>
+<%= form_for(@subsystem) do |f| %>
+  <% if @subsystem.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@subsubsystem.errors.count, "error") %> prohibited this product from being saved:</h2>
+      <h2><%= pluralize(@subsystem.errors.count, "error") %> prohibited this product from being saved:</h2>
 
       <ul>
-      <% @subsubsystem.errors.full_messages.each do |msg| %>
+      <% @subsystem.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label "Nome" %>
-    <%= f.text_field :name %>
-  </div>
   <div class="field">
     <%= f.label "Preço" %>
     <%= f.number_field :price %>
@@ -30,18 +26,18 @@
   <br>
   <strong><h5> Ponderadores: </strong> </h5>
   <div class="field">
-    <%= f.label "hh" %>
+    <%= f.label "HH" %>
     <%= f.number_field :hh %>
-  </div>
-  <div class="field">
-    <%= f.label "Porcentagem (%)" %>
-    <%= f.number_field :percentage %>
   </div>
   <div class="field">
     <%= f.label "Valor" %>
     <%= f.number_field :value %>
   </div>
-  <br>
+  <div class="field">
+    <%= f.label "Porcentagem" %>
+    <%= f.number_field :percentage %>
+  </div>
+  <Br>
   <div class="actions">
     <%= f.submit "OK" %>
   </div>

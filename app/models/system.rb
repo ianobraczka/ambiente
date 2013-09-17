@@ -3,7 +3,7 @@ class System < ActiveRecord::Base
   has_many :areas
   has_many :subsystems, :dependent => :destroy
   belongs_to :enterprise
-  has_many :plannings
+  has_many :plannings, as: :plannable
 
   def has_desagregation?
   	if self.subsystems.empty? then
@@ -24,8 +24,8 @@ class System < ActiveRecord::Base
 
   def hh
     subsystems = self.subsystems
-    if subsystems.empty? 
-      self.attributes["hh"] 
+    if subsystems.empty?
+      self.attributes["hh"]
     else
       self.subsystems.map(&:hh).sum
     end
@@ -33,12 +33,13 @@ class System < ActiveRecord::Base
 
   def percentage
     subsystems = self.subsystems
-    if subsystems.empty? 
-      self.attributes["percentage"] 
+    if subsystems.empty?
+      self.attributes["percentage"]
     else
       self.subsystems.map(&:percentage).sum
     end
   end
+
 
   def value
     subsystems = self.subsystems
@@ -49,12 +50,57 @@ class System < ActiveRecord::Base
     end
   end
 
-  def total_quantity
-    tq = 0
-    self.plannings.each do |planning| 
-      tq = tq + planning.total_quantity
+  def accomplished_quantity
+    aq = 0
+    if self.subsystems.empty?
+      self.plannings.each do |planning| 
+        aq = aq + planning.quantity
+      end
+    else
+      self.subsystems.each do |subsystem|
+        aq = aq + subsystem.accomplished_quantity
+      end
     end
-    tq
+    aq
+  end
+
+  def quantity_percentage
+    if self.subsystems.empty? then
+      if self.total_quantity == nil || self.accomplished_quantity == nil then
+        qp = 0
+      else
+        qp = ((self.accomplished_quantity/self.total_quantity)*100).round
+      end
+    else
+      qp = 0
+      self.subsystems.each do |subsystem|
+        qp = qp + subsystem.quantity_percentage
+        qp = (qp/self.subsystems.count)
+      end
+    end
+    qp
+  end
+
+  def planned_quantity
+    pq = 0
+    if self.subsystems.empty?
+      self.plannings.each do |planning| 
+        pq = pq + planning.planned_quantity
+      end
+    else
+      self.subsystems.each do |subsystem|
+        pq = pq + subsystem.planned_quantity
+      end
+    end
+    pq
+  end
+
+  def current_planning
+    self.plannings.last
+  end
+
+  def completed
+    quantity_percentage
   end
 
 end

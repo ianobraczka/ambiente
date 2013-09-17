@@ -17,23 +17,28 @@
   <b>Preço:</b>
   R$ <%= @system.price %>
   <br>
+  <strong> <font color= "red"><%=@system.completed%>% </font> </strong>completo
+  <br>
+  <% if !@system.has_desagregation? %>
+    <b>Quantidade total planejada:</b>
+      <%= @system.total_quantity %> <%=@system.unity%>
+      <br>
+  <%end%>
   <br>
   <b>HH:</b>
-  <%= @system.hh %>
   <br>
   <b>Valor:</b>
-  R$ <%= @system.value %>
   <br>
   <b>Porcentagem:</b>
-  <%= @system.percentage %> %
 </p>
 <br>
 
 <% if !@system.has_desagregation? && @system.price == 0 then %>
   <br>
-  <strong> <font color = "red">Seu sistema nao possui nenhum subsistema cadastrado.
-  <br> Para prosseguir, voce deve decidir se esse é o nível mais desagregado (caso seja, clique em definir valores) ou se o sistema se desagrega em um ou mais subsistemas (clique em criar subsistema).</strong></font>
-  <br><br>
+  <strong> <font color = "red">Seu sistema nao possui nenhum subsistema cadastrado. Para prosseguir, voce deve decidir se: <br><br>
+  -Esse é o nível mais desagregado (caso seja, clique em definir valores) ou;<br>
+  -Se o sistema se desagrega em um ou mais subsistemas (clique em criar subsistema).</strong></font>
+  <br><br><br>
 
   <%= button_to "Definir valores", edit_system_path(@system), :method => "get" %>
   <%= button_to 'Criar subsistema', new_system_subsystem_path(@system), :method => "get" %>
@@ -43,18 +48,37 @@
 <% if !@system.has_desagregation? && @system.price != 0 then %>
 
   <%= button_to "Editar valores", edit_system_path(@system), :method => "get" %>
+  <br>
+  <br>
+
   <% if @system.plannings.empty? then %>
+    <strong><font color = "red"> Seu sistema é o nível mais desagregado e ainda não possui nenhuma entrada (período). </strong></font>
     <br>
-    <strong><font color = "red"> Seu sistema é o nível mais desagregado e ainda não possui nenhum planejamento. </strong></font>
     <br>
-    <br>
-    <%= button_to "Criar planejamento", new_system_planning_path(@system), :method => "get" %>
+    <%= button_to "Entrar com dados do período", new_system_planning_path(@system), :method => "get" %>
     <br>
   <%end%>
   <% if !@system.plannings.empty? then %>
+    <b>Quantidade realizada até o período:</b>
+    <%= @system.accomplished_quantity %> <%=@system.unity%> (<b><font color = "red"><%=@system.quantity_percentage%>%</font></b>)
     <br>
-    <%= link_to "Ver planejamento atual", @system.plannings.last %>
+    <b>Quantidade planejada até o período:</b>
+    <%= @system.planned_quantity %> <%=@system.unity%>
     <br>
+    <br>
+    <b>Quantidade planejada no período:</b> <%= @system.plannings.last.planned_quantity %> <%=@system.unity%> <br>
+    <b>Quantidade realizada no período:</b> <%= @system.plannings.last.quantity %> <%=@system.unity%> (<b><font color = "red"><%= @system.plannings.last.quantity_percentage %>%</font></b>)
+    <br>
+    <br>
+    <% if @system.current_planning.days_left != -1 then %>
+      O atual período é o <%= @system.plannings.count %>o e <b><font color="red">faltam <%= @system.current_planning.days_left %> dias</b></font> para o término dele.
+    <%end%>
+    <% if @system.current_planning.days_left == -1 then %>
+      <b><font color="red"> O <%= @system.plannings.count %>o período terminou, crie um novo período: </font></b>
+      <Br>
+      <br>
+      <%= button_to "Novo período", new_system_planning_path(@system), :method => "get" %>
+    <% end %>
   <% end %>
 <%end%>
 
@@ -64,9 +88,17 @@
   <br>
   <br>
   <% @system.subsystems.each do |subsystem| %>
-    <strong><%= link_to subsystem.name, subsystem %></strong>
+    <h4><%= link_to subsystem.name, subsystem %></h4>
+    <font color= "red"><%= subsystem.completed %>%</font> completo<br>
+    Quantidade total estimada: <%= subsystem.total_quantity %> <%= subsystem.unity %><br>
+    Quantidade realizada: <%= subsystem.accomplished_quantity %> <%= subsystem.unity %><br>
+    HH: <%= subsystem.hh %><br>
+    Porcentagem: <%= subsystem.percentage %>%<br>
+    Valor: R$<%= subsystem.value %> 
     <br>
   <%end%>
+  <br>
+  <%= button_to "Criar subsistema", new_system_subsystem_path(@system), :method => "get" %>
 <%end%>
 
 
