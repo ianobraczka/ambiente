@@ -10,59 +10,82 @@
   font-size: 15pt;
 }
 </style>
-
+<center>
   <span class="small_font"><%= link_to @subsubsystem.subsystem.system.enterprise.program.name, @subsubsystem.subsystem.system.enterprise.program %> > <%= link_to @subsubsystem.subsystem.system.enterprise.name, @subsubsystem.subsystem.system.enterprise %> > <%= link_to @subsubsystem.subsystem.system.name, @subsubsystem.subsystem.system %> > <%=link_to @subsubsystem.subsystem.name, @subsubsystem.subsystem %> > </span>  <span class="large_font"><%= @subsubsystem.name %></h1> </span>
-<p>
 <br>
-  <b>Preço:</b>
-  R$ <%= @subsubsystem.price %>
-</p>
-
 <br>
-
-<p>
-  <b>HH:</b>
-  <%= @subsubsystem.hh %>
-</p>
-
-<p>
-  <b>Valor:</b>
-  R$ <%= @subsubsystem.value %>
-</p>
-
-<p>
-  <b>Porcentagem:</b>
-  <%= @subsubsystem.percentage %> %
-</p>
 <br>
-<%= button_to 'Editar valores', edit_subsubsystem_path(@subsubsystem), :method => "get" %>
+<div class="row">
+  <div class="span3">
+  </div>
+  <div class="span3">
+    <b>Preço:</b>
+    R$ <%= @subsubsystem.price %>
+    <br>
+    <strong> <font color= "red"><%=@subsubsystem.completed%>% </font> </strong>completo
+    <br>
+    <b>Quantidade total planejada:</b>
+    <%= @subsubsystem.total_quantity %> <%=@subsubsystem.unity%>
+  </div>
+  <div class="span3">
+    <b>HH:</b><%=@subsubsystem.hh%>
+    <br>
+    <b>Valor:</b> R$<%=@subsubsystem.value%>
+    <br>
+    <b>Porcentagem:</b> <%=@subsubsystem.percentage%>%
+  </p>
+  <br>
+  </div>
+</div>
 <br>
+<%= select_tag(:option, options_for_select([['HH', 1], ['Porcentagem', 2], ['Valor', 3]]), :onchange => "location.href = '#{system_url}'") %>
+</center>
+<br>
+<br>
+</center>
 <% if @subsubsystem.plannings.empty? then %>
-  <strong><font color = "red"> Seu subsubsistema ainda não possui nenhuma entrada (período). </strong></font>
-  <br>
-  <br>
-  <%= button_to "Entrar com dados do período", new_subsubsystem_planning_path(@subsubsystem), :method => "get" %>
-  <br>
+  <div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <center>
+    <strong>Esse subsubsistema ainda não possui nenhum período cadastrado. </strong>
+    </div>
+    </center>
+    <br>
+    <center><%= button_to "Entrar com dados do período", new_subsubsystem_planning_path(@subsubsystem), :method => "get", :class => "btn btn-success" %></center>
+    <br>
 <%end%>
 <% if !@subsubsystem.plannings.empty? then %>
-  <b>Quantidade realizada até o período:</b>
-  <%= @subsubsystem.accomplished_quantity %> <%=@subsubsystem.unity%> (<b><font color = "red"><%=@subsubsystem.quantity_percentage%>%</font></b>)
-  <br>
-  <b>Quantidade planejada até o período:</b>
-  <%= @subsubsystem.planned_quantity %> <%=@subsubsystem.unity%>
-  <br>
-  <br>
-  <b>Quantidade planejada no período:</b> <%= @subsubsystem.plannings.last.planned_quantity %> <%=@subsubsystem.unity%> <br>
-  <b>Quantidade realizada no período:</b> <%= @subsubsystem.plannings.last.quantity %> <%=@subsubsystem.unity%> (<b><font color = "red"><%= @subsubsystem.plannings.last.quantity_percentage %>%</font></b>)
-  <br>
-  <br>
+  <center>
   <% if @subsubsystem.current_planning.days_left != -1 then %>
-    O atual período é o <%= @subsubsystem.plannings.count %>o e <b><font color="red">faltam <%= @subsubsystem.current_planning.days_left %> dias</b></font> para o término dele.
-  <%end%>
-  <% if @subsubsystem.current_planning.days_left == -1 then %>
-    <b><font color="red"> O <%= @subsubsystem.plannings.count %>o período terminou, crie um novo período: </font></b>
-    <Br>
+    <div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+     <strong> O <%= link_to "atual período", @subsubsystem.current_planning %> é o <%= @subsubsystem.plannings.count %>º e <b><span class="small_font">faltam <%= @subsubsystem.current_planning.days_left %> dias</b></span> para o término dele. </strong>
+    </div>
+    <%end%>
+    <% if @subsubsystem.current_planning.days_left == -1 then %>
+      <b><font color="red"> O <%= @subsubsystem.plannings.count %>o período terminou, crie um novo período: </font></b>
+      <Br>
+      <br>
+      <%= button_to "Novo período", new_subsubsystem_planning_path(@subsubsystem), :method => "get" %>
+    <% end %>
     <br>
-    <%= button_to "Novo período", new_subsubsystem_planning_path(@subsubsystem), :method => "get" %>
-  <% end %>
+    <span class="very_small_font">
+    <b>Quantidade planejada no período:</b> <%= @subsubsystem.plannings.last.planned_quantity %> <%=@subsubsystem.unity%> <br>
+    <b>Quantidade realizada no período:</b> <%= @subsubsystem.plannings.last.quantity %> <%=@subsubsystem.unity%> (<b><font color = "red"><%= @subsubsystem.plannings.last.quantity_percentage %>%</font></b>)
+    <br>
+    <br>
+    <b>Quantidade realizada até o período:</b>
+    <%= @subsubsystem.accomplished_quantity %> <%=@subsubsystem.unity%> (<b><font color = "red"><%=@subsubsystem.quantity_percentage%>%</font></b>)
+    <br>
+    <b>Quantidade planejada até o período:</b>
+    <%= @subsubsystem.planned_quantity %> <%=@subsubsystem.unity%>
+    </center>
+    </span>
+    <br>
+    <br>  <br>
 <% end %>
+
+<center><strong>
+<%= link_to 'Editar', edit_subsubsystem_path(@subsubsystem) %> |
+<%= link_to "Deletar subsubsistema", @subsubsystem, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse subsubsistema?' } %>
+</center></strong>

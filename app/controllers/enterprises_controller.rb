@@ -19,7 +19,7 @@ class EnterprisesController < ApplicationController
     @enterprise.destroy
 
     respond_to do |format|
-      format.html { redirect_to enterprises_url }
+      format.html { redirect_to @enterprise.program }
       format.json { head :no_content }
     end
   end

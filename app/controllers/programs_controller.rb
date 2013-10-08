@@ -52,7 +52,7 @@ class ProgramsController < ApplicationController
     @program = Program.new(params[:program])
     respond_to do |format|
       if @program.save
-        format.html { redirect_to @program, notice: ' O programa foi criado com sucesso! ' }
+        format.html { redirect_to @program}
         format.json { render json: @program, status: :created, location: @program }
       else
         format.html { render action: "new" }

@@ -1,6 +1,6 @@
 class System < ActiveRecord::Base
   attr_accessible :enterprise_id, :hh, :name, :percentage, :price, :total_quantity, :unity, :value
-  has_many :areas
+  has_and_belongs_to_many :areas
   has_many :subsystems, :dependent => :destroy
   belongs_to :enterprise
   has_many :plannings, as: :plannable

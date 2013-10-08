@@ -53,10 +53,17 @@ class PlanningsController < ApplicationController
 
   def create
     @plannable = find_plannable
-    @planning = @plannable.plannings.build(params[:planning])
+    if @plannable.plannings.empty?
+      @planning = @plannable.plannings.build(params[:planning])
+      @planning.period_begin = Date.current
+    else
+      p_begin = @plannable.plannings.last.period_end
+      @planning = @plannable.plannings.build(params[:planning])
+      @planning.period_begin = p_begin
+    end
     respond_to do |format|
       if @planning.save
-        format.html { redirect_to @planning, notice: ' O Sistema foi criado com sucesso! ' }
+        format.html { redirect_to @plannable }
         format.json { render json: @planning, status: :created, location: @planning.plannable }
       else
         format.html { render action: "new" }

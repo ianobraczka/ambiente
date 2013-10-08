@@ -7,11 +7,6 @@ class Planning < ActiveRecord::Base
   	pe
   end
 
-  def period_begin
-  	pb = created_at.to_date
-  	pb
-  end
-
   def quantity_percentage
     qp = (quantity/planned_quantity)*100
     qp.round

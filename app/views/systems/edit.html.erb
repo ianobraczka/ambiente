@@ -1,7 +1,8 @@
-<h2><%= @system.name %></h2>
+<span class= "small_font">editando: <%= link_to @system.name, @system %> </span>
+<br>
+<br>
 <br>
 
 <%= render 'desagregated_form' %>
-
-<%= link_to 'Ver sistema', @system %> |
+<br>
 <%= link_to 'Voltar', systems_path %>

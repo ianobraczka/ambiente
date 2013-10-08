@@ -1,25 +1,20 @@
 <br>
-<style>
-.large_font
-{
-  font-size: 30pt;
-}
-
-.small_font
-{
-  font-size: 15pt;
-}
-</style>
-
-  <span class="small_font"><%= link_to @planning.plannable.name, @planning.plannable %> >  </span> <span class="large_font"> Período<%= @planning.plannable.plannings.count %></h1> </span>
+<center>
+  <span class="medium_font"><%= @planning.plannable.plannings.count %>º período </span> <span class="small_font"> de <%= link_to @planning.plannable.name, @planning.plannable %> </span>
+  <br>
+  <br>
+  <br><span class="small_font">
+   Quantidade planejada no período: <font color= "red"> <%= @planning.planned_quantity %> <%= @planning.plannable.unity %> </font>
+  <br>
+  <br>
+      Quantidade realizada: <font color= "red"> <%= @planning.quantity %> <%= @planning.plannable.unity %> </font> (<%=@planning.quantity_percentage%>% do planejado)
   <br>
   <br>
   <br>
-  <b> Quantidade planejada a ser realizada: <%= @planning.planned_quantity %> 
-  <br>
-      Quantidade realizada: <%= @planning.quantity %>
-  <br>
-  <br>
-      Início do período: <%= @planning.period_begin.to_formatted_s(:rfc822) %>
+      Início do período: <font color= "red"> <%= @planning.period_begin.to_formatted_s(:rfc822) %> </font>
       <br>
-      Fim do período: <%= @planning.period_end.to_formatted_s(:rfc822) %>
+      <br>
+      Fim do período: <font color= "red"> <%= @planning.period_end.to_formatted_s(:rfc822) %> </font>
+  </span>
+
+</center>

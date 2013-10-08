@@ -3,14 +3,6 @@ class Subsubsystem < ActiveRecord::Base
   belongs_to :subsystem
   has_many :plannings, as: :plannable
 
-  def total_quantity
-    tq = 0
-    self.plannings.each do |planning| 
-      tq = tq + planning.quantity
-    end
-    tq
-  end
-
   def accomplished_quantity
     aq = 0
     self.plannings.each do |planning| 
@@ -22,8 +14,10 @@ class Subsubsystem < ActiveRecord::Base
   def quantity_percentage
     if self.total_quantity == nil || self.accomplished_quantity == nil then
       qp = 0
-    else
+    elsif self.total_quantity != 0 then
       qp = ((self.accomplished_quantity/self.total_quantity)*100).round
+    elsif self.total_quantity == 0 then
+      qp = 0
     end
     qp
   end
@@ -41,8 +35,10 @@ class Subsubsystem < ActiveRecord::Base
   end
 
   def completed
+  if total_quantity != 0 then
     ((accomplished_quantity/total_quantity)*100).round
+  else
+    0
   end
-
-
+  end
 end

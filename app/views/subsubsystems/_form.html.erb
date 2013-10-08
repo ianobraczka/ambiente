@@ -10,39 +10,40 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= f.label "Nome" %>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label "Preço" %>
-    <%= f.number_field :price %>
-  </div>
-  <div class="field">
-    <%= f.label "Quantidade total prevista" %>
-    <%= f.number_field :total_quantity %>
-  </div>
-  <div class="field">
-    <%= f.label "Unidade" %>
-    <%= f.text_field :unity %>
-  </div>
-  <br>
-  <strong><h5> Ponderadores: </strong> </h5>
-  <div class="field">
-    <%= f.label "hh" %>
-    <%= f.number_field :hh %>
-  </div>
-  <div class="field">
-    <%= f.label "Porcentagem (%)" %>
-    <%= f.number_field :percentage %>
-  </div>
-  <div class="field">
-    <%= f.label "Valor" %>
-    <%= f.number_field :value %>
-  </div>
-  <br>
-  <div class="actions">
-    <%= f.submit "OK" %>
-  </div>
+  <div class="row">
+    <div class ="span3">
+    <div class="field">
+      <%= f.label "Nome" %>
+      <%= f.text_field :name %>
+    </div>
+    <div class="field">
+      <%= f.label "Preço (em reais)" %>
+      <%= f.number_field :price %>
+    </div>
+    <div class="field">
+      <%= f.label "Unidade" %>
+      <%= f.text_field :unity %>
+    </div>
+    </div>
+    <div class= "span3">
+    <strong><h5> Ponderadores: </strong> </h5><br>
+    <div class="field">
+      <%= f.label "hh" %>
+      <%= f.number_field :hh %>
+    </div>
+    <div class="field">
+      <%= f.label "Porcentagem (%)" %>
+      <%= f.number_field :percentage %>
+    </div>
+    <div class="field">
+      <%= f.label "Valor (em reais)" %>
+      <%= f.number_field :value %>
+    </div>
+    </div>
+    <br>
+    </div>
+    <br><br>
+    <div class="actions">
+      <%= f.submit "OK", class: "btn btn-success" %>
+    </div>
 <% end %>

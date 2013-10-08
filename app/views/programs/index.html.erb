@@ -1,12 +1,16 @@
-
-<h1>Programas</h1>
+<h1>Programas:</h1>
 <br>
 <% if @programs.empty? then %>
-	<strong><font color="red"> O sistema ainda não possui nenhum programa</strong></font>
+	<div class="alert alert-error">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>O sistema ainda não possui nenhum programa cadastrado. </strong>
+  </div>
 	<br>
 <% end %>
 <br>
+<div class="row">
 <% @programs.each do |program| %>
+<div class="span3">
   <tr>
     <td><h4><%= link_to program.name, program %></h4></td>
     <td>Preço: R$<%= program.price %></td>
@@ -16,8 +20,11 @@
     <td><%= button_to "Deletar", program, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse programa?' } %> </td></p>
   </tr>
   <br>
+  <br>
+</div>
 <% end %>
+</div>
 
-<%= button_to 'Novo Programa', "programs/new", :method => "get" %>
+<%= button_to 'Novo Programa', "programs/new", :method => "get", :class => "btn btn-success" %>
 
 <br>

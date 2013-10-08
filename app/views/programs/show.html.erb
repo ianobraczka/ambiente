@@ -1,23 +1,27 @@
 
-  <h1><%= @program.name %></h1>
+<center> <h1><%= @program.name %></h1>
   <strong>Preço: R$ <%= @program.price %><br>
     <font color="red"><%= @program.completed %>%</font> completo </strong>
 <br>
 <br>
 <br>
+</center>
 <% if @program.enterprises.empty? then %>
-  <strong><font color="red">  Esse programa ainda não possui empreendimentos</strong></font>
-  <br>
-  <br>
+  <div class="alert alert-error">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <center><strong>Este programa ainda não possui nenhum empreendimento cadastrado!</strong></center>
+  </div>
 <% end %>
-
+</center>
+<br>
 <% if !(@program.enterprises.empty?) then %>
 <p>
-  <b>Empreendimentos:</b>
+  <h4>Empreendimentos:</h4>
   <br>
+  <div class="row">
   <p><% @program.enterprises.each do |enterprise| %>
-  <strong><%= link_to enterprise.name, enterprise %></strong>
-  <br>
+  <div class="span3">
+  <h4><%= link_to enterprise.name, enterprise %></h4>
   Preço: R$<%= enterprise.price %>
   <br>
   <font color="red"><%= enterprise.completed %>%</font> completo
@@ -29,16 +33,17 @@
   Porcentagem: <%= enterprise.percentage %>%
   <br>
   <br>
+  </div>
   <% end %>
+  </div>
 <%end%>
-
- <b> <%= button_to "Criar empreendimento", new_program_enterprise_path(@program), :method => "get" %>
+<br>
+ <b> <%= button_to "Criar empreendimento", new_program_enterprise_path(@program), :method => "get", :class => "btn btn-success" %>
  </p>
 
 </p>
 <br>
-
-
-
+<center>
 <%= link_to 'Editar', edit_program_path(@program) %> |
 <%= link_to "Deletar programa", @program, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse programa?' } %>
+</center>

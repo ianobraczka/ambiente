@@ -12,12 +12,8 @@
   <% end %>
 
   <div class="field">
-    <%= f.label "Preço" %>
+    <%= f.label "Preço (em reais)" %>
     <%= f.number_field :price %>
-  </div>
-  <div class="field">
-    <%= f.label "Quantidade total prevista" %>
-    <%= f.number_field :total_quantity %>
   </div>
   <div class="field">
     <%= f.label "Unidade" %>
@@ -30,7 +26,7 @@
     <%= f.number_field :hh %>
   </div>
   <div class="field">
-    <%= f.label "Valor" %>
+    <%= f.label "Valor (em reais)" %>
     <%= f.number_field :value %>
   </div>
   <div class="field">
@@ -39,6 +35,6 @@
   </div>
   <Br>
   <div class="actions">
-    <%= f.submit "OK" %>
+    <%= f.submit "OK", :class => "btn btn-success" %>
   </div>
 <% end %>

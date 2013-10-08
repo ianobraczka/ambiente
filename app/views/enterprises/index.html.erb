@@ -1,13 +1,17 @@
 
-<h1>Empreendimentos</h1>
+<h2>Empreendimentos:</h2>
 
 <br><br>
 
 <% if @enterprises.empty? then %>
+ <div class="alert alert-error">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
 <strong>O sistema ainda não possui empreendimentos. Para criar um, vá em um programa e crie a partir dele.</strong>
+</div>
 <%end%>
-
+<div class="row">
 <% @enterprises.each do |enterprise| %>
+  <div class="span3">
   <tr>
     <td><h4><%=link_to enterprise.name, enterprise %></h4></td>
     <td>Programa: <%= link_to enterprise.program.name, enterprise.program %></td>
@@ -23,6 +27,8 @@
     <td><%= button_to "Deletar", enterprise, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse empreendimento?' } %></td></p>
   	<br>
   </tr>
+  </div>
 <% end %>
+</div>
 </table>
 <br>

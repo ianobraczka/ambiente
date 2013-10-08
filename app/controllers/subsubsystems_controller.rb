@@ -19,7 +19,7 @@ class SubsubsystemsController < ApplicationController
     @subsubsystem.destroy
 
     respond_to do |format|
-      format.html { redirect_to subsubsystems_url }
+      format.html { redirect_to @subsubsystem.subsystem }
       format.json { head :no_content }
     end
   end

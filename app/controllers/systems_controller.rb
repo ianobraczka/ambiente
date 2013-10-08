@@ -23,7 +23,7 @@ class SystemsController < ApplicationController
     @system.destroy
 
     respond_to do |format|
-      format.html { redirect_to systems_url }
+      format.html { redirect_to @system.enterprise }
       format.json { head :no_content }
     end
   end
@@ -33,7 +33,7 @@ class SystemsController < ApplicationController
 
     respond_to do |format|
       if @system.update_attributes(params[:system])
-        format.html { redirect_to @system, notice: 'Sistema atualizado!' }
+        format.html { redirect_to @system }
         format.json { head :no_content }
       else
         format.html { render action: "Editar" }
@@ -63,7 +63,7 @@ class SystemsController < ApplicationController
     @system.save
     respond_to do |format|
       if @system.save
-        format.html { redirect_to @system, notice: ' O Sistema foi criado com sucesso! ' }
+        format.html { redirect_to @system }
         format.json { render json: @system, status: :created, location: @system }
       else
         format.html { render action: "new" }

@@ -24,7 +24,11 @@ class Subsystem < ActiveRecord::Base
   def hh
     subsubsystems = self.subsubsystems
     if subsubsystems.empty? 
-      self.attributes["hh"] 
+      if self.attributes["hh"] != nil then
+        self.attributes["hh"]
+      else
+        0
+      end
     else
       self.subsubsystems.map(&:hh).sum
     end
@@ -33,7 +37,11 @@ class Subsystem < ActiveRecord::Base
   def percentage
     subsubsystems = self.subsubsystems
     if subsubsystems.empty? 
-      self.attributes["percentage"] 
+      if self.attributes["percentage"] != nil then
+        self.attributes["percentage"]
+      else
+        0
+      end
     else
       self.subsubsystems.map(&:percentage).sum
     end
@@ -42,7 +50,11 @@ class Subsystem < ActiveRecord::Base
   def value
     subsubsystems = self.subsubsystems
     if subsubsystems.empty? 
-      self.attributes["value"] 
+       if self.attributes["value"] != nil then
+        self.attributes["value"]
+      else
+        0
+      end
     else
       self.subsubsystems.map(&:value).sum
     end
@@ -100,6 +112,5 @@ class Subsystem < ActiveRecord::Base
   def completed
     quantity_percentage
   end
-
 
 end
