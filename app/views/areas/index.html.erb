@@ -13,7 +13,6 @@
 <% @areas.each do |area| %>
   <tr>
     <td><h4><%= link_to area.name, area %></h4></td>
-    <td> Empreendimento: <%=link_to area.enterprise.name, area.enterprise %></td>
     <br>
     <td>Preço: <%= area.price %></td>
     <br>

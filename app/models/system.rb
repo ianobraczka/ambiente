@@ -1,5 +1,5 @@
 class System < ActiveRecord::Base
-  attr_accessible :enterprise_id, :hh, :name, :percentage, :price, :total_quantity, :unity, :value
+  attr_accessible :enterprise_id, :hh, :name, :percentage, :price, :total_quantity, :unity, :value, :area_ids, :weight
   has_and_belongs_to_many :areas
   has_many :subsystems, :dependent => :destroy
   belongs_to :enterprise
@@ -20,6 +20,9 @@ class System < ActiveRecord::Base
     else
       self.subsystems.map(&:price).sum
     end
+  end
+
+  def weight
   end
 
   def hh

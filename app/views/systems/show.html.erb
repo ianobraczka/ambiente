@@ -24,9 +24,10 @@
   </div>
 </div>
 <br>
-<%= select_tag(:option, options_for_select([['HH', 1], ['Porcentagem', 2], ['Valor', 3]]), :onchange => "location.href = '#{system_url}'") %>
+<%= select_tag(@system.weight, options_for_select([['HH', 1], ['Porcentagem', 2], ['Valor', 3]]), :onchange => "location.href = '#{system_url}'") %>
 </center>
 <br>
+<%= @system.weight %>
 
 <% if !@system.has_desagregation? && @system.price == 0 then %>
   <br>
