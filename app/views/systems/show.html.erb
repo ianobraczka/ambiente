@@ -4,31 +4,50 @@
 <br>
 <br>
 <div class="row">
-  <div class="span3">
-  </div>
-  <div class="span3">
+  <div class="span4">
+  <br>
     <b>Preço:</b>
     R$ <%= @system.price %>
     <br>
+    <b>Área(s):</b><% @system.areas.each do |area| %> <%= link_to area.name, area %>, <% end %>
+    <br> 
     <strong> <font color= "red"><%=@system.completed%>% </font> </strong>completo
     <br>
   </div>
-  <div class="span3">
+  <div class="span4">
+    <br>
     <b>HH:</b><%=@system.hh%>
     <br>
     <b>Valor:</b> R$<%=@system.value%>
     <br>
     <b>Porcentagem:</b> <%=@system.percentage%>%
-  </p>
-  <br>
   </div>
+<div class= "span4">
+<%= form_for(@system) do |f| %>
+  <% if @system.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@system.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+      <ul>
+      <% @system.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label "Escolha o ponderador" %>
+    <%= f.select :weight, options_for_select([["Preço", 1], ["HH", 2], ["Porcentagem", 3]], @system.weight) %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Ponderar", :class => "btn btn-success" %>
+  </div>
+<% end %>
 </div>
-<br>
-<%= select_tag(@system.weight, options_for_select([['HH', 1], ['Porcentagem', 2], ['Valor', 3]]), :onchange => "location.href = '#{system_url}'") %>
+</div>
 </center>
 <br>
-<%= @system.weight %>
-
 <% if !@system.has_desagregation? && @system.price == 0 then %>
   <br>
   <div class="alert alert-error">

@@ -1,7 +1,6 @@
 class SystemsController < ApplicationController
   
   @@enterprise_id = 1
-  @@weight = 1
 
   def index
     @systems = System.all

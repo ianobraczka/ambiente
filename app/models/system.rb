@@ -13,6 +13,16 @@ class System < ActiveRecord::Base
     end
   end
 
+  def mult
+    if self.weight == 1 then
+      mult = self.price
+    elsif self.weight == 2 then
+      mult = self.hh
+    elsif self.weight == 3 then
+      mult = self.percentage
+    end
+  end
+      
   def price
     subsystems = self.subsystems
     if subsystems.empty? 
@@ -20,9 +30,6 @@ class System < ActiveRecord::Base
     else
       self.subsystems.map(&:price).sum
     end
-  end
-
-  def weight
   end
 
   def hh

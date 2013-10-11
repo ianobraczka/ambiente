@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131008142742) do
+ActiveRecord::Schema.define(:version => 20131010124436) do
 
   create_table "areas", :force => true do |t|
     t.integer  "enterprise_id"
@@ -141,6 +141,7 @@ ActiveRecord::Schema.define(:version => 20131008142742) do
     t.datetime "updated_at",         :null => false
     t.boolean  "has_desagragations"
     t.integer  "enterprise_id"
+    t.integer  "weight"
   end
 
   create_table "users", :force => true do |t|
