@@ -4,15 +4,13 @@
 <br>
 <br>
 <div class="row">
-  <div class="span3">
-  </div>
-  <div class="span3">
+  <div class="span4">
     <br>
     <b>Preço:</b>
     R$ <%= @enterprise.price %>
     <br><strong><font color = "red"> <%= @enterprise.completed %>%</font> completo<br></strong>
   </div>
-  <div class="span3">
+  <div class="span4">
     <br>
     <b>HH:</b>
     <%= @enterprise.hh %>
@@ -23,6 +21,30 @@
     <b>Porcentagem:</b>
     <%= @enterprise.percentage %>%
   </div>
+  <div class= "span4">
+  <br>
+  <%= form_for(@enterprise) do |f| %>
+  <% if @enterprise.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@enterprise.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+      <ul>
+      <% @enterprise.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label "Escolha o ponderador" %>
+    <%= f.select :weight, options_for_select([["Valor", 1], ["HH", 2], ["Porcentagem", 3]], @enterprise.weight) %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Ponderar", :class => "btn btn-success" %>
+  </div>
+<% end %>
+</div>
 <br>
 <br>
 </center>
@@ -39,10 +61,11 @@
   <h4>Sistemas:</h4>
   <div class="row">
   <p><% @enterprise.systems.each do |system| %>
-  <div class="span3">
+  <div class="span3 tab-content">
     <h4><%= link_to system.name, system %></h4>
     <font color="red"><%= system.completed%>% </font>completo<br>
-    Preço: R$<%= system.price %><br>
+    Preço: R$<%= system.price %><br><br>
+    <b>Ponderadores:<br></b>
     HH: <%= system.hh %><br>
     Valor: R$<%= system.value %><br>
     Porcentagem: <%= system.percentage %>%

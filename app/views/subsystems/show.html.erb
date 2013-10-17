@@ -16,9 +16,7 @@
 <br>
 <br>
 <div class="row">
-<div class="span3">
-</div>
-  <div class="span3">
+  <div class="span4">
   <b>Preço:</b>
   R$ <%= @subsystem.price %>
   <br>
@@ -31,7 +29,7 @@
   <% end %>
   <br>
   </div>
-  <div class="span3">
+  <div class="span4">
   <b>HH:</b>
   <%= @subsystem.hh %>
   <br>
@@ -41,12 +39,31 @@
   <b>Porcentagem:</b>
   <%= @subsystem.percentage %>%
   </div>
+  <div class="span4">
+  <%= form_for(@subsystem) do |f| %>
+  <% if @subsystem.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@subsystem.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+      <ul>
+      <% @subsystem.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label "Escolha o ponderador" %>
+    <%= f.select :weight, options_for_select([["Valor", 1], ["HH", 2], ["Porcentagem", 3]], @subsystem.weight) %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Ponderar", :class => "btn btn-success" %>
+  </div>
+<% end %>
+</div>
 </p>
 </div>
-<br>
-<br>
-<%= select_tag(:option, options_for_select([['HH', 1], ['Porcentagem', 2], ['Valor', 3]]), :onchange => "location.href = '#{system_url}'") %>
-<br>
 </center>
 
 <% if !@subsystem.has_desagregation? && @subsystem.price == 0 then %>
@@ -122,16 +139,21 @@
 <br>
 <h4> Subsubsistemas: </h4>
   <br>
+  <div class="row"> 
   <% @subsystem.subsubsystems.each do |subsubsystem| %>
+    <div class="span3">
     <h4><%= link_to subsubsystem.name, subsubsystem %></h4>
     <font color= "red"><%= subsubsystem.completed %>%</font> completo<br>
     Quantidade total estimada: <%= subsubsystem.total_quantity %> <%= subsubsystem.unity %><br>
-    Quantidade realizada: <%= subsubsystem.accomplished_quantity %> <%= subsubsystem.unity %><br>
+    Quantidade realizada: <%= subsubsystem.accomplished_quantity %> <%= subsubsystem.unity %><br><br>
+    <b>Ponderadores:</b><br>
     HH: <%= subsubsystem.hh %><br>
     Porcentagem: <%= subsubsystem.percentage %>%<br>
     Valor: R$<%= subsubsystem.value %> 
     <br>
+    </div>
   <%end%>
+  </div>
   <br><br>
   <%= button_to "Criar subsubsistema", new_subsystem_subsubsystem_path(@subsystem), :method => "get", class: "btn btn-success" %>
 <%end%>

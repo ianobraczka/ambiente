@@ -1,34 +1,30 @@
-
-<h1>Áreas</h1>
-
+<h1>Áreas:</h1>
 <br>
-
 <% if @areas.empty? then %>
-  <strong> O sistema ainda não possui nenhuma área </strong>
+  <div class="alert alert-error">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>O sistema ainda não possui nenhuma área cadastrada. </strong>
+  </div>
   <br>
 <% end %>
-
 <br>
-
+<div class="row">
 <% @areas.each do |area| %>
+<div class="span3">
   <tr>
     <td><h4><%= link_to area.name, area %></h4></td>
+    <td>Preço: R$<%= area.price %></td>
+    <br><font color="red"><%=area.completed%>%</font> completa
     <br>
-    <td>Preço: <%= area.price %></td>
     <br>
-  	<td>HH: <%= area.hh %></td>
-  	<br>
-  	<td>%: <%= area.percentage %></td>
-  	<br>
-  	<td>$: <%= area.value %></td>
-    <p>
-    <td><%= button_to "Deletar", area, method: :delete, data: { confirm: 'Tem certeza que quer deletar essa Area?' } %></td></p>
-  	<br>
+    <td><%= button_to "Deletar", area, method: :delete, data: { confirm: 'Tem certeza que quer deletar essa área?' } %> </td></p>
   </tr>
+  <br>
+  <br>
+</div>
 <% end %>
+</div>
 
-<%= button_to "Criar área", new_area_path, :method => "get" %>
+<%= button_to 'Nova área', "areas/new", :method => "get", :class => "btn btn-success" %>
 
-</table>
-
-<br />
+<br>

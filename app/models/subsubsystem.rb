@@ -1,5 +1,5 @@
 class Subsubsystem < ActiveRecord::Base
-  attr_accessible :hh, :name, :percentage, :price, :subsystem_id, :total_quantity, :unity, :value
+  attr_accessible :hh, :name, :percentage, :price, :subsystem_id, :total_quantity, :unity, :value, :weight
   belongs_to :subsystem
   has_many :plannings, as: :plannable
 
@@ -11,20 +11,20 @@ class Subsubsystem < ActiveRecord::Base
     aq
   end
 
-  def quantity_percentage
-    if self.total_quantity == nil || self.accomplished_quantity == nil then
+  def completed
+    if self.accomplished_quantity == nil then
       qp = 0
-    elsif self.total_quantity != 0 then
-      qp = ((self.accomplished_quantity/self.total_quantity)*100).round
-    elsif self.total_quantity == 0 then
+    elsif self.planned_quantity != 0 then
+      qp = ((self.accomplished_quantity/self.planned_quantity)*100)
+    elsif self.planned_quantity == 0 then
       qp = 0
     end
-    qp
+    qp.round
   end
 
   def planned_quantity
     pq = 0
-    self.plannings.each do |planning| 
+    self.plannings.each do |planning|
       pq = pq + planning.planned_quantity
     end
     pq
@@ -34,11 +34,16 @@ class Subsubsystem < ActiveRecord::Base
     self.plannings.last
   end
 
-  def completed
-  if total_quantity != 0 then
-    ((accomplished_quantity/total_quantity)*100).round
-  else
-    0
+  def weight_variable (weight)
+    if weight == 1 then
+      mult = self.value
+    elsif weight == 2 then
+      mult = self.hh
+    elsif weight == 3 then
+      mult = self.percentage
+    end
+    mult
   end
-  end
+
+
 end

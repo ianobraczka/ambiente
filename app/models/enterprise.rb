@@ -1,5 +1,5 @@
 class Enterprise < ActiveRecord::Base
-  attr_accessible :hh, :name, :percentage, :price, :program_id, :value
+  attr_accessible :hh, :name, :percentage, :price, :program_id, :value, :weight
   belongs_to :program
   has_many :systems, :dependent => :destroy
 
@@ -45,12 +45,32 @@ class Enterprise < ActiveRecord::Base
     if !self.systems.empty? then
       perc = 0
       self.systems.each do |system|
-        perc = perc + system.completed
+        perc = perc + system.completed*system.weight_variable(self.weight)
       end
-      perc = perc/(self.systems.count)
-      perc
+      perc = perc/(self.chosen)
+      perc.round
     else
       perc = 0
+    end
+  end
+
+  def chosen
+    if self.weight == 1 then
+      mult = self.value
+    elsif self.weight == 2 then
+      mult = self.hh
+    elsif self.weight == 3 then
+      mult = self.percentage
+    end
+  end
+
+  def weight_variable (recieved)
+    if recieved == 1 then
+      mult = self.value
+    elsif recieved == 2 then
+      mult = self.hh
+    elsif recieved == 3 then
+      mult = self.percentage
     end
   end
 

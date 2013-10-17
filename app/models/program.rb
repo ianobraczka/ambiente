@@ -1,5 +1,5 @@
 class Program < ActiveRecord::Base
-  attr_accessible :name, :price, :value, :hh, :percentage
+  attr_accessible :name, :price, :value, :hh, :percentage, :weight
   has_many :enterprises, :dependent => :destroy
 
   def price
@@ -38,12 +38,23 @@ class Program < ActiveRecord::Base
     if !self.enterprises.empty? then
       perc = 0
       self.enterprises.each do |enterprise|
-        perc = perc + enterprise.completed
+        perc = perc + enterprise.completed*enterprise.weight_variable(weight)
       end
-      perc = perc/(self.enterprises.count)
+      perc = perc/(self.chosen).round
     else
       perc = 0
     end
   end
+
+  def chosen
+    if self.weight == 1 then
+      mult = self.value
+    elsif weight == 2 then
+      mult = self.hh
+    elsif weight == 3 then
+      mult = self.percentage
+    end
+  end
+
   
 end

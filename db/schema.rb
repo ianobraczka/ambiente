@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131010124436) do
+ActiveRecord::Schema.define(:version => 20131017130339) do
 
   create_table "areas", :force => true do |t|
     t.integer  "enterprise_id"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(:version => 20131010124436) do
     t.float    "value"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "weight"
   end
 
   create_table "locals", :force => true do |t|
@@ -87,6 +88,7 @@ ActiveRecord::Schema.define(:version => 20131010124436) do
     t.float    "value"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "weight"
   end
 
   create_table "subareas", :force => true do |t|
@@ -111,6 +113,7 @@ ActiveRecord::Schema.define(:version => 20131010124436) do
     t.float    "value"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.integer  "weight"
   end
 
   create_table "subsystems", :force => true do |t|
@@ -124,6 +127,7 @@ ActiveRecord::Schema.define(:version => 20131010124436) do
     t.float    "value"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.integer  "weight"
   end
 
   create_table "systems", :force => true do |t|

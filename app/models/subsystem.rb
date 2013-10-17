@@ -1,8 +1,9 @@
 class Subsystem < ActiveRecord::Base
-  attr_accessible :hh, :name, :percentage, :price, :system_id, :total_quantity, :unity, :value
+  attr_accessible :hh, :name, :percentage, :price, :system_id, :total_quantity, :unity, :value, :weight
   belongs_to :system
   has_many :subsubsystems, :dependent => :destroy
   has_many :plannings, as: :plannable
+
 
   def has_desagregation?
   	if self.subsubsystems.empty? then
@@ -10,6 +11,17 @@ class Subsystem < ActiveRecord::Base
   	else
   		return true
   	end
+  end
+
+  def mult
+    if weight == 1 then
+      mult = self.value
+    elsif weight == 2 then
+      mult = self.hh
+    elsif weight == 3 then
+      mult = self.percentage
+    end
+    mult
   end
 
    def price
@@ -84,9 +96,9 @@ class Subsystem < ActiveRecord::Base
     else
       qp = 0
       self.subsubsystems.each do |subsubsystem|
-        qp = qp + subsubsystem.quantity_percentage
-        qp = (qp/self.subsubsystems.count)
+        qp = qp + subsubsystem.completed*subsubsystem.weight_variable(self.weight)
       end
+      qp = (qp/self.mult)
     end
     qp
   end
@@ -110,7 +122,18 @@ class Subsystem < ActiveRecord::Base
   end
 
   def completed
-    quantity_percentage
+    quantity_percentage.round
+  end
+
+  def weight_variable (weight)
+    if weight == 1 then
+      mult = self.value
+    elsif weight == 2 then
+      mult = self.hh
+    elsif weight == 3 then
+      mult = self.percentage
+    end
+    mult
   end
 
 end

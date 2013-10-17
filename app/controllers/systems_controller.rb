@@ -30,7 +30,6 @@ class SystemsController < ApplicationController
 
   def update
     @system = System.find(params[:id])
-
     respond_to do |format|
       if @system.update_attributes(params[:system])
         format.html { redirect_to @system }
@@ -48,6 +47,10 @@ class SystemsController < ApplicationController
     @system = @enterprise.systems.build
     @@enterprise_id = @enterprise.id
     @system.price = 0
+    @system.hh = 0
+    @system.percentage = 0
+    @system.value = 0
+    @system.weight = @enterprise.weight
     @system.save
 
     respond_to do |format|

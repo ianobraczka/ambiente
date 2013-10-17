@@ -53,6 +53,10 @@ class SubsystemsController < ApplicationController
     @system = System.find(@@system_id)
     @subsystem = @system.subsystems.build(params[:subsystem])
     @subsystem.price = 0
+    @subsystem.hh = 0
+    @subsystem.percentage = 0
+    @subsystem.value = 0
+    @subsystem.weight = @system.weight
 
     respond_to do |format|
       if @subsystem.save

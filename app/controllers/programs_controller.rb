@@ -50,6 +50,7 @@ class ProgramsController < ApplicationController
 
   def create
     @program = Program.new(params[:program])
+    @program.weight = 1
     respond_to do |format|
       if @program.save
         format.html { redirect_to @program}

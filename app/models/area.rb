@@ -5,8 +5,20 @@ class Area < ActiveRecord::Base
  	def price
  		value = 0
 		self.systems.each do |system|
-			value += system.price
+			value = value + system.price
 		end
 		value
+	end
+
+	def completed
+		value = 0
+		self.systems.each do |system|
+			value = value + system.completed
+		end
+		if !self.systems.empty? then
+			value/self.systems.count
+		else
+			100
+		end
 	end
 end

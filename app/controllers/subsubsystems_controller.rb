@@ -53,7 +53,7 @@ class SubsubsystemsController < ApplicationController
   def create
     @subsystem = Subsystem.find(@@subsystem_id)
     @subsubsystem = @subsystem.subsubsystems.build(params[:subsubsystem])
-    @subsubsystem.price = 0
+    @subsubsystem.weight = @subsystem.weight
     @subsubsystem.save
 
     respond_to do |format|

@@ -28,7 +28,7 @@ class AreasController < ApplicationController
 
     respond_to do |format|
       if @area.update_attributes(params[:area])
-        format.html { redirect_to @area, notice: 'Area atualizada!' }
+        format.html { redirect_to @area, notice: 'area atualizada!' }
         format.json { head :no_content }
       else
         format.html { render action: "Editar" }

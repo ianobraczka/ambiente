@@ -12,21 +12,11 @@ class System < ActiveRecord::Base
   		return true
     end
   end
-
-  def mult
-    if self.weight == 1 then
-      mult = self.price
-    elsif self.weight == 2 then
-      mult = self.hh
-    elsif self.weight == 3 then
-      mult = self.percentage
-    end
-  end
       
   def price
     subsystems = self.subsystems
-    if subsystems.empty? 
-      self.attributes["price"] 
+    if subsystems.empty?
+      self.attributes["price"]
     else
       self.subsystems.map(&:price).sum
     end
@@ -76,16 +66,12 @@ class System < ActiveRecord::Base
 
   def quantity_percentage
     if self.subsystems.empty? then
-      if self.total_quantity == nil || self.accomplished_quantity == nil then
-        qp = 0
-      else
-        qp = ((self.accomplished_quantity/self.total_quantity)*100).round
-      end
+      qp = ((self.accomplished_quantity/self.planned_quantity)*100).round
     else
       qp = 0
       self.subsystems.each do |subsystem|
-        qp = qp + subsystem.quantity_percentage
-        qp = (qp/self.subsystems.count)
+        qp = qp + subsystem.quantity_percentage*subsystem.mult(weight)
+        qp = (qp/self.mult)
       end
     end
     qp
@@ -110,7 +96,42 @@ class System < ActiveRecord::Base
   end
 
   def completed
-    quantity_percentage
+    if self.subsystems.empty? then
+        if self.planned_quantity == 0
+          qp = 0
+        else
+          qp = ((self.accomplished_quantity/self.planned_quantity)*100).round
+        end
+    else
+      qp = 0
+      self.subsystems.each do |subsystem|
+        qp = qp + subsystem.completed*subsystem.weight_variable(weight)
+      end
+      qp = (qp/self.chosen)
+    end
+    qp.round
   end
+
+  def chosen
+    if self.weight == 1 then
+      mult = self.value
+    elsif self.weight == 2 then
+      mult = self.hh
+    elsif self.weight == 3 then
+      mult = self.percentage
+    end
+  end
+
+  def weight_variable (weight)
+    if weight == 1 then
+      mult = self.value
+    elsif weight == 2 then
+      mult = self.hh
+    elsif weight == 3 then
+      mult = self.percentage
+    end
+  end
+
+
 
 end

@@ -38,7 +38,7 @@
 
   <div class="field">
     <%= f.label "Escolha o ponderador" %>
-    <%= f.select :weight, options_for_select([["Preço", 1], ["HH", 2], ["Porcentagem", 3]], @system.weight) %>
+    <%= f.select :weight, options_for_select([["Valor", 1], ["HH", 2], ["Porcentagem", 3]], @system.weight) %>
   </div>
   <div class="actions">
     <%= f.submit "Ponderar", :class => "btn btn-success" %>
@@ -117,7 +117,8 @@
     <h4><%= link_to subsystem.name, subsystem %></h4>
     <font color= "red"><%= subsystem.completed %>%</font> completo<br>
     Quantidade total estimada: <%= subsystem.total_quantity %> <%= subsystem.unity %><br>
-    Quantidade realizada: <%= subsystem.accomplished_quantity %> <%= subsystem.unity %><br>
+    Quantidade realizada: <%= subsystem.accomplished_quantity %> <%= subsystem.unity %><br><br>
+    <b>Ponderadores:</b><br>
     HH: <%= subsystem.hh %><br>
     Porcentagem: <%= subsystem.percentage %>%<br>
     Valor: R$<%= subsystem.value %>

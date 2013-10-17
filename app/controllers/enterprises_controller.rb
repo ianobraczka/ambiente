@@ -29,7 +29,7 @@ class EnterprisesController < ApplicationController
 
     respond_to do |format|
       if @enterprise.update_attributes(params[:enterprise])
-        format.html { redirect_to @enterprise, notice: 'enterprisea atualizado!' }
+        format.html { redirect_to @enterprise }
         format.json { head :no_content }
       else
         format.html { render action: "Editar" }
@@ -52,6 +52,7 @@ class EnterprisesController < ApplicationController
   def create
     @program = Program.find(@@program_id)
     @enterprise = @program.enterprises.build(params[:enterprise])
+    @enterprise.weight = @program.weight
     respond_to do |format|
       if @enterprise.save
         format.html { redirect_to @enterprise, notice: ' O empreendimento foi criado com sucesso! ' }

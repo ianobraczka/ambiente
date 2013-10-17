@@ -1,43 +1,46 @@
+
+<center> <h1><%= @area.name %></h1>
+  <strong>Preço: R$ <%= @area.price %><br>
+    <font color="red"><%= @area.completed %>%</font> completa </strong>
 <br>
-<style>
-.large_font
-{
-  font-size: 30pt;
-}
-
-.small_font
-{
-  font-size: 15pt;
-}
-</style>
-
-<span class="large_font"><%= @area.name %> </span>
+<br>
+<br>
+</center>
+<% if @area.systems.empty? then %>
+  <div class="alert alert-error">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <center><strong>Esta área ainda não foi relacionada a nenhum sistema!</strong></center>
+  </div>
+<% end %>
+</center>
+<br>
+<% if !(@area.systems.empty?) then %>
 <p>
-<br>
-  <b>Preço:</b>
-  R$ <%= @area.price %>
-</p>
-<br>
-  <h4>Sistemas:</h4><br>
-  <% @area.systems.each do |system| %>
-    <strong><h4><%= link_to  system.name, system %></h4></strong>
-    Preço: <%= system.price %><br>
-    Porcentagem: <%= system.percentage %>%<br>
-    Valor: R$<%= system.value %><br>
-    HH: <%= system.hh %><br>
-    <br>
+  <h4>Sistemas:</h4>
   <br>
+  <div class="row">
+  <p><% @area.systems.each do |system| %>
+  <div class="span3">
+  <h4><%= link_to system.name, system %></h4>
+  Preço: R$<%= system.price %>
+  <br>
+  <font color="red"><%= system.completed %>%</font> completo
+  <br>
+  HH: <%=system.hh %> 
+  <br>
+  Valor: R$<%= system.value %>
+  <br>
+  Porcentagem: <%= system.percentage %>%
+  <br>
+  <br>
+  </div>
+  <% end %>
+  </div>
 <%end%>
 <br>
-  <h4>Subáreas:</h4>
-  <% @area.subareas.each do |subarea| %>
-    <strong><%= link_to  subarea.name, subarea %></strong><br>
-    Preço: <%= subarea.price %><br>
-    Porcentagem: <%= subarea.percentage %>%<br>
-    Valor: R$<%= subarea.value %><br>
-    HH: <%= subarea.hh %><br>
-    <br>
-  <%end%>
-
+</p>
 <br>
-<%= link_to 'Voltar para áreas', areas_path %>
+<center>
+<%= link_to 'Editar', edit_area_path(@area) %> |
+<%= link_to "Deletar área", @area, method: :delete, data: { confirm: 'Tem certeza que quer deletar essa área?' } %>
+</center>
