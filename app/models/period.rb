@@ -1,4 +1,4 @@
 class Period < ActiveRecord::Base
-  attr_accessible :end_date, :init_date, :number, :quantity, :subsubsystem_id, :subsystem_id, :system_id, :unity
+  attr_accessible :begin_date, :end_date, :planning_id, :quantity, :planned_quantity
   belongs_to :planning
 end

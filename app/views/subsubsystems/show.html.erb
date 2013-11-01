@@ -66,11 +66,11 @@
   <div class="alert alert-error">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <center>
-    <strong>Esse subsubsistema ainda não possui nenhum período cadastrado. </strong>
+    <strong>Esse subsubsistema ainda não possui planejamento </strong>
     </div>
     </center>
     <br>
-    <center><%= button_to "Entrar com dados do período", new_subsubsystem_planning_path(@subsubsystem), :method => "get", :class => "btn btn-success" %></center>
+    <center><%= button_to "Cadastrar planejamento", new_subsubsystem_planning_path(@subsubsystem), :method => "get", :class => "btn btn-success" %></center>
     <br>
 <%end%>
 <% if !@subsubsystem.plannings.empty? then %>

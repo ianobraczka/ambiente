@@ -71,16 +71,15 @@
     </div>
     </center>
     <br>
-    <center><%= button_to "Entrar com dados do período", new_system_planning_path(@system), :method => "get", :class => "btn btn-success" %></center>
+    <center><%= button_to "Cadastrar planejamentos", new_system_planning_path(@system), :method => "get", :class => "btn btn-success" %></center>
     <br>
   <%end%>
   <% if !@system.plannings.empty? then %>
-
-  <% if @system.current_planning.days_left != -1 then %>
-    <div class="alert alert-error">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-     <strong> O <%= link_to "atual período", @system.current_planning %> é o <%= @system.plannings.count %>º e <b><span class="small_font">faltam <%= @system.current_planning.days_left %> dias</b></span> para o término dele. </strong>
-    </div>
+    <% if @system.current_planning.days_left != -1 then %>
+      <div class="alert alert-error">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong> O <%= link_to "atual período", @system.current_planning %> é o <%= @system.plannings.count %>º e <b><span class="small_font">faltam <%= @system.current_planning.days_left %> dias</b></span> para o término dele. </strong >
+      </div>
     <%end%>
     <% if @system.current_planning.days_left == -1 then %>
       <b><font color="red"> O <%= @system.plannings.count %>o período terminou, crie um novo período: </font></b>
@@ -91,10 +90,6 @@
     <center>
     <br>
     <span class="very_small_font">
-    <b>Quantidade planejada no período:</b> <%= @system.plannings.last.planned_quantity %> <%=@system.unity%> <br>
-    <b>Quantidade realizada no período:</b> <%= @system.plannings.last.quantity %> <%=@system.unity%> (<b><font color = "red"><%= @system.plannings.last.quantity_percentage %>%</font></b>)
-    <br>
-    <br>
     <b>Quantidade realizada até o período:</b>
     <%= @system.accomplished_quantity %> <%=@system.unity%> (<b><font color = "red"><%=@system.quantity_percentage%>%</font></b>)
     <br>
@@ -104,6 +99,21 @@
     </span>
     <br>
     <br>
+    <br>
+    <center><span class="medium_font">Planejamento dos períodos:</span><br><br></center>
+    <div class="row">
+      <% @system.plannings.each do |planning| %>
+        <div class ="span3"><br>
+        <% if planning.period_end < Date.current %> <font color="red"> <%end%>
+        <% if planning.period_end >= Date.current %> <font color="blue"> <%end%>
+        <b><span class="very_small_font"><%= @system.plannings.count %>º período<br><br></font></span>
+        Quantidade planejada: <%= planning.planned_quantity %> <%=@system.unity %><br>
+        Quantidade realizada: <%= planning.quantity %> <%=@system.unity %> (<b><font color = "red"><%= planning.quantity_percentage %>%</font></b>)<br> </b>
+        <br>
+        <%= button_to "Entrar com dados do período", edit_system_planning_path(planning), :method => "get" %>
+        </div>
+      <% end %>
+    </div>
   <% end %>
 <%end%>
 
@@ -131,8 +141,9 @@
 <%end%>
 
 <center><strong>
+<br>
 <%= link_to 'Editar', edit_system_path(@system) %> |
 <%= link_to "Deletar sistema", @system, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse sistema?' } %>
-</center></strong>
+</center></strong><br><br>
 
 

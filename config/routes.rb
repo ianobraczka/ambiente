@@ -1,5 +1,7 @@
 Ambiente::Application.routes.draw do
 
+  get "baselines_controller/index"
+
   get "plannings/new"
 
   get "plannings/create"
@@ -128,7 +130,9 @@ Ambiente::Application.routes.draw do
     resources :plannings
   end
 
-  resources :plannings
+  resources :plannings do
+    resources :periods
+  end
 
 =begin
   get "program/index"

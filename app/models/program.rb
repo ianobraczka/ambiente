@@ -1,6 +1,7 @@
 class Program < ActiveRecord::Base
   attr_accessible :name, :price, :value, :hh, :percentage, :weight
   has_many :enterprises, :dependent => :destroy
+  has_one :baseline
 
   def price
   	value = 0

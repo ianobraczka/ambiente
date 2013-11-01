@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131017130339) do
+ActiveRecord::Schema.define(:version => 20131024143237) do
 
   create_table "areas", :force => true do |t|
     t.integer  "enterprise_id"
@@ -27,6 +27,13 @@ ActiveRecord::Schema.define(:version => 20131017130339) do
   create_table "areas_systems", :id => false, :force => true do |t|
     t.integer "area_id"
     t.integer "system_id"
+  end
+
+  create_table "baselines", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.date     "date"
+    t.string   "comment"
   end
 
   create_table "enterprises", :force => true do |t|
@@ -61,8 +68,11 @@ ActiveRecord::Schema.define(:version => 20131017130339) do
     t.string   "unity"
     t.datetime "init_date"
     t.datetime "end_date"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.float    "planned_quantity"
+    t.float    "real_quantity"
+    t.integer  "planning_id"
   end
 
   create_table "plannings", :force => true do |t|

@@ -4,10 +4,8 @@ one:
   system_id: 1
   subsystem_id: 1
   subsubsystem_id: 1
-  period_id: 1
 
 two:
   system_id: 1
   subsystem_id: 1
   subsubsystem_id: 1
-  period_id: 1

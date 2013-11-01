@@ -44,6 +44,7 @@ class PlanningsController < ApplicationController
     @plannable = find_plannable
     @planning = @plannable.plannings.build
     @@plannable_id = @plannable.id
+    3.times { @planning.periods.build }
 
     respond_to do |format|
       format.html # new.html.erb
@@ -57,14 +58,14 @@ class PlanningsController < ApplicationController
       @planning = @plannable.plannings.build(params[:planning])
       @planning.period_begin = Date.current
     else
-      p_begin = @plannable.plannings.last.period_end
+      begin_date = @plannable.plannings.last.period_end
       @planning = @plannable.plannings.build(params[:planning])
-      @planning.period_begin = p_begin
+      @planning.period_begin = begin_date
     end
     respond_to do |format|
       if @planning.save
-        format.html { redirect_to @plannable }
-        format.json { render json: @planning, status: :created, location: @planning.plannable }
+        format.html { redirect_to new_planning_path(@plannable) }
+        format.json { render json: @planning, status: :created, location: @planning.plannable.plannings }
       else
         format.html { render action: "new" }
         format.json { render json: @planning.errors, status: :unprocessable_entity }

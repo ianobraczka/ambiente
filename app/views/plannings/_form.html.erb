@@ -11,27 +11,16 @@
     </div>
   <% end %>
   <br>
-  <div class="row">
-  <div class="span4">
-  <div class="field">
-    <%= f.label "Quantidade planejada no período (em " + @planning.plannable.unity + ")" %>
-    <%= f.number_field :planned_quantity %>
-  </div>
-  <div class="field">
-    <%= f.label "Quantidade realizada no período (em " + @planning.plannable.unity + ")" %>
-    <%= f.number_field :quantity %>
-  </div>
+  
+  <%= f.fields_for :periods do |builder| %>
+       <%= builder.label :planned_quantity, "Quantidade planejada" %>
+       <%= builder.number_field :planned_quantity%>
+
+  <%end%>
   <br>
-  </div>
-  <div class="span4">
   <br>
-  <span class="small_font">Início do período: <font color = "red"><%= Date.current.to_formatted_s(:rfc822) %><br></font><br>
-  Fim do período: <font color = "red"><%= (Date.current + 7.days).to_formatted_s(:rfc822) %></b></font>
-  </span>
-  </div>
-  </div>  <br>
   <div class="actions">
     <%= f.submit "OK", class: "btn btn-success" %>
   </div>
   <br>
-<% end %>
+<%end%>
