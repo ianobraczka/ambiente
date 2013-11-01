@@ -1,13 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
+  planning_id: 1
+  quantity: 1.5
+  planned_quantity: 1.5
   begin_date: 
   end_date: 
-  quantity: 1.5
-  planning_id: 1
 
 two:
+  planning_id: 1
+  quantity: 1.5
+  planned_quantity: 1.5
   begin_date: 
   end_date: 
-  quantity: 1.5
-  planning_id: 1

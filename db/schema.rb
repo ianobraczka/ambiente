@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131024143237) do
+ActiveRecord::Schema.define(:version => 20131101135953) do
 
   create_table "areas", :force => true do |t|
     t.integer  "enterprise_id"
@@ -60,34 +60,23 @@ ActiveRecord::Schema.define(:version => 20131024143237) do
   end
 
   create_table "periods", :force => true do |t|
-    t.integer  "subsubsystem_id"
-    t.integer  "subsystem_id"
-    t.integer  "system_id"
-    t.integer  "number"
+    t.integer  "planning_id"
     t.float    "quantity"
-    t.string   "unity"
-    t.datetime "init_date"
-    t.datetime "end_date"
+    t.float    "planned_quantity"
+    t.date     "begin_date"
+    t.date     "end_date"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
-    t.float    "planned_quantity"
-    t.float    "real_quantity"
-    t.integer  "planning_id"
   end
 
   create_table "plannings", :force => true do |t|
     t.integer  "system_id"
     t.integer  "subsystem_id"
     t.integer  "subsubsystem_id"
-    t.integer  "period_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
-    t.date     "period_begin"
-    t.date     "period_end"
-    t.float    "quantity"
-    t.integer  "plannable_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.string   "plannable_type"
-    t.float    "planned_quantity"
+    t.integer  "plannable_id"
   end
 
   create_table "programs", :force => true do |t|

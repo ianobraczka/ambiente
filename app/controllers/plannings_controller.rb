@@ -74,12 +74,12 @@ class PlanningsController < ApplicationController
   end
 
   def find_plannable
-  params.each do |name, value|
-    if name =~ /(.+)_id$/
-      return $1.classify.constantize.find(value)
+    params.each do |name, value|
+      if name =~ /(.+)_id$/
+        return $1.classify.constantize.find(value)
+      end
     end
+    nil
   end
-  nil
-end
 
 end

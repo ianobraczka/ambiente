@@ -1,5 +1,8 @@
 Ambiente::Application.routes.draw do
 
+  resources :plannings
+
+
   get "baselines_controller/index"
 
   get "plannings/new"
@@ -91,7 +94,7 @@ Ambiente::Application.routes.draw do
   get "enterprises/create"
 
   get "enterprises/new"
-
+  
   resources :programs do
     resources :enterprises
   end
