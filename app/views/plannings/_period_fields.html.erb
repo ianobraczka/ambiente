@@ -1,0 +1,6 @@
+<p class = "fields" >
+    <%= f.label :planned_quantity, "Quantidade planejada no período" %>
+    <%= f.number_field :planned_quantity%><br>
+    <%= f.hidden_field :_destroy %>
+    <%= link_to_remove_fields "Remover período", f %>
+</p>

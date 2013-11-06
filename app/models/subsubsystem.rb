@@ -1,7 +1,7 @@
 class Subsubsystem < ActiveRecord::Base
   attr_accessible :hh, :name, :percentage, :price, :subsystem_id, :total_quantity, :unity, :value, :weight
   belongs_to :subsystem
-  has_many :plannings, as: :plannable
+  has_many :plannings, :as => :plannable
 
   def accomplished_quantity
     aq = 0

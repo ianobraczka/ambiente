@@ -54,18 +54,11 @@ class PlanningsController < ApplicationController
 
   def create
     @plannable = find_plannable
-    if @plannable.plannings.empty?
-      @planning = @plannable.plannings.build(params[:planning])
-      @planning.period_begin = Date.current
-    else
-      begin_date = @plannable.plannings.last.period_end
-      @planning = @plannable.plannings.build(params[:planning])
-      @planning.period_begin = begin_date
-    end
+    @planning = @plannable.plannings.build(params[:planning])
     respond_to do |format|
       if @planning.save
-        format.html { redirect_to new_planning_path(@plannable) }
-        format.json { render json: @planning, status: :created, location: @planning.plannable.plannings }
+        format.html { redirect_to @plannable }
+        format.json { render json: @planning, status: :created, location: @plannable }
       else
         format.html { render action: "new" }
         format.json { render json: @planning.errors, status: :unprocessable_entity }

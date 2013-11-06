@@ -11,13 +11,12 @@
     </div>
   <% end %>
   <br>
-  
+  <% i = 1 %>
   <%= f.fields_for :periods do |builder| %>
-       <%= builder.label :planned_quantity, "Quantidade planejada" %>
-       <%= builder.number_field :planned_quantity%>
-
+    <%= render "period_fields", :f => builder %>
   <%end%>
   <br>
+  <%= f.hidden_field :plannable_id, :value => @plannable.id %>
   <br>
   <div class="actions">
     <%= f.submit "OK", class: "btn btn-success" %>
