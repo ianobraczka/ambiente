@@ -78,7 +78,7 @@
   <% if @subsubsystem.current_planning.days_left != -1 then %>
     <div class="alert alert-error">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
-     <strong> O <%= link_to "atual período", @subsubsystem.current_planning %> é o <%= @subsubsystem.plannings.count %>º e <b><span class="small_font">faltam <%= @subsubsystem.current_planning.days_left %> dias</b></span> para o término dele. </strong>
+     <strong> O atual período é o <%= @subsubsystem.current_planning.current_period.number %>º e <b><span class="small_font">faltam <%= @subsubsystem.current_planning.days_left %> dias</b></span> para o término dele. </strong>
     </div>
     <%end%>
     <% if @subsubsystem.current_planning.days_left == -1 then %>
@@ -89,15 +89,15 @@
     <% end %>
     <br>
     <span class="very_small_font">
-    <b>Quantidade planejada no período:</b> <%= @subsubsystem.plannings.last.planned_quantity %> <%=@subsubsystem.unity%> <br>
-    <b>Quantidade realizada no período:</b> <%= @subsubsystem.plannings.last.quantity %> <%=@subsubsystem.unity%> (<b><font color = "red"><%= @subsubsystem.plannings.last.quantity_percentage %>%</font></b>)
+    <b>Quantidade planejada no período:</b> <%= @subsubsystem.current_planning.planned_quantity %> <%=@subsubsystem.unity%> <br>
+    <b>Quantidade realizada no período:</b> <%= @subsubsystem.current_planning.real_quantity %> <%=@subsubsystem.unity%> (<b><font color = "red"><%= @subsubsystem.current_planning.quantity_percentage %>%</font></b>)
     <br>
     <br>
     <b>Quantidade planejada até o período:</b>
     <%= @subsubsystem.planned_quantity %> <%=@subsubsystem.unity%>
     <br>
     <b>Quantidade realizada até o período:</b>
-    <%= @subsubsystem.accomplished_quantity %> <%=@subsubsystem.unity%> (<b><font color = "red"><%=@subsubsystem.completed%>%</font></b>)
+    <%= @subsubsystem.real_quantity %> <%=@subsubsystem.unity%> (<b><font color = "red"><%=@subsubsystem.completed%>%</font></b>)
     </center>
     </span>
     <br>

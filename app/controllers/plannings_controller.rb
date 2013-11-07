@@ -1,6 +1,7 @@
 class PlanningsController < ApplicationController
 
   @@plannable_id = 1
+  @@plannable_type = "oie"
 
   def index
     @plannings = Planning.all
@@ -44,6 +45,7 @@ class PlanningsController < ApplicationController
     @plannable = find_plannable
     @planning = @plannable.plannings.build
     @@plannable_id = @plannable.id
+    @@plannable_type = @plannable.class.to_s
     3.times { @planning.periods.build }
 
     respond_to do |format|
@@ -53,8 +55,15 @@ class PlanningsController < ApplicationController
   end
 
   def create
-    @plannable = find_plannable
+    if @@plannable_type == "Subsubsystem"
+      @plannable = Subsubsystem.find(@@plannable_id)
+    elsif @@plannable_type == "Subsystem"
+      @plannable = Subsystem.find(@@plannable_id)
+    elsif @@plannable_type == "System"
+      @plannable = System.find(@@plannable_id)
+    end
     @planning = @plannable.plannings.build(params[:planning])
+    @planning.periods.first.begin_date = Date.current
     respond_to do |format|
       if @planning.save
         format.html { redirect_to @plannable }

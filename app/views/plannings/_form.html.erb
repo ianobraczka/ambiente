@@ -17,7 +17,9 @@
   <%end%>
   <br>
   <%= f.hidden_field :plannable_id, :value => @plannable.id %>
+  <%= f.hidden_field :plannable_type, :value => @plannable.class.to_s %>
   <br>
+
   <div class="actions">
     <%= f.submit "OK", class: "btn btn-success" %>
   </div>

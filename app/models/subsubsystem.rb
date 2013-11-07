@@ -3,19 +3,15 @@ class Subsubsystem < ActiveRecord::Base
   belongs_to :subsystem
   has_many :plannings, :as => :plannable
 
-  def accomplished_quantity
-    aq = 0
-    self.plannings.each do |planning| 
-      aq = aq + planning.quantity
-    end
-    aq
+  def real_quantity
+    self.current_planning.real_quantity
   end
 
   def completed
-    if self.accomplished_quantity == nil then
+    if self.real_quantity == nil then
       qp = 0
     elsif self.planned_quantity != 0 then
-      qp = ((self.accomplished_quantity/self.planned_quantity)*100)
+      qp = ((self.real_quantity/self.planned_quantity)*100)
     elsif self.planned_quantity == 0 then
       qp = 0
     end

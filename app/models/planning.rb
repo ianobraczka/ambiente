@@ -13,5 +13,25 @@ class Planning < ActiveRecord::Base
   	value
   end
 
+  def real_quantity
+  	qt = 0
+  	periods = self.periods
+  	periods.each do |period|
+  		qt = qt + period.real_quantity
+  	end
+  	qt
+  end
+
+  def days_left
+    self.current_period.days_left
+  end
+
+  def current_period
+    self.periods.last
+  end
+
+  def quantity_percentage
+    (real_quantity/planned_quantity)*100
+  end
 
 end
