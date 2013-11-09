@@ -13,6 +13,14 @@ class Subsystem < ActiveRecord::Base
   	end
   end
 
+  def current_planning
+    self.plannings.last
+  end
+
+  def current_period
+    current_planning.current_period
+  end
+
   def mult
     if weight == 1 then
       mult = self.value

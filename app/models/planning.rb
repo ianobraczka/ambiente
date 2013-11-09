@@ -27,7 +27,11 @@ class Planning < ActiveRecord::Base
   end
 
   def current_period
-    self.periods.last
+    self.periods.each do |period|
+      if period.real_quantity == 0 then
+        return period
+      end
+    end
   end
 
   def quantity_percentage

@@ -12,6 +12,14 @@ class System < ActiveRecord::Base
   		return true
     end
   end
+
+  def current_planning
+    self.plannings.last
+  end
+
+  def current_period
+    current_planning.current_period
+  end
       
   def price
     subsystems = self.subsystems

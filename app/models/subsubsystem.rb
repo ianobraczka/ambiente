@@ -4,7 +4,11 @@ class Subsubsystem < ActiveRecord::Base
   has_many :plannings, :as => :plannable
 
   def real_quantity
-    self.current_planning.real_quantity
+    if !self.plannings.empty?
+      self.current_planning.real_quantity
+    else
+      0
+    end
   end
 
   def completed
@@ -28,6 +32,10 @@ class Subsubsystem < ActiveRecord::Base
 
   def current_planning
     self.plannings.last
+  end
+
+  def current_period
+    current_planning.current_period
   end
 
   def weight_variable (weight)

@@ -10,18 +10,17 @@ class Period < ActiveRecord::Base
   end
 
   def number
-  	variable = 0
+  	number = 1
 	self.planning.periods.each do |period|
-	  	if period == self then
-	  		return variable
+	  	if period.id == self.id then
+	  		return number
 	  	end
-	  	variable = variable + 1
+	  	number = number + 1
 	 end
-	 return variable
   end
 
   def days_left
-  	((Date.current + 7.days) - Date.current).day
+  	
   end
 
   def begin_date
