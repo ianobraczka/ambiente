@@ -62,6 +62,7 @@
   <br>
   Porcentagem: <%= enterprise.percentage %>%
   <br>
+  <%= button_to "deletar empreendimento", enterprise, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse empreendimento?' } %>
   <br>
   </div>
   <% end %>

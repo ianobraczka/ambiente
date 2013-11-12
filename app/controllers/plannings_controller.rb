@@ -1,7 +1,7 @@
 class PlanningsController < ApplicationController
 
   @@plannable_id = 1
-  @@plannable_type = "oie"
+  @@plannable_type = " "
 
   def index
     @plannings = Planning.all

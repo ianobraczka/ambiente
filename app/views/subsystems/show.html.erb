@@ -134,6 +134,7 @@
   <% end %>
 <%end%>
 
+
 <% if @subsystem.has_desagregation? then %>
 <br>
 <br>
@@ -143,9 +144,7 @@
   <% @subsystem.subsubsystems.each do |subsubsystem| %>
     <div class="span3">
     <h4><%= link_to subsubsystem.name, subsubsystem %></h4>
-    <font color= "red"><%= subsubsystem.completed %>%</font> completo<br>
-    Quantidade total estimada: <%= subsubsystem.total_quantity %> <%= subsubsystem.unity %><br>
-    Quantidade realizada: <%= subsubsystem.accomplished_quantity %> <%= subsubsystem.unity %><br><br>
+    <font color= "red"><%= subsubsystem.completed %>%</font> completo<br><br>
     <b>Ponderadores:</b><br>
     HH: <%= subsubsystem.hh %><br>
     Porcentagem: <%= subsubsystem.percentage %>%<br>

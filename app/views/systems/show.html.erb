@@ -125,9 +125,7 @@
   <% @system.subsystems.each do |subsystem| %>
     <div class="span3">
     <h4><%= link_to subsystem.name, subsystem %></h4>
-    <font color= "red"><%= subsystem.completed %>%</font> completo<br>
-    Quantidade total estimada: <%= subsystem.total_quantity %> <%= subsystem.unity %><br>
-    Quantidade realizada: <%= subsystem.accomplished_quantity %> <%= subsystem.unity %><br><br>
+    <font color= "red"><%= subsystem.completed %>%</font> completo<br><br>
     <b>Ponderadores:</b><br>
     HH: <%= subsystem.hh %><br>
     Porcentagem: <%= subsystem.percentage %>%<br>

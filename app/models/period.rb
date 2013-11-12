@@ -10,7 +10,7 @@ class Period < ActiveRecord::Base
   end
 
   def number
-  	number = 1
+  number = 1
 	self.planning.periods.each do |period|
 	  	if period.id == self.id then
 	  		return number
@@ -20,7 +20,6 @@ class Period < ActiveRecord::Base
   end
 
   def days_left
-  	
   end
 
   def begin_date

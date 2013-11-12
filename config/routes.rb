@@ -137,6 +137,8 @@ Ambiente::Application.routes.draw do
     resources :periods
   end
 
+  resources :periods
+
 =begin
   get "program/index"
 
