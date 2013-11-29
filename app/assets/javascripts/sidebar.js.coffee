@@ -1,5 +1,3 @@
-root = exports ? this
-
 $("#sidebar").mouseenter ->
 	$(this).animate({
 		left:"0px",
@@ -15,13 +13,19 @@ $("#sidebar").mouseleave ->
 		opacity:0.0
 	}, 200)
 
-root.toggle = (id) ->
+$(".disclosure-indicator").click ->
 
-	element = $("#"+id)
+	toggleID = $(this).attr("toggle_id")
+	status = $(this).attr("status")
 
-	if element.attr("status") == "open"
-		element.css("display":"inline")
-		element.attr({"status":"closed"})
+	if (status == "open")
+		$(this).find("img").attr({"src":image_path("disclosure-indicator-closed.png")})
+		$(this).attr({"status":"closed"})
+		$("#"+toggleID).css("display":"none")
+		$("#"+toggleID).attr({"status":"closed"})
 	else
-		element.css("display":"none")
-		element.attr({"status":"open"})
+		$(this).find("img").attr({"src":image_path("disclosure-indicator-open.png")})
+		$(this).attr({"status":"open"})
+		$("#"+toggleID).css("display":"inline")
+		$("#"+toggleID).attr({"status":"open"})
+

@@ -34,7 +34,7 @@
           <div class="container nav-collapse" pull-right>
             <ul class="nav">
               <li><%= link_to "Ajuda", "/help" %></li>
-              <li><%= link_to "Baselines", "/baselines"  %></li>
+              <li><%= link_to "Planejamentos", "/plannings"  %></li>
               <li class='dropdown'>
                         <a id='fran_drop' href='' class='dropdown-toggle' data-toggle='dropdown'>Entidades <b class="caret"></b></a>
                         <ul class='dropdown-menu' role='menu' arialabledby='fran_drop'>
@@ -62,7 +62,7 @@
           <li>
             <h5>
               <% unless program.enterprises.empty? %>
-                <%= link_to "→", "#", :onclick => "toggle('program-#{program.id}');", :status => "open" %>
+                <%= link_to image_tag("disclosure-indicator-open.png"), "#", :toggle_id => "program-#{program.id}", :status => "open", :class => "disclosure-indicator" %>
               <% end %>
               <%= link_to program.name, program %>
             </h5>
@@ -74,7 +74,7 @@
                 <li>
                   <h5>
                     <% unless enterprise.systems.empty? %>
-                      <%= link_to "→", "#", :onclick => "toggle('enterprise-#{enterprise.id}');", :status => "open" %>
+                      <%= link_to image_tag("disclosure-indicator-open.png"), "#", :toggle_id => "enterprise-#{enterprise.id}", :status => "open", :class => "disclosure-indicator" %>
                      <% end %> 
                     <%= link_to enterprise.name, enterprise %>
                   </h5>
@@ -86,7 +86,7 @@
                       <li>
                         <h5>
                           <% unless system.subsystems.empty? %>
-                            <%= link_to "→", "#", :onclick => "toggle('system-#{system.id}');", :status => "open" %>
+                            <%= link_to image_tag("disclosure-indicator-open.png"), "#", :toggle_id => "system-#{system.id}", :status => "open", :class => "disclosure-indicator" %>
                           <% end %>
                           <%= link_to system.name, system %>
                         </h5>
@@ -98,7 +98,7 @@
                             <li>
                               <h5>
                                 <% unless subsystem.subsubsystems.empty? %>
-                                  <%= link_to "→", "#", :onclick => "toggle('subsystem-#{subsystem.id}');", :status => "open" %>
+                                  <%= link_to image_tag("disclosure-indicator-open.png"), "#", :toggle_id => "subsystem-#{subsystem.id}", :status => "open", :class => "disclosure-indicator" %>
                                 <% end %>
                                 <%= link_to subsystem.name, subsystem %>
                               </h5>
@@ -127,12 +127,12 @@
     </div>
 
     <div class="container">
-        <div class="row">
-          <div class="span12">
-            <%= bootstrap_flash %>
-              <%= yield %>
-          </div>
-        </div><!--/row-->
+      <div class="row">
+        <div class="span12">
+          <%= bootstrap_flash %>
+          <%= yield %>
+        </div>
+      </div><!--/row-->
     </div> <!-- /container -->
 
     <!-- Javascripts
