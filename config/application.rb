@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'devise'
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -60,5 +61,8 @@ module Ambiente
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    #adding fonts to the pipeline
+    config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
   end
 end

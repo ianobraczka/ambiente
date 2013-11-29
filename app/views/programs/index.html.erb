@@ -1,30 +1,34 @@
-<h1>Programas:</h1>
-<br>
-<% if @programs.empty? then %>
-	<div class="alert alert-error">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong>O sistema ainda não possui nenhum programa cadastrado. </strong>
+<div id="programs">
+
+  <div class="area-title">
+    <h1>PROGRAMAS</h1>
   </div>
-	<br>
-<% end %>
-<br>
-<div class="row">
-<% @programs.each do |program| %>
-<div class="span3">
-  <tr>
-    <td><h4><%= link_to program.name, program %></h4></td>
-    <td>Preço: R$<%= program.price %></td>
-    <br><font color="red"><%=program.completed%>%</font> completo
-    <br>
-    <br>
-    <td><%= button_to "Deletar", program, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse programa?' } %> </td></p>
-  </tr>
-  <br>
-  <br>
-</div>
-<% end %>
-</div>
 
-<%= button_to 'Novo Programa', "programs/new", :method => "get", :class => "btn btn-success" %>
+  <% if @programs.empty? then %>
+  <br>
+    <div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>O sistema ainda não possui nenhum programa cadastrado. </strong>
+    </div>
+  <% end %>
 
-<br>
+  <div class="row">
+  <% @programs.each do |program| %>
+  <div class="span3 list-item">
+    <div class="name"><%= link_to program.name, program %></div>
+    <div class="content"><strong>Investimento:</strong><%=  number_to_currency(program.price, :unit => "R$") %></div>
+    <div class="content"><span class="percentage-number"><%=program.completed%>%</span> completo</div>
+    <div class="delete-button">
+      <%= button_to "Deletar", program, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse programa?' }, :class => "btn btn-danger" %>
+    </div>
+  </div>
+  <% end %>
+  </div>
+
+
+
+  <div class="create-button">
+    <%= button_to 'Novo Programa', "programs/new", :method => "get", :class => "btn btn-success" %>
+  </div>
+
+</div>

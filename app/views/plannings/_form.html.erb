@@ -11,13 +11,29 @@
     </div>
   <% end %>
   <br>
+
+  <div class="field">
+    <%= f.label "Data de início:" %>
+    <%= f.date_select :input_date, :order => [:day, :month, :year], :start_year => Date.current.year %>
+  </div>
+  <br>
+
+  <div id="period-fields-container">
+
   <% i = 1 %>
   <%= f.fields_for :periods do |builder| %>
-    <%= render "period_fields", :f => builder %>
+    <div id="period-not-to-be-removed">
+      <%= builder.label :planned_quantity, "Quantidade planejada no " + i.to_s + "º período" %>
+      <%= builder.number_field :planned_quantity, :id => "planned-quantity" %><br>
+    </div>
+    <% i = i+1 %>
   <%end%>
+
+  </div>
+  <%= link_to "Adicionar período", "#", :id => "add-period" %>
+  |
+  <%= link_to "Remover período", "#", :id => "remove-period" %>
   <br>
-  <%= f.hidden_field :plannable_id, :value => @plannable.id %>
-  <%= f.hidden_field :plannable_type, :value => @plannable.class.to_s %>
   <br>
 
   <div class="actions">

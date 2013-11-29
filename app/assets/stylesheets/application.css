@@ -9,25 +9,8 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+ *= require superfish
+ *= require superfish-vertical
+ *= require superfish-navbar
  *= require_tree .
  */
-
-.large_font
-{
-  font-size: 30pt;
-}
-
-.small_font
-{
-  font-size: 15pt;
-}
-
-.medium_font
-{
-	font-size: 23pt;
-}
-
-.very_small_font
-{
-	font-size: 12pt;
-}

@@ -47,11 +47,6 @@ class SystemsController < ApplicationController
     @system = @enterprise.systems.build
     @@enterprise_id = @enterprise.id
     @system.price = 0
-    @system.hh = 0
-    @system.percentage = 0
-    @system.value = 0
-    @system.weight = @enterprise.weight
-    @system.save
 
     respond_to do |format|
       format.html # new.html.erb
@@ -63,6 +58,10 @@ class SystemsController < ApplicationController
     @enterprise = Enterprise.find(@@enterprise_id)
     @system = @enterprise.systems.build(params[:system])
     @system.price = 0
+    @system.hh = 0
+    @system.percentage = 0
+    @system.value = 0
+    @system.weight = @enterprise.weight
     @system.save
     respond_to do |format|
       if @system.save

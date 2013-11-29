@@ -12,7 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require twitter/bootstrap
+//= require bootstrap
+//= require hoverIntent
 //= require_tree .
 
 function remove_fields(link) {
@@ -26,4 +27,4 @@ function add_fields(link, association, content) {
   $(link).up().insert({
     before: content.replace(regexp, new_id)
   });
-}
+} 

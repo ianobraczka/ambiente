@@ -1,7 +1,5 @@
+<h2 class="area-title">EMPREENDIMENTOS</h2>
 
-<h2>Empreendimentos:</h2>
-
-<br><br>
 
 <% if @enterprises.empty? then %>
  <div class="alert alert-error">
@@ -11,24 +9,19 @@
 <%end%>
 <div class="row">
 <% @enterprises.each do |enterprise| %>
-  <div class="span3">
-  <tr>
-    <td><h4><%=link_to enterprise.name, enterprise %></h4></td>
-    <td>Programa: <%= link_to enterprise.program.name, enterprise.program %></td>
-    <br>
-    <td>Preço: <%= enterprise.price %></td>
-    <br>
-  	<td>HH: <%= enterprise.hh %></td>
-  	<br>
-  	<td>%: <%= enterprise.percentage %></td>
-  	<br>
-  	<td>$: <%= enterprise.value %></td>
-    <p>
-    <td><%= button_to "Deletar", enterprise, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse empreendimento?' } %></td></p>
-  	<br>
-  </tr>
+  <div class="span3 list-item">
+    <div class="name"><%=link_to enterprise.name, enterprise %></div>
+    <div class="content"><b>Programa:</b> <%= link_to enterprise.program.name, enterprise.program %></div>
+    <div class="content"><b>Investimento:</b> <%= enterprise.price %></div>
+    <hr>
+    <div class="content"><b>HH:</b> <%= enterprise.hh %></div>
+    <div class="content"><b>%:</b> <%= enterprise.percentage %></div>
+    <div class="content"><b>$:</b> <%= enterprise.value %></div>
+
+    <div class="delete-button">
+      <%= button_to "Deletar", enterprise, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse empreendimento?' }, :class => "btn btn-danger" %>
+    </div>
   </div>
 <% end %>
 </div>
-</table>
 <br>

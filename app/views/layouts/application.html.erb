@@ -30,11 +30,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/programs">Ambiente</a>
+          <a class="brand" href="/programs"><%= image_tag("logo_ambiental.png", :width => "146pt", :height => "35pt", :alt => "Logo Ambiente", :width => "90px") %></a>
           <div class="container nav-collapse" pull-right>
             <ul class="nav">
               <li><%= link_to "Ajuda", "/help" %></li>
-              <li><%= link_to "Planejamentos", "/plannings"  %></li>
+              <li><%= link_to "Baselines", "/baselines"  %></li>
               <li class='dropdown'>
                         <a id='fran_drop' href='' class='dropdown-toggle' data-toggle='dropdown'>Entidades <b class="caret"></b></a>
                         <ul class='dropdown-menu' role='menu' arialabledby='fran_drop'>
@@ -54,11 +54,83 @@
       </div>
     </div>
 
+    <div id="sidebar">
+
+      <ul>
+        <% @programs.each do |program| %>
+
+          <li>
+            <h5>
+              <% unless program.enterprises.empty? %>
+                <%= link_to "→", "#", :onclick => "toggle('program-#{program.id}');", :status => "open" %>
+              <% end %>
+              <%= link_to program.name, program %>
+            </h5>
+          </li>
+
+          <li id="program-<%= program.id %>">
+            <ul>
+              <% program.enterprises.each do |enterprise| %>
+                <li>
+                  <h5>
+                    <% unless enterprise.systems.empty? %>
+                      <%= link_to "→", "#", :onclick => "toggle('enterprise-#{enterprise.id}');", :status => "open" %>
+                     <% end %> 
+                    <%= link_to enterprise.name, enterprise %>
+                  </h5>
+                </li>
+
+                <li id="enterprise-<%= enterprise.id %>">
+                  <ul>
+                    <% enterprise.systems.each do |system| %>
+                      <li>
+                        <h5>
+                          <% unless system.subsystems.empty? %>
+                            <%= link_to "→", "#", :onclick => "toggle('system-#{system.id}');", :status => "open" %>
+                          <% end %>
+                          <%= link_to system.name, system %>
+                        </h5>
+                      </li>
+
+                      <li id="system-<%= system.id %>">
+                        <ul id="program-<%= program.id %>">
+                          <% system.subsystems.each do |subsystem| %>
+                            <li>
+                              <h5>
+                                <% unless subsystem.subsubsystems.empty? %>
+                                  <%= link_to "→", "#", :onclick => "toggle('subsystem-#{subsystem.id}');", :status => "open" %>
+                                <% end %>
+                                <%= link_to subsystem.name, subsystem %>
+                              </h5>
+                            </li>
+
+                            <li id="subsystem-<%= subsystem.id %>">
+                              <ul>
+                                <% subsystem.subsubsystems.each do |subsubsystem| %>
+                                  <li><h5><%= link_to subsubsystem.name, subsubsystem %></h5></li>
+
+                                <% end %>
+                              </ul>
+                            </li>
+                          <% end %>
+                        </ul>
+                      </li>
+                    <% end %>
+                  </ul>
+                </li>
+              <% end %>
+            </ul>
+        </li>
+        <% end %>
+      </ul>
+
+    </div>
+
     <div class="container">
         <div class="row">
           <div class="span12">
             <%= bootstrap_flash %>
-            <%= yield %>
+              <%= yield %>
           </div>
         </div><!--/row-->
     </div> <!-- /container -->

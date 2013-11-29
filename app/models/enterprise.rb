@@ -41,19 +41,44 @@ class Enterprise < ActiveRecord::Base
     value
   end
 
-  def completed
-    if !self.systems.empty? then
-      perc = 0
-      self.systems.each do |system|
-        perc = perc + system.completed*system.weight_variable(self.weight)
-      end
-      perc = perc/(self.chosen)
-      perc.round
+  def planned_quantity
+    pq = 0
+    if self.systems.empty?
+      0
     else
-      perc = 0
+      self.systems.each do |system|
+        pq = pq + system.planned_quantity
+      end
     end
+    pq
   end
 
+  def real_quantity
+    rq = 0
+    if self.systems.empty?
+      0
+    else
+      self.systems.each do |system|
+        rq = rq + system.real_quantity
+      end
+    end
+    rq
+  end
+
+  def completed
+    if self.planned_quantity == nil || self.real_quantity == nil
+      return 0
+    elsif self.real_quantity == 0 || self.planned_quantity == 0
+      return 0
+    else
+      completed = 0
+      self.systems.each do |system|
+        completed = completed + (system.real_quantity*100/system.planned_quantity)*system.weight_variable(weight)
+      end
+      (completed/mult).round 
+    end
+  end
+  
   def chosen
     if self.weight == 1 then
       mult = self.value
@@ -72,6 +97,17 @@ class Enterprise < ActiveRecord::Base
     elsif recieved == 3 then
       mult = self.percentage
     end
+  end
+
+  def mult
+    if weight == 1 then
+      mult = self.value
+    elsif weight == 2 then
+      mult = self.hh
+    elsif weight == 3 then
+      mult = self.percentage
+    end
+    mult
   end
 
 end

@@ -5,7 +5,7 @@ class Subsubsystem < ActiveRecord::Base
 
   def real_quantity
     if !self.plannings.empty?
-      self.current_planning.real_quantity
+      self.plannings.map(&:real_quantity).sum
     else
       0
     end

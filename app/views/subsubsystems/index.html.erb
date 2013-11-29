@@ -1,32 +1,23 @@
-
-<h1>Subsubsistemas</h1>
-
+<h1 class="area-title">Subsubsistemas</h1>
 
 <br>
 <% if @subsubsystems.empty? then %>
-  <strong> O Ambiente ainda não possui nenhum subsubsistema. Para criar um, vá em algum subsistema e crie a partir dele.</strong>
+  <strong> O Ambiente ainda não possui nenhum subsistema. Para criar um, vá em algum sistema e crie a partir dele.</strong>
   <br>
 <% end %>
 <br>
 
 <% @subsubsystems.each do |subsubsystem| %>
-  <tr>
-    <td><h4><%= link_to subsubsystem.name, subsubsystem %></h4></td>
-    <td>Preço: <%= subsubsystem.price %></td>
-    <br>
-  	<td>HH: <%= subsubsystem.hh %></td>
-  	<br>
-  	<td>%: <%= subsubsystem.percentage %></td>
-  	<br>
-  	<td>$: <%= subsubsystem.value %></td>
-    <br>
-    <p>
-    <td><%= button_to "Deletar", subsubsystem, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse subsubsistema?' } %> </td></p>
-  	<br>
-  </tr>
-  <br>
-  <br>
-<% end %>
-</table>
 
-<br />
+  <div class="span3 list-item">
+
+    <div class="name"><%=link_to subsubsystem.name, subsubsystem %></div>
+    <div class="content"><b>Investimento:</b> <%= subsubsystem.price %></div>
+    <div class="content"><b>HH:</b> <%= subsubsystem.hh %></div>
+    <div class="content"><b>Porcentagem:</b> <%= subsubsystem.percentage %></div>
+    <div class="content"><b>Valor:</b> <%= subsubsystem.value %></div>
+    <div class="delete-button"><%= button_to "Deletar", subsubsystem, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse sistema?' }, :class => "btn btn-danger" %></div>
+
+  </div>
+
+<% end %>

@@ -58,7 +58,7 @@ class SubsubsystemsController < ApplicationController
 
     respond_to do |format|
       if @subsubsystem.save
-        format.html { redirect_to @subsubsystem, notice: ' O Subsubsistema foi criado com sucesso! ' }
+        format.html { redirect_to @subsubsystem }
         format.json { render json: @subsubsystem, status: :created, location: @subsubsystem }
       else
         format.html { render action: "new" }

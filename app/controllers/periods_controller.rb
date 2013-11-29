@@ -6,6 +6,7 @@ class PeriodsController < ApplicationController
 
   	def update
     @period = Period.find(params[:id])
+    @period.begin_date = Date.current
 
     respond_to do |format|
       if @period.update_attributes(params[:period])

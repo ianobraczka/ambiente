@@ -1,147 +1,150 @@
-<br>
- <center> <span class="small_font"><%= link_to @system.enterprise.program.name, @system.enterprise.program %> > <%= link_to @system.enterprise.name, @system.enterprise %> > </span> <span class="large_font"><%= @system.name %></h1> </span>
-<p>
-<br>
-<br>
-<div class="row">
-  <div class="span4">
-  <br>
-    <b>Preço:</b>
-    R$ <%= @system.price %>
-    <br>
-    <b>Área(s):</b><% @system.areas.each do |area| %> <%= link_to area.name, area %>, <% end %>
-    <br> 
-    <strong> <font color= "red"><%=@system.completed%>% </font> </strong>completo
-    <br>
-  </div>
-  <div class="span4">
-    <br>
-    <b>HH:</b><%=@system.hh%>
-    <br>
-    <b>Valor:</b> R$<%=@system.value%>
-    <br>
-    <b>Porcentagem:</b> <%=@system.percentage%>%
-  </div>
-<div class= "span4">
-<%= form_for(@system) do |f| %>
-  <% if @system.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@system.errors.count, "error") %> prohibited this product from being saved:</h2>
+<div class="history-container">
 
-      <ul>
-      <% @system.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
+  ←
+  <%= link_to @system.enterprise.program.name, @system.enterprise.program %> 
+  ←
+  <%= link_to @system.enterprise.name, @system.enterprise %>
+
+</div>
+  
+<div id="edit-and-delete-section-buttons-container">
+  <div class="edit-section-button"><%= button_to 'Editar', edit_system_path(@system) , :class => "btn" %></div>
+  <div class="delete-section-button"><%= button_to "Deletar sistema", @system, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse sistema?' }, :class => "btn btn-danger" %></div>
+</div>
+
+<div class="area-title"><%= @system.name %></div>
+
+<div class="list-item section-details">
+  <br>
+  <div class="content"><b>Investimento:</b> <%= number_to_currency(@system.price, :unit => "R$") %></div>
+  <div class="content"><strong><span class="percentage-number"><%= @system.completed %>%</span></strong> completo</div>
+
+  <hr>
+
+  <div class="content"><b>HH: </b><%=@system.hh%></div>
+  <div class="content"><b>Valor:</b> <%=number_to_currency(@system.value, :unit => "R$")%></div>
+  <div class="content"><b>Porcentagem:</b> <%=@system.percentage%>%</div>
+  <hr>
+
+  <%= form_for(@system) do |f| %>
+    <% if @system.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@system.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+        <ul>
+        <% @system.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="content"><strong><%= f.label "Escolha o ponderador" %></strong></div>
+    <div class="content"><%= f.select :weight, options_for_select([["Valor", 1], ["HH", 2], ["Porcentagem", 3]], @system.weight) %></div>
+    <center><div class="content"><%= f.submit "Ponderar", :class => "btn btn-success" %></div></center>
+    <br>
   <% end %>
 
-  <div class="field">
-    <%= f.label "Escolha o ponderador" %>
-    <%= f.select :weight, options_for_select([["Valor", 1], ["HH", 2], ["Porcentagem", 3]], @system.weight) %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Ponderar", :class => "btn btn-success" %>
-  </div>
-<% end %>
 </div>
-</div>
-</center>
-<br>
+
+  <span class="small_font">Área(s): 
+  <% @system.areas.each do |area| %>
+    <%= link_to area.name, area %><%if @system.areas.last != area%>,<%end%>
+  <% end %>
+  <br> </span>
+
 <% if !@system.has_desagregation? && @system.price == 0 then %>
   <br>
   <div class="alert alert-error">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong><center>Esse sistema não possui nenhum subsistema cadastrado. Para prosseguir, voce deve escolher uma das opcões abaixo:</strong></center></div>
+  <strong><center>Esse sistema não possui nenhum subsistema cadastrado. Para prosseguir, voce deve escolher se ele possui subsistemas ou se é o nível mais desagregado:</strong></center></div>
   <br>
-  <br><center>
-      <%= button_to "Definir valores", edit_system_path(@system), :method => "get", :class => "btn btn-info"%>
-      <%= button_to 'Criar subsistema', new_system_subsystem_path(@system), :method => "get", :class => "btn btn-success" %></center>
-      <br><br>
+  <div id="choose-system-type-buttons">
+    <div class = "edit-section-button">
+    <%= button_to "É o nível mais desagregado", edit_system_path(@system), :method => "get", :class => "btn btn-info"%>
+    </div>
+    <div class = "delete-section-button">
+    <%= button_to "Criar subsistema", new_system_subsystem_path(@system), :method => "get", :class => "btn btn-success" %>
+    </div>
+  </div>
 <%end%>
 
 <% if !@system.has_desagregation? && @system.price != 0 then %>
-  <br>
-
-  <% if @system.plannings.empty? then %>
-    <div class="alert alert-error">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <center>
-    <strong>Esse sistema é o nível mais desagregado e ainda não possui nenhum período cadastrado </strong>
-    </div>
-    </center>
-    <br>
-    <center><%= button_to "Cadastrar planejamentos", new_system_planning_path(@system), :method => "get", :class => "btn btn-success" %></center>
-    <br>
-  <%end%>
-  <% if !@system.plannings.empty? then %>
-    <% if @system.current_planning.days_left != -1 then %>
-      <div class="alert alert-error">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      <strong> O <%= link_to "atual período", @system.current_planning %> é o <%= @system.plannings.count %>º e <b><span class="small_font">faltam <%= @system.current_planning.days_left %> dias</b></span> para o término dele. </strong >
+  <% if !@system.plannings.empty? %>
+    <hr>
+    <span class="medium_font"> Planejamento:<br><br></span>
+    <div class="row">
+  
+    <% @system.current_planning.periods.each do |period| %>
+      <div class="span4 list-item">
+      <div class="name"> <%= period.number %>o período </div>
+      <div class="content"> Quant. planejada no período: <%= period.planned_quantity %> <%= @system.unity %></div>
+      <% if period.quantity != nil %>
+        <div class="content"> Quant. realizada no período: <%= period.real_quantity %> <%= @system.unity %></div>
+      <%end%>
+      <% if @system.current_period.quantity == nil && @system.current_period == period %>
+          <%= form_for(@system.current_period) do |f| %>
+            <% if @system.current_period.errors.any? %>
+              <div id="error_explanation">
+              <h2><%= pluralize(@system.current_period.errors.count, "error") %> prohibited this product from being saved:</h2>
+              <ul>
+              <% @system.current_period.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+              </ul>
+              </div>
+            <% end %>
+            <hr>
+            <div class = "content">
+            <center><span class = "very_small_font"> Quant. realizada:</span><br><br>
+            <%= f.number_field :quantity %>
+            <br><%= f.submit "Entrar", :class => "btn btn-success" %></center>
+            </div>
+          <% end %>
+      <%end%>
       </div>
     <%end%>
-    <% if @system.current_planning.days_left == -1 then %>
-      <b><font color="red"> O <%= @system.plannings.count %>o período terminou, crie um novo período: </font></b>
-      <Br>
-      <br>
-      <%= button_to "Novo período", new_system_planning_path(@system), :method => "get" %>
-    <% end %>
-    <center>
-    <br>
-    <span class="very_small_font">
-    <b>Quantidade realizada até o período:</b>
-    <%= @system.accomplished_quantity %> <%=@system.unity%> (<b><font color = "red"><%=@system.quantity_percentage%>%</font></b>)
-    <br>
-    <b>Quantidade planejada até o período:</b>
-    <%= @system.planned_quantity %> <%=@system.unity%>
-    </center>
-    </span>
-    <br>
-    <br>
-    <br>
-    <center><span class="medium_font">Planejamento dos períodos:</span><br><br></center>
-    <div class="row">
-      <% @system.plannings.each do |planning| %>
-        <div class ="span3"><br>
-        <% if planning.period_end < Date.current %> <font color="red"> <%end%>
-        <% if planning.period_end >= Date.current %> <font color="blue"> <%end%>
-        <b><span class="very_small_font"><%= @system.plannings.count %>º período<br><br></font></span>
-        Quantidade planejada: <%= planning.planned_quantity %> <%=@system.unity %><br>
-        Quantidade realizada: <%= planning.quantity %> <%=@system.unity %> (<b><font color = "red"><%= planning.quantity_percentage %>%</font></b>)<br> </b>
-        <br>
-        <%= button_to "Entrar com dados do período", edit_system_planning_path(planning), :method => "get" %>
-        </div>
-      <% end %>
     </div>
-  <% end %>
+  </center>
+<% else %>
+  <br>
+  <div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <center>
+    <strong>Esse sistema ainda não possui planejamento </strong>
+    </div>
+    </center>
+    <br>
+    <center><%= button_to "Cadastrar planejamento", new_system_planning_path(@system), :method => "get", :class => "btn btn-success" %></center>
+    <br>
 <%end%>
+<%end %>
+
 
 <% if @system.has_desagregation? then %>
+
+  <hr>
+  <div class="right-aligned-create-button-container">
+  <%= button_to "Criar subsistema", new_system_subsystem_path(@system), :method => "get", :class => "btn btn-success" %>
+</div>
+  <h2 class="area-subtitle">SUBSISTEMAS</h2>
   
-  <h4> Subsistemas: </h4>
-  <div class= "row">
-  <br>
+
+  <div class="row">
   <% @system.subsystems.each do |subsystem| %>
-    <div class="span3">
-    <h4><%= link_to subsystem.name, subsystem %></h4>
-    <font color= "red"><%= subsystem.completed %>%</font> completo<br><br>
-    <b>Ponderadores:</b><br>
-    HH: <%= subsystem.hh %><br>
-    Porcentagem: <%= subsystem.percentage %>%<br>
-    Valor: R$<%= subsystem.value %>
-    <br><br>
+    <div class="span3 list-item">
+      <div class="name"><%= link_to subsystem.name, subsystem %></div>
+      <div class="content"><span class="percentage-number"><strong><%= subsystem.completed %>%</strong></span> completo</div>
+      <hr>
+      <div class="content"><strong>HH:</strong> <%= subsystem.hh %></div>
+      <div class="content"><strong>Porcentagem:</strong> <%= subsystem.percentage %>%</div>
+      <div class="content"><strong>Valor:</strong><%= number_to_currency(subsystem.price, :unit => "R$") %></div>
+      <br>
     </div>
   <%end%>
   </div>
-  <br><br>
-  <%= button_to "Criar subsistema", new_system_subsystem_path(@system), :method => "get", class: "btn btn-success" %>
 <%end%>
 
-<center><strong>
 <br>
-<%= link_to 'Editar', edit_system_path(@system) %> |
-<%= link_to "Deletar sistema", @system, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse sistema?' } %>
-</center></strong><br><br>
 
 

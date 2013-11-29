@@ -35,15 +35,41 @@ class Program < ActiveRecord::Base
   	value
   end
 
-  def completed
-    if !self.enterprises.empty? then
-      perc = 0
-      self.enterprises.each do |enterprise|
-        perc = perc + enterprise.completed*enterprise.weight_variable(weight)
-      end
-      perc = perc/(self.chosen).round
+  def planned_quantity
+    pq = 0
+    if self.enterprises.empty?
+      0
     else
-      perc = 0
+      self.enterprises.each do |enterprise|
+        pq = pq + enterprise.planned_quantity
+      end
+    end
+    pq
+  end
+
+  def real_quantity
+    rq = 0
+    if self.enterprises.empty?
+      0
+    else
+      self.enterprises.each do |enterprise|
+        rq = rq + enterprise.real_quantity
+      end
+    end
+    rq
+  end
+
+  def completed
+    if self.planned_quantity == nil || self.real_quantity == nil
+      return 0
+    elsif self.real_quantity == 0 || self.planned_quantity == 0
+      return 0
+    else
+      completed = 0
+      self.enterprises.each do |enterprise|
+        completed = completed + (enterprise.real_quantity*100/enterprise.planned_quantity)*enterprise.weight_variable(weight)
+      end
+      (completed/mult).round 
     end
   end
 
@@ -56,6 +82,18 @@ class Program < ActiveRecord::Base
       mult = self.percentage
     end
   end
+  
+  def mult
+    if weight == 1 then
+      mult = self.value
+    elsif weight == 2 then
+      mult = self.hh
+    elsif weight == 3 then
+      mult = self.percentage
+    end
+    mult
+  end
+
 
   
 end

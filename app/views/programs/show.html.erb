@@ -1,81 +1,79 @@
+<div id="programs-show">
 
-<center> <h1><%= @program.name %></h1>
-  <div class = "row">
-  <div class= "span3">
-  </div>
-  <div class="span3">
-  <br><br>
-  <strong>Preço: R$ <%= @program.price %><br>
-    <font color="red"><%= @program.completed %>%</font> completo </strong>
-    </div>
-    <div class= "span4">
+<div id="edit-and-delete-section-buttons-container">
+  <div class="edit-section-button"><%= button_to 'Editar', edit_program_path(@program), :class => "btn" %></div>
+  <div class="delete-section-button"><%= button_to "Deletar programa", @program, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse programa?' }, :class => "btn btn-danger" %></div>
+</div>
+
+<h1 class="area-title"><%= @program.name %></h1>
+
+<div class="list-item section-details">
+  <br>
+  <div class="content"><strong>Investimento:</strong> <%= number_to_currency(@program.price, :unit => "R$") %></div>
+  <div class="content"><span class="percentage-number"><strong><%= @program.completed %>%</span> completo</div></strong>
+  <br>
+</div>
+
+<div class="list-item section-details">
+
+  <br>
+
+  <%= form_for(@program) do |f| %>
+    <% if @program.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@program.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+        <ul>
+        <% @program.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="content"><strong>Escolha o ponderador</strong></div>
+    <div class="content"><%= f.select :weight, options_for_select([["Valor", 1], ["HH", 2], ["Porcentagem", 3]], @program.weight) %></div>
+    <div class="content weight-button"><%= f.submit "Ponderar", :class => "btn btn-success" %></div>
     <br>
-<%= form_for(@program) do |f| %>
-  <% if @program.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@program.errors.count, "error") %> prohibited this product from being saved:</h2>
-
-      <ul>
-      <% @program.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label "Escolha o ponderador" %>
-    <%= f.select :weight, options_for_select([["Valor", 1], ["HH", 2], ["Porcentagem", 3]], @program.weight) %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Ponderar", :class => "btn btn-success" %>
-  </div>
-<% end %>
 </div>
-<br>
-<br>
-<br>
-</center>
+
+<hr>
+
+<div class="right-aligned-create-button-container">
+  <%= button_to "Criar empreendimento", new_program_enterprise_path(@program), :method => "get", :class => "btn btn-success" %>
+</div>
+
+<h2 class="area-subtitle">EMPREENDIMENTOS</h2>
+
 <% if @program.enterprises.empty? then %>
+  <br>
   <div class="alert alert-error">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
   <center><strong>Este programa ainda não possui nenhum empreendimento cadastrado!</strong></center>
   </div>
 <% end %>
-</center>
-<br>
+
 <% if !(@program.enterprises.empty?) then %>
-<p>
-  <h4>Empreendimentos:</h4>
-  <br>
+
   <div class="row">
-  <p><% @program.enterprises.each do |enterprise| %>
-  <div class="span3">
-  <h4><%= link_to enterprise.name, enterprise %></h4>
-  Preço: R$<%= enterprise.price %>
-  <br>
-  <font color="red"><%= enterprise.completed %>%</font> completo
-  <br>
-  HH: <%=enterprise.hh %> 
-  <br>
-  Valor: R$<%= enterprise.value %>
-  <br>
-  Porcentagem: <%= enterprise.percentage %>%
-  <br>
-  <%= button_to "deletar empreendimento", enterprise, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse empreendimento?' } %>
-  <br>
+    <% @program.enterprises.each do |enterprise| %>
+      <div class="span3 list-item">
+        <div class="name"><%= link_to enterprise.name, enterprise %></div>
+        <div class="content"><strong>Investimento:</strong><%= number_to_currency(enterprise.price, :unit => "R$") %></div>
+        <div class="content"><span class="percentage-number"><strong><%= enterprise.completed %>%</span> completo</div></strong>
+        <hr>
+        <div class="content"><strong>HH:</strong> <%=enterprise.hh %></div>
+        <div class="content"><strong>Valor:</strong> <%= number_to_currency(enterprise.value, :unit => "R$") %></div>
+        <div class="content"><strong>Porcentagem:</strong> <%= enterprise.percentage %>%</div>
+        <br>
+      </div>
+    <% end %>
   </div>
-  <% end %>
-  </div>
+
 <%end%>
 
-<br>
- <b> <%= button_to "Criar empreendimento", new_program_enterprise_path(@program), :method => "get", :class => "btn btn-success" %>
- </p>
+</div>
 
-</p>
 <br>
-<center>
-<%= link_to 'Editar', edit_program_path(@program) %> |
-<%= link_to "Deletar programa", @program, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse programa?' } %>
-</center>

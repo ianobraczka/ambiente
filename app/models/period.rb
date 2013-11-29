@@ -4,7 +4,7 @@ class Period < ActiveRecord::Base
 
   def real_quantity
   	if self.quantity == nil
-  		self.quantity = 0
+  		return 0
   	end
   	quantity
   end
@@ -12,33 +12,59 @@ class Period < ActiveRecord::Base
   def number
   number = 1
 	self.planning.periods.each do |period|
-	  	if period.id == self.id then
+	  	if period == self then
 	  		return number
 	  	end
 	  	number = number + 1
 	 end
   end
 
-  def days_left
+  def begin_date
+    if self.planning.periods.first == self
+      date = self.planning.input_date
+      while date.wday != 1 do
+        date = date + 1.day
+      end
+      date
+    else
+      index = 1
+      while index < self.planning.periods.count
+        if self.planning.periods[index] == self
+          return self.planning.periods[index-1].end_date
+        end
+        index = index +1
+      end
+    end
   end
 
-  def begin_date
-  	if self != self.planning.periods.first then
-	  	variable = 0
-	  	self.planning.periods.each do |period|
-	  		if period == self then
-	  			return variable
-	  		end
-	  		variable = variable + 1
-	  	end
-	 	return self.planning.periods.find(variable).end_date
-	else
-		self.attributes["begin_date"]
-	end
+  def completed
+    (real_quantity/planned_quantity)*100
   end
 
   def end_date
   	begin_date + 7.days
+  end
+
+  def real_until_period
+    quant = 0
+    self.planning.periods.each do |period|
+      if self == period
+        quant = quant + self.real_quantity
+        return quant
+      end
+      quant = quant + period.real_quantity
+    end
+  end
+
+  def planned_until_period
+    quant = 0
+    self.planning.periods.each do |period|
+      if self == period
+        quant = quant + self.planned_quantity
+        return quant
+      end
+      quant = quant + period.planned_quantity
+    end
   end
 
   

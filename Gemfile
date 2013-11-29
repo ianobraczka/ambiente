@@ -9,6 +9,10 @@ gem 'pg'
 
 gem 'therubyracer'
 
+gem 'devise', '1.4.7'
+
+gem 'superfish-rails'
+
 
 # Gems used only for assets and not required
 # in production environments by default.

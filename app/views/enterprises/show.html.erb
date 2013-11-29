@@ -1,89 +1,91 @@
-<br>
-
-  <center><span class="small_font"><%= link_to @enterprise.program.name, @enterprise.program %></span> > <span class="large_font"><%= @enterprise.name %></h1> </span>
-<br>
-<br>
-<div class="row">
-  <div class="span4">
-    <br>
-    <b>Preço:</b>
-    R$ <%= @enterprise.price %>
-    <br><strong><font color = "red"> <%= @enterprise.completed %>%</font> completo<br></strong>
-  </div>
-  <div class="span4">
-    <br>
-    <b>HH:</b>
-    <%= @enterprise.hh %>
-    <br>
-    <b>Valor:</b>
-    R$ <%= @enterprise.value %>
-    <br>
-    <b>Porcentagem:</b>
-    <%= @enterprise.percentage %>%
-  </div>
-  <div class= "span4">
-  <br>
-  <%= form_for(@enterprise) do |f| %>
-  <% if @enterprise.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@enterprise.errors.count, "error") %> prohibited this product from being saved:</h2>
-
-      <ul>
-      <% @enterprise.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label "Escolha o ponderador" %>
-    <%= f.select :weight, options_for_select([["Valor", 1], ["HH", 2], ["Porcentagem", 3]], @enterprise.weight) %>
-  </div>
-  <div class="actions">
-    <%= f.submit "Ponderar", :class => "btn btn-success" %>
-  </div>
-<% end %>
+<div class="history-container">
+  ←
+  <%= link_to @enterprise.program.name, @enterprise.program %>
 </div>
-<br>
-<br>
-</center>
-<Br>
+
+<div id="edit-and-delete-section-buttons-container">
+
+  <div class="edit-section-button"><%= button_to 'Editar', edit_enterprise_path(@enterprise), :class => "btn" %></div>
+  <div class="edit-section-button"><%= button_to "Deletar empreendimento", @enterprise, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse empreendimento?' }, :class => "btn btn-danger" %></div>
+
+</div>
+
+<div class="area-title"><%= @enterprise.name %></div>
+
+
+<div class="list-item section-details">
+
+  <br>
+
+  <div class="content"><b>Investimento:</b> <%= number_to_currency(@enterprise.price, :unit => "R$") %></div>
+  <div class="content"><strong><span class="percentage-number"><%= @enterprise.completed %>%</span> completo</strong></div>
+
+  <hr>
+
+  <div class="content"><b>HH:</b> <%= @enterprise.hh %></div>
+  <div class="content"><b>Valor:</b> <%= number_to_currency(@enterprise.value, :unit => "R$") %></div>
+  <div class="content"><b>Porcentagem:</b> <%= @enterprise.percentage %>%</div>
+
+  <hr>
+
+  <%= form_for(@enterprise) do |f| %>
+    <% if @enterprise.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@enterprise.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+        <ul>
+        <% @enterprise.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="content"><%= f.label "Escolha o ponderador" %></div>
+    <div class="content"><%= f.select :weight, options_for_select([["Valor", 1], ["HH", 2], ["Porcentagem", 3]], @enterprise.weight) %></div>
+    <center><div class="content"><%= f.submit "Ponderar", :class => "btn btn-success" %></div></center>
+
+    <br>
+<% end %>
+
+</div>
+
+<hr>
+
+
+<div class="right-aligned-create-button-container">
+  <%= button_to "Criar sistema", new_enterprise_system_path(@enterprise), :method => "get", :class => "btn btn-success" %>
+</div>
+
+<h2 class="area-subtitle">SISTEMAS</h2>
+
 <% if @enterprise.systems.empty? then %>
-<div class="alert alert-error">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <center><strong>Este empreendimento ainda não possui nenhum sistema cadastrado!</strong></center>
+  <br>
+  <div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <center><strong>Este empreendimento ainda não possui nenhum sistema cadastrado!</strong></center>
   </div>
 <%end%>
 
 <% if !(@enterprise.systems.empty?) then %>
-  <p>
-  <h4>Sistemas:</h4>
+  
   <div class="row">
-  <p><% @enterprise.systems.each do |system| %>
-  <div class="span3 tab-content">
-    <h4><%= link_to system.name, system %></h4>
-    <font color="red"><%= system.completed%>% </font>completo<br>
-    Preço: R$<%= system.price %><br><br>
-    <b>Ponderadores:<br></b>
-    HH: <%= system.hh %><br>
-    Valor: R$<%= system.value %><br>
-    Porcentagem: <%= system.percentage %>%
-    <br><br>
-  </div>
+  <% @enterprise.systems.each do |system| %>
+    <div class="span3 list-item">
+      <div class="name"><%= link_to system.name, system %></div>
+      <div class="content"><span class="percentage-number"><b><%= system.completed%>%</b> </span>completo</div>
+      <div class="content"><b>Investimento:</b><%= number_to_currency(system.price, :unit => "R$") %></div>
+
+      <hr>
+
+      <div class="content"><b>HH:</b> <%= system.hh %></div>
+      <div class="content"><b>Valor:</b><%= number_to_currency(system.value, :unit => "R$") %></div>
+      <div class="content"><b>Porcentagem:</b> <%= system.percentage %>%</div>
+      <br>
+    </div>
+
   <% end %>
   </div>
 <%end%>
-<br>
-<br>
-<b> <%= button_to "Criar sistema", new_enterprise_system_path(@enterprise), :method => "get", :class => "btn btn-success" %>
-</p>
-
-</p>
-<br>
-<center>
-<%= link_to 'Editar', edit_enterprise_path(@enterprise) %> |
-<%= link_to "Deletar empreendimento", @enterprise, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse empreendimento?' } %>
-</center>
 <br>
 <br>

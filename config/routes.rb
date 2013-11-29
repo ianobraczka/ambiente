@@ -1,7 +1,10 @@
 Ambiente::Application.routes.draw do
 
-  resources :plannings
+  devise_for :users do
+    get '/users/sign_out' => 'devise/sessions#destroy'
+  end
 
+  resources :plannings
 
   get "baselines_controller/index"
 
@@ -94,7 +97,7 @@ Ambiente::Application.routes.draw do
   get "enterprises/create"
 
   get "enterprises/new"
-  
+
   resources :programs do
     resources :enterprises
   end

@@ -94,23 +94,6 @@ class Subsystem < ActiveRecord::Base
     aq
   end
 
-  def quantity_percentage
-    if self.subsubsystems.empty? then
-      if self.total_quantity == nil || self.accomplished_quantity == nil then
-        qp = 0
-      else
-        qp = ((self.accomplished_quantity/self.total_quantity)*100).round
-      end
-    else
-      qp = 0
-      self.subsubsystems.each do |subsubsystem|
-        qp = qp + subsubsystem.completed*subsubsystem.weight_variable(self.weight)
-      end
-      qp = (qp/self.mult)
-    end
-    qp
-  end
-
   def planned_quantity
     pq = 0
     if self.subsubsystems.empty?
@@ -130,7 +113,17 @@ class Subsystem < ActiveRecord::Base
   end
 
   def completed
-    quantity_percentage.round
+    if self.planned_quantity == nil || self.real_quantity == nil
+      return 0
+    elsif self.real_quantity == 0 || self.planned_quantity == 0
+      return 0
+    else
+      completed = 0
+      self.subsubsystems.each do |subsubsystem|
+        completed = completed + (subsubsystem.real_quantity*100/subsubsystem.planned_quantity)*subsubsystem.weight_variable(weight)
+      end
+      (completed/mult).round 
+    end
   end
 
   def weight_variable (weight)

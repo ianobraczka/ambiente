@@ -46,7 +46,7 @@ class PlanningsController < ApplicationController
     @planning = @plannable.plannings.build
     @@plannable_id = @plannable.id
     @@plannable_type = @plannable.class.to_s
-    3.times { @planning.periods.build }
+    6.times { @planning.periods.build }
 
     respond_to do |format|
       format.html # new.html.erb
@@ -63,7 +63,6 @@ class PlanningsController < ApplicationController
       @plannable = System.find(@@plannable_id)
     end
     @planning = @plannable.plannings.build(params[:planning])
-    @planning.periods.first.begin_date = Date.current
     respond_to do |format|
       if @planning.save
         format.html { redirect_to @plannable }

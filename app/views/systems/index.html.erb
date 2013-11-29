@@ -1,5 +1,5 @@
 
-<h1>Sistemas</h1>
+<h1 class="area-title">Sistemas</h1>
 
 <br>
 <% if @systems.empty? then %>
@@ -9,23 +9,16 @@
 <br>
 
 <% @systems.each do |system| %>
-  <tr>
-    <td><h4><%= link_to system.name, system %></h4></td>
-    <br>
-    <td>Empreendimento: <%=link_to system.enterprise.name, system.enterprise %>
-    <br>
-    <td>Preço: <%= system.price %></td>
-    <br>
-  	<td>HH: <%= system.hh %></td>
-  	<br>
-  	<td>%: <%= system.percentage %></td>
-  	<br>
-  	<td>$: <%= system.value %></td>
-    <p>
-    <td><%= button_to "Deletar", system, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse sistema?' } %></td></p>
-  	<br>
-  </tr>
-<% end %>
-</table>
 
-<br />
+  <div class="span3 list-item">
+
+    <div class="name"><%= link_to system.name, system %></div>
+    <div class="content"><b>Empreendimento:</b> <%=link_to system.enterprise.name, system.enterprise %></div>
+    <div class="content"><b>HH:</b> <%= system.hh %></div>
+    <div class="content"><b>Porcentagem:</b> <%= system.percentage %></div>
+    <div class="content"><b>Valor:</b> <%= number_to_currency(system.value, :unit => "R$") %></div>
+    <div class="delete-button"><%= button_to "Deletar", system, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse sistema?' }, :class => "btn btn-danger" %></div>
+  </div>
+
+
+<% end %>
