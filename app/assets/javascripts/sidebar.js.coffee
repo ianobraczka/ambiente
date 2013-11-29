@@ -7,8 +7,11 @@ $("#sidebar").mouseenter ->
 	}, 200)
 
 $("#sidebar").mouseleave ->
+
+	newLeft = "-" + ($(this).width() - 50) + "px"
+
 	$(this).animate({
-		left:"-293px",
+		left:newLeft,
 		opacity:0.0
 	}, 200)
 
