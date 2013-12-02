@@ -130,7 +130,32 @@
         <div class="row">
           <div class="span12">
             <%= bootstrap_flash %>
+            <% if user_signed_in? %>
               <%= yield %>
+            <% else %>
+            <div class="alert alert-error">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>Para continuar você precisa se logar.</strong>
+            </div>
+            <center>
+              <%= form_for("user", :url => user_session_path) do |f| %>
+                <div class="field">
+                  <%= f.label "Usuário" %>
+                  <%= f.text_field :email %>
+                </div>
+                <div class="field">
+                  <%= f.label "Senha" %>
+                  <%= f.password_field :password %>
+                </div>
+                <div class="field">
+                <%= f.check_box :remember_me %> Lembrar senha
+                </div>
+                <div class="actions">
+                  <%= f.submit "Entrar", :class => "btn btn-success" %>
+                </div>
+              <% end %>
+              </center>
+            <% end %>
           </div>
         </div><!--/row-->
     </div> <!-- /container -->
