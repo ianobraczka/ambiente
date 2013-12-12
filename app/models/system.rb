@@ -1,8 +1,7 @@
 class System < ActiveRecord::Base
-  attr_accessible :enterprise_id, :hh, :name, :percentage, :price, :total_quantity, :unity, :value, :area_ids, :weight
-  has_and_belongs_to_many :areas
+  attr_accessible :enterprise_id, :hh, :name, :percentage, :price, :total_quantity, :unity, :value, :area_id, :weight
+  belongs_to :area
   has_many :subsystems, :dependent => :destroy
-  belongs_to :enterprise
   has_many :plannings, as: :plannable
 
   def has_desagregation?
@@ -98,9 +97,11 @@ class System < ActiveRecord::Base
     else
       completed = 0
       self.subsystems.each do |subsystem|
-        completed = completed + (subsystem.real_quantity*100/subsystem.planned_quantity)*subsystem.weight_variable(weight)
+        unless subsystem.planned_quantity == 0
+          completed = completed + (subsystem.real_quantity*100/subsystem.planned_quantity)*subsystem.weight_variable(weight)
+        end
       end
-      (completed/mult).round 
+      (completed/mult).round
     end
   end
 

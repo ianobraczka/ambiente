@@ -1,3 +1,10 @@
+<div class="history-container">
+  ←
+  <%= link_to @area.enterprise.program.name, @area.enterprise.program %>
+  ←
+  <%= link_to @area.enterprise.name, @area.enterprise %>
+</div>
+
 <div id="edit-and-delete-section-buttons-container">
 
   <div class="edit-section-button"><%= button_to 'Editar', edit_area_path(@area), :class => "btn" %></div>
@@ -11,17 +18,42 @@
   <br>
   <div class="content"><b>Investimento:</b> <%= number_to_currency(@area.price, :unit => "R$") %></div>
   <div class="content"><span class="percentage-number"><b><%= @area.completed %>%</b></span> completa</div>
+  <hr>
+  <%= form_for(@area) do |f| %>
+    <% if @area.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@area.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+        <ul>
+        <% @area.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="content"><strong><%= f.label "Escolha o ponderador" %></strong></div>
+    <div class="content"><%= f.select :weight, options_for_select([["Valor", 1], ["HH", 2], ["Porcentagem", 3]], @area.weight) %></div>
+    <center><div class="content"><%= f.submit "Ponderar", :class => "btn btn-success" %></div></center>
+    <br>
+  <% end %>
   </br>
 </div>
 <br>
+<%= button_to "Gerar relatório", area_report_path(@area), :class => "btn", :method => "get" %>
 <hr>
+
+
+<div class="right-aligned-create-button-container">
+  <%= button_to "Criar sistema", new_area_system_path(@area), :method => "get", :class => "btn btn-success" %>
+</div>
 
 <h2 class="area-subtitle">SISTEMAS</h2>
 
 <% if @area.systems.empty? then %>
   <div class="alert alert-error">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <center><strong>Esta área ainda não foi relacionada a nenhum sistema!</strong></center>
+  <center><strong>Esta área ainda não foi possui nenhum sistema!</strong></center>
   </div>
 <% end %>
 

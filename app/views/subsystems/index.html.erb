@@ -1,4 +1,4 @@
-<h1 class="area-title">Subsistemas</h1>
+<h1 class="area-title">SUBSISTEMAS</h1>
 
 <br>
 <% if @subsystems.empty? then %>
@@ -13,10 +13,14 @@
 
     <div class="name"><%=link_to subsystem.name, subsystem %></div>
     <div class="content"><b>Sistema:</b> <%=link_to subsystem.system.name, subsystem.system %></div>
+    <hr>
+    <div class="content"><span class="percentage-number"><strong><%= subsystem.completed %>%</span> completo</div></strong>
     <div class="content"><b>Investimento:</b> <%= number_to_currency(subsystem.price, :unit => "R$") %></div>
+    <hr>
     <div class="content"><b>HH:</b> <%= subsystem.hh %></div>
     <div class="content"><b>Porcentagem:</b> <%= subsystem.percentage %></div>
     <div class="content"><b>Valor:</b> <%= number_to_currency(subsystem.value, :unit => "R$") %></div>
+    <br>
     <div class="delete-button"><%= button_to "Deletar", subsystem, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse sistema?' }, :class => "btn btn-danger" %></div>
 
   </div>

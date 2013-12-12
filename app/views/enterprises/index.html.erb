@@ -12,12 +12,14 @@
   <div class="span3 list-item">
     <div class="name"><%=link_to enterprise.name, enterprise %></div>
     <div class="content"><b>Programa:</b> <%= link_to enterprise.program.name, enterprise.program %></div>
-    <div class="content"><b>Investimento:</b> <%= enterprise.price %></div>
+    <hr>
+    <div class="content"><span class="percentage-number"><strong><%= enterprise.completed %>%</span> completo</div></strong>
+    <div class="content"><b>Investimento:</b> <%= number_to_currency(enterprise.price, :unit => "R$") %></div>
     <hr>
     <div class="content"><b>HH:</b> <%= enterprise.hh %></div>
-    <div class="content"><b>%:</b> <%= enterprise.percentage %></div>
-    <div class="content"><b>$:</b> <%= enterprise.value %></div>
-
+    <div class="content"><b>Valor:</b> <%= number_to_currency(enterprise.value, :unit => "R$") %></div>
+    <div class="content"><b>Porcentagem:</b> <%= enterprise.percentage %></div>
+    <br>
     <div class="delete-button">
       <%= button_to "Deletar", enterprise, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse empreendimento?' }, :class => "btn btn-danger" %>
     </div>

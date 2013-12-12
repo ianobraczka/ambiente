@@ -1,5 +1,5 @@
 
-<h1 class="area-title">Sistemas</h1>
+<h1 class="area-title">SISTEMAS</h1>
 
 <br>
 <% if @systems.empty? then %>
@@ -14,9 +14,14 @@
 
     <div class="name"><%= link_to system.name, system %></div>
     <div class="content"><b>Empreendimento:</b> <%=link_to system.enterprise.name, system.enterprise %></div>
+    <hr>
+    <div class="content"><span class="percentage-number"><strong><%= system.completed %>%</span> completo</div></strong>
+    <div class="content"><b>Investimento:</b> <%= number_to_currency(system.price, :unit => "R$") %></div>
+    <hr>
     <div class="content"><b>HH:</b> <%= system.hh %></div>
     <div class="content"><b>Porcentagem:</b> <%= system.percentage %></div>
     <div class="content"><b>Valor:</b> <%= number_to_currency(system.value, :unit => "R$") %></div>
+    <br>
     <div class="delete-button"><%= button_to "Deletar", system, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse sistema?' }, :class => "btn btn-danger" %></div>
   </div>
 

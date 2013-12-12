@@ -21,6 +21,7 @@
     
   </head>
   <body>
+   <script src="js/bootstrap.min.js"></script>
 
     <div class="navbar navbar-fixed-top ">
       <div class="navbar-inner">
@@ -34,18 +35,15 @@
           <div class="container nav-collapse" pull-right>
             <ul class="nav">
               <li><%= link_to "Ajuda", "/help" %></li>
-              <li><%= link_to "Baselines", "/baselines"  %></li>
               <li class='dropdown'>
                         <a id='fran_drop' href='' class='dropdown-toggle' data-toggle='dropdown'>Entidades <b class="caret"></b></a>
                         <ul class='dropdown-menu' role='menu' arialabledby='fran_drop'>
                             <li><%= link_to "Programas", "/programs"  %></li>
                             <li><%= link_to "Empreendimentos", "/enterprises"  %></li>
+                            <li><%= link_to "Áreas", "/areas"  %></li>
                             <li><%= link_to "Sistemas", "/systems"  %></li>
                             <li><%= link_to "Subsistemas", "/subsystems"  %></li>
                             <li><%= link_to "Subsubsistemas", "/subsubsystems"  %></li>
-                            <li><%= link_to "Áreas", "/areas"  %></li>
-                            <li><%= link_to "Subáreas", "/subareas"  %></li>
-                            <li><%= link_to "Locais", "/locals"  %></li>
                         </ul>
                     </li>
             </ul>
@@ -56,13 +54,13 @@
 
     <div id="sidebar">
 
-      <ul>
+      <ul id="top-level">
         <% @programs.each do |program| %>
 
           <li>
             <h5>
               <% unless program.enterprises.empty? %>
-                <%= link_to "→", "#", :onclick => "toggle('program-#{program.id}');", :status => "open" %>
+                <%= link_to image_tag("disclosure-indicator-open.png"), "#", :toggle_id => "program-#{program.id}", :status => "open", :class => "disclosure-indicator" %>
               <% end %>
               <%= link_to program.name, program %>
             </h5>
@@ -73,8 +71,8 @@
               <% program.enterprises.each do |enterprise| %>
                 <li>
                   <h5>
-                    <% unless enterprise.systems.empty? %>
-                      <%= link_to "→", "#", :onclick => "toggle('enterprise-#{enterprise.id}');", :status => "open" %>
+                    <% unless enterprise.areas.empty? %>
+                      <%= link_to image_tag("disclosure-indicator-open.png"), "#", :toggle_id => "enterprise-#{enterprise.id}", :status => "open", :class => "disclosure-indicator" %>
                      <% end %> 
                     <%= link_to enterprise.name, enterprise %>
                   </h5>
@@ -82,23 +80,35 @@
 
                 <li id="enterprise-<%= enterprise.id %>">
                   <ul>
-                    <% enterprise.systems.each do |system| %>
+                    <% enterprise.areas.each do |area| %>
                       <li>
                         <h5>
-                          <% unless system.subsystems.empty? %>
-                            <%= link_to "→", "#", :onclick => "toggle('system-#{system.id}');", :status => "open" %>
+                          <% unless area.systems.empty? %>
+                            <%= link_to image_tag("disclosure-indicator-open.png"), "#", :toggle_id => "area-#{area.id}", :status => "open", :class => "disclosure-indicator" %>
                           <% end %>
-                          <%= link_to system.name, system %>
+                          <%= link_to area.name, area %>
                         </h5>
                       </li>
 
-                      <li id="system-<%= system.id %>">
-                        <ul id="program-<%= program.id %>">
+                      <li id="area-<%= area.id %>">
+                        <ul>
+                          <% area.systems.each do |system| %>
+                            <li>
+                              <h5>
+                                <% unless system.subsystems.empty? %>
+                                  <%= link_to image_tag("disclosure-indicator-open.png"), "#", :toggle_id => "system-#{system.id}", :status => "open", :class => "disclosure-indicator" %>
+                                <% end %>
+                                <%= link_to system.name, system %>
+                               </h5>
+                            </li>
+                            
+                            <li id="system-<%= system.id %>">
+                               <ul id="program-<%= program.id %>">
                           <% system.subsystems.each do |subsystem| %>
                             <li>
                               <h5>
                                 <% unless subsystem.subsubsystems.empty? %>
-                                  <%= link_to "→", "#", :onclick => "toggle('subsystem-#{subsystem.id}');", :status => "open" %>
+                                  <%= link_to image_tag("disclosure-indicator-open.png"), "#", :toggle_id => "subsystem-#{subsystem.id}", :status => "open", :class => "disclosure-indicator" %>
                                 <% end %>
                                 <%= link_to subsystem.name, subsystem %>
                               </h5>
@@ -111,6 +121,9 @@
 
                                 <% end %>
                               </ul>
+                            </li>
+                            <%end%>
+                            </ul>
                             </li>
                           <% end %>
                         </ul>
@@ -138,18 +151,21 @@
               <strong>Para continuar você precisa se logar.</strong>
             </div>
             <center>
+            <br>
               <%= form_for("user", :url => user_session_path) do |f| %>
                 <div class="field">
-                  <%= f.label "Usuário" %>
+                  <span class= "small_font"> Email</span><br>
                   <%= f.text_field :email %>
                 </div>
+                
                 <div class="field">
-                  <%= f.label "Senha" %>
+                  <span class= "small_font"> Senha</span><br>
                   <%= f.password_field :password %>
                 </div>
                 <div class="field">
                 <%= f.check_box :remember_me %> Lembrar senha
                 </div>
+                <br>
                 <div class="actions">
                   <%= f.submit "Entrar", :class => "btn btn-success" %>
                 </div>
@@ -157,7 +173,7 @@
               </center>
             <% end %>
           </div>
-        </div><!--/row-->
+
     </div> <!-- /container -->
 
     <!-- Javascripts

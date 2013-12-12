@@ -1,8 +1,10 @@
 <div class="history-container">
   ←
-  <%= link_to @subsystem.system.enterprise.program.name, @subsystem.system.enterprise.program %>
+  <%= link_to @subsystem.system.area.enterprise.program.name, @subsystem.system.area.enterprise.program %>
   ←
-  <%= link_to @subsystem.system.enterprise.name, @subsystem.system.enterprise %>
+  <%= link_to @subsystem.system.area.enterprise.name, @subsystem.system.area.enterprise %>
+  ←
+  <%= link_to @subsystem.system.area.name, @subsystem.system.area %>
   ←
   <%= link_to @subsystem.system.name, @subsystem.system %>
 </div>
@@ -20,8 +22,8 @@
 
   <br>
 
-  <div class="content"><b>Investimento:</b> <%= number_to_currency(@subsystem.price, :unit => "R$") %></div>
   <div class="content"><strong><span class="percentage-number"><%=@subsystem.completed%>%</span></strong> completo</div>
+  <div class="content"><b>Investimento:</b> <%= number_to_currency(@subsystem.price, :unit => "R$") %></div>
   <% if !@subsystem.has_desagregation? %>
     <div class="content"><b>Qtd planejada:</b><br></div>
     <div class="content"><%= @subsystem.total_quantity %> <%=@subsystem.unity%></div>
@@ -56,6 +58,8 @@
 </div>
 
 <% end %>
+
+<%= button_to "Gerar relatório", subsystem_report_path(@subsystem), :class => "btn", :method => "get" %>
 
 <% if !@subsystem.has_desagregation? && @subsystem.price != 0 then %>
 
@@ -129,6 +133,7 @@
 
       <div class="name"><%= link_to subsubsystem.name, subsubsystem %></div>
       <div class="content"><span class="percentage-number"><b><%= subsubsystem.completed %>%</b></span> completo</div>
+      <div class="content"><b>Investimento: </b><%= number_to_currency(subsubsystem.price, :unit => "R$") %></div>
       <hr>
       <div class="content"><b>Quant. estimada:</b> <%= subsubsystem.planned_quantity %> <%= subsubsystem.unity %></div>
       <div class="content"><b>Quant. realizada:</b> <%= subsubsystem.real_quantity %> <%= subsubsystem.unity %></div>

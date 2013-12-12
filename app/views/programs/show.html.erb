@@ -9,8 +9,8 @@
 
 <div class="list-item section-details">
   <br>
-  <div class="content"><strong>Investimento:</strong> <%= number_to_currency(@program.price, :unit => "R$") %></div>
   <div class="content"><span class="percentage-number"><strong><%= @program.completed %>%</span> completo</div></strong>
+  <div class="content"><strong>Investimento:</strong> <%= number_to_currency(@program.price, :unit => "R$") %></div>
   <br>
 </div>
 
@@ -39,6 +39,8 @@
 
 </div>
 
+<%= button_to "Gerar relatório", program_report_path(@program), :class => "btn", :method => "get" %>
+
 <hr>
 
 <div class="right-aligned-create-button-container">
@@ -61,8 +63,8 @@
     <% @program.enterprises.each do |enterprise| %>
       <div class="span3 list-item">
         <div class="name"><%= link_to enterprise.name, enterprise %></div>
-        <div class="content"><strong>Investimento:</strong><%= number_to_currency(enterprise.price, :unit => "R$") %></div>
         <div class="content"><span class="percentage-number"><strong><%= enterprise.completed %>%</span> completo</div></strong>
+        <div class="content"><strong>Investimento: </strong><%= number_to_currency(enterprise.price, :unit => "R$") %></div>
         <hr>
         <div class="content"><strong>HH:</strong> <%=enterprise.hh %></div>
         <div class="content"><strong>Valor:</strong> <%= number_to_currency(enterprise.value, :unit => "R$") %></div>

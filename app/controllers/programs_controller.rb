@@ -62,5 +62,31 @@ class ProgramsController < ApplicationController
     end
   end
 
-
+  def report
+    @program = Program.find(params[:program_id])
+    @subsubsystems = Array.new
+    @program.enterprises.each do |enterprise|
+      enterprise.areas.each do |area|
+        area.systems.each do |system|
+          system.subsystems.each do |subsystem|
+            subsystem.subsubsystems.each do |subsubsystem|
+              @subsubsystems.push(subsubsystem)
+            end
+          end
+        end
+      end
+    end
+    @subsubsystems.each do |subsubsystem1|
+      @subsubsystems.each do |subsubsystem2|
+        if subsubsystem1 != subsubsystem2
+          if subsubsystem1.name == subsubsystem2.name
+            subsubsystem1.planned_quantity = subsubsystem1.planned_quantity + subsubsystem2.planned_quantity
+            subsubsystem1.real_quantity = subsubsystem1.real_quantity + subsubsystem2.real_quantity
+            @subsubsystems.delete(subsubsystem2)
+          end
+        end
+      end
+    end
+  end
+    
 end

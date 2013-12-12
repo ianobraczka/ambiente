@@ -16,10 +16,6 @@
     <%= f.text_field :name %>
   </div>
 
-  <div class="field">
-    <%= f.label "Áreas" %>
-    <%= f.select :area_ids, Area.all.collect {|area| [area.name, area.id]}, {:include_blank => 'Nenhuma'}, :multiple => true, class: "dropdown_checkbox" %>
-  </div>
   <br>
 
   <div class="actions">

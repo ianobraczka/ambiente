@@ -1,10 +1,12 @@
 <div class="history-container">
   ←
-  <%= link_to @subsubsystem.subsystem.system.enterprise.program.name, @subsubsystem.subsystem.system.enterprise.program %>
+  <%= link_to @subsubsystem.subsystem.system.area.enterprise.program.name, @subsubsystem.subsystem.system.area.enterprise.program %>
   ←
-  <%= link_to @subsubsystem.subsystem.system.enterprise.name, @subsubsystem.subsystem.system.enterprise %>
+  <%= link_to @subsubsystem.subsystem.system.area.enterprise.name, @subsubsystem.subsystem.system.area.enterprise %>
   ←
-  <%= link_to @subsubsystem.subsystem.system.name, @subsubsystem.subsystem.system %>
+  <%= link_to @subsubsystem.subsystem.system.area.name, @subsubsystem.subsystem.system.area %>
+  ←
+  <%=link_to @subsubsystem.subsystem.system.name, @subsubsystem.subsystem.system %>
   ←
   <%=link_to @subsubsystem.subsystem.name, @subsubsystem.subsystem %>
 </div>
@@ -21,9 +23,8 @@
 <div class="list-item section-details">
 
   <br>
-
-  <div class="content"><b>Investimento:</b> <%= number_to_currency(@subsubsystem.price, :unit => "R$") %></div>
   <div class="content"><span class="percentage-number"><b><%=@subsubsystem.completed%>%</b></span> completo</div>
+  <div class="content"><b>Investimento:</b> <%= number_to_currency(@subsubsystem.price, :unit => "R$") %></div>
   <hr>
   <div class="content"><b>Quant. total planejada:</b> <%= @subsubsystem.planned_quantity %> <%=@subsubsystem.unity%></div>
   <div class="content"><b>Quant. total realizada:</b> <%= @subsubsystem.real_quantity %> <%=@subsubsystem.unity%></div>
@@ -39,7 +40,8 @@
 
 <% if !@subsubsystem.plannings.empty? %>
     <hr>
-    <span class="medium_font"> Planejamento:<br><br></span>
+    <br>
+    <span class="medium_font"> Planejamento atual:<br><br></span>
     <div class="row">
   
   <% @subsubsystem.current_planning.periods.each do |period| %>
@@ -82,6 +84,9 @@
       <%end%>
     </div>
   </center>
+  <br>
+<%= button_to "Novo planejamento", new_subsubsystem_planning_path(@subsubsystem), :method => "get", :class => "btn btn-success" %>
+
 <% else %>
   <br>
   <div class="alert alert-error">

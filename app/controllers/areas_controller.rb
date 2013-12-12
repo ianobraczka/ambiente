@@ -1,6 +1,8 @@
 class AreasController < ApplicationController
 
 
+  @@enterprise_id = 1
+
   def index
     @areas = Area.all
   end
@@ -39,7 +41,9 @@ class AreasController < ApplicationController
 
 
   def new
-    @area = Area.new
+    @enterprise = Enterprise.find(params[:enterprise_id])
+    @area = @enterprise.areas.build
+    @@enterprise_id = @enterprise.id
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @enterprise }
@@ -47,7 +51,9 @@ class AreasController < ApplicationController
   end
 
   def create
-    @area = Area.new(params[:area])
+    @enterprise = Enterprise.find(@@enterprise_id)
+    @area = @enterprise.areas.build(params[:area])
+    @area.weight = @enterprise.weight
     respond_to do |format|
       if @area.save
         format.html { redirect_to @area, notice: 'A area foi criada com sucesso! ' }
@@ -58,4 +64,28 @@ class AreasController < ApplicationController
       end
     end
   end
+
+  def report
+    @area = Area.find(params[:area_id])
+    @subsubsystems = Array.new
+    @area.systems.each do |system|
+      system.subsystems.each do |subsystem|
+        subsystem.subsubsystems.each do |subsubsystem|
+          @subsubsystems.push(subsubsystem)
+        end
+      end
+    end
+    @subsubsystems.each do |subsubsystem1|
+      @subsubsystems.each do |subsubsystem2|
+        if subsubsystem1 != subsubsystem2
+          if subsubsystem1.name == subsubsystem2.name
+            subsubsystem1.planned_quantity = subsubsystem1.planned_quantity + subsubsystem2.planned_quantity
+            subsubsystem1.real_quantity = subsubsystem1.real_quantity + subsubsystem2.real_quantity
+            @subsubsystems.delete(subsubsystem2)
+          end
+        end
+      end
+    end
+  end
+
 end

@@ -6,6 +6,26 @@ Ambiente::Application.routes.draw do
 
   resources :plannings
 
+  resources :programs do
+    get "report"
+  end
+
+  resources :enterprises do
+    get "report"
+  end
+
+  resources :areas do
+    get "report"
+  end
+
+  resources :systems do
+    get "report"
+  end
+
+  resources :subsystems do
+    get "report"
+  end
+
   get "baselines_controller/index"
 
   get "plannings/new"
@@ -103,7 +123,7 @@ Ambiente::Application.routes.draw do
   end
 
   resources :enterprises do
-    resources :systems
+    resources :areas
   end
 
   resources :subsubsystems
@@ -121,7 +141,7 @@ Ambiente::Application.routes.draw do
   end
 
   resources :areas do
-    resources :subareas
+    resources :systems
   end
 
   resources :systems do

@@ -1,6 +1,6 @@
 class SystemsController < ApplicationController
   
-  @@enterprise_id = 1
+  @@area_id = 1
 
   def index
     @systems = System.all
@@ -23,7 +23,7 @@ class SystemsController < ApplicationController
     @system.destroy
 
     respond_to do |format|
-      format.html { redirect_to @system.enterprise }
+      format.html { redirect_to @system.area }
       format.json { head :no_content }
     end
   end
@@ -43,9 +43,9 @@ class SystemsController < ApplicationController
 
 
   def new
-    @enterprise = Enterprise.find(params[:enterprise_id])
-    @system = @enterprise.systems.build
-    @@enterprise_id = @enterprise.id
+    @area = Area.find(params[:area_id])
+    @system = @area.systems.build
+    @@area_id = @area.id
     @system.price = 0
 
     respond_to do |format|
@@ -55,13 +55,13 @@ class SystemsController < ApplicationController
   end
 
   def create
-    @enterprise = Enterprise.find(@@enterprise_id)
-    @system = @enterprise.systems.build(params[:system])
+    @area = Area.find(@@area_id)
+    @system = @area.systems.build(params[:system])
     @system.price = 0
     @system.hh = 0
     @system.percentage = 0
     @system.value = 0
-    @system.weight = @enterprise.weight
+    @system.weight = @area.weight
     @system.save
     respond_to do |format|
       if @system.save
@@ -73,4 +73,26 @@ class SystemsController < ApplicationController
       end
     end
   end
+
+  def report
+    @system = System.find(params[:system_id])
+    @subsubsystems = Array.new
+    @system.subsystems.each do |subsystem|
+      subsystem.subsubsystems.each do |subsubsystem|
+        @subsubsystems.push(subsubsystem)
+      end
+    end
+    @subsubsystems.each do |subsubsystem1|
+      @subsubsystems.each do |subsubsystem2|
+        if subsubsystem1 != subsubsystem2
+          if subsubsystem1.name == subsubsystem2.name
+            subsubsystem1.planned_quantity = subsubsystem1.planned_quantity + subsubsystem2.planned_quantity
+            subsubsystem1.real_quantity = subsubsystem1.real_quantity + subsubsystem2.real_quantity
+            @subsubsystems.delete(subsubsystem2)
+          end
+        end
+      end
+    end
+  end
+
 end

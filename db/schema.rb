@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131129144057) do
+ActiveRecord::Schema.define(:version => 20131205135925) do
 
   create_table "areas", :force => true do |t|
     t.integer  "enterprise_id"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20131129144057) do
     t.float    "value"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.integer  "weight"
   end
 
   create_table "areas_systems", :id => false, :force => true do |t|

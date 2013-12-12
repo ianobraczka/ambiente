@@ -31,21 +31,32 @@ ul {
 }
 
 #sidebar {
-	position:absolute;
+	position:fixed;
 	opacity:0.0;
-	left:-200px;
+	left:-280px;
 	top:44px;
-	min-width:250px;
-	height:100%;
-	border-right-style:solid;
+	min-width:200px;
+	min-height:100%;
 	border-right:solid 2px #c0c0c0;
+	border-bottom:solid 2px #c0c0c0;
 	background-color: rgba(234, 234, 234, 0.95);
 	padding:10px;
 	padding-left:0px;
 
+	#top-level {
+		margin-left: 15px;
+	}
+
 	li {
 		font-family:"Roboto";
 		font-weight:normal;
+	}
+
+	.disclosure-indicator-closed {
+		background:url("disclosure-indicator-closed.png") no-repeat;
+	}
+	.disclosure-indicator-open {
+		background:url("disclosure-indicator-open.png") no-repeat;
 	}
 }
 

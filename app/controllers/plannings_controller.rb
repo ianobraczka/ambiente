@@ -46,7 +46,7 @@ class PlanningsController < ApplicationController
     @planning = @plannable.plannings.build
     @@plannable_id = @plannable.id
     @@plannable_type = @plannable.class.to_s
-    6.times { @planning.periods.build }
+    8.times { @planning.periods.build }
 
     respond_to do |format|
       format.html # new.html.erb

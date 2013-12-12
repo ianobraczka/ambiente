@@ -120,9 +120,11 @@ class Subsystem < ActiveRecord::Base
     else
       completed = 0
       self.subsubsystems.each do |subsubsystem|
-        completed = completed + (subsubsystem.real_quantity*100/subsubsystem.planned_quantity)*subsubsystem.weight_variable(weight)
+        unless subsubsystem.planned_quantity == 0
+          completed = completed + (subsubsystem.real_quantity*100/subsubsystem.planned_quantity)*subsubsystem.weight_variable(weight)
+        end
       end
-      (completed/mult).round 
+      (completed/mult).round
     end
   end
 

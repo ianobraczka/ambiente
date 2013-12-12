@@ -1,9 +1,11 @@
 <div class="history-container">
 
   ←
-  <%= link_to @system.enterprise.program.name, @system.enterprise.program %> 
+  <%= link_to @system.area.enterprise.program.name, @system.area.enterprise.program %> 
   ←
-  <%= link_to @system.enterprise.name, @system.enterprise %>
+  <%= link_to @system.area.enterprise.name, @system.area.enterprise %>
+  ←
+  <%= link_to @system.area.name, @system.area %>
 
 </div>
   
@@ -16,9 +18,8 @@
 
 <div class="list-item section-details">
   <br>
-  <div class="content"><b>Investimento:</b> <%= number_to_currency(@system.price, :unit => "R$") %></div>
   <div class="content"><strong><span class="percentage-number"><%= @system.completed %>%</span></strong> completo</div>
-
+  <div class="content"><b>Investimento:</b> <%= number_to_currency(@system.price, :unit => "R$") %></div>
   <hr>
 
   <div class="content"><b>HH: </b><%=@system.hh%></div>
@@ -47,18 +48,14 @@
 
 </div>
 
-  <span class="small_font">Área(s): 
-  <% @system.areas.each do |area| %>
-    <%= link_to area.name, area %><%if @system.areas.last != area%>,<%end%>
-  <% end %>
-  <br> </span>
+<%= button_to "Gerar relatório", system_report_path(@system), :class => "btn", :method => "get" %>
 
 <% if !@system.has_desagregation? && @system.price == 0 then %>
   <br>
   <div class="alert alert-error">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
   <strong><center>Esse sistema não possui nenhum subsistema cadastrado. Para prosseguir, voce deve escolher se ele possui subsistemas ou se é o nível mais desagregado:</strong></center></div>
-  <br>
+  <br><center>
   <div id="choose-system-type-buttons">
     <div class = "edit-section-button">
     <%= button_to "É o nível mais desagregado", edit_system_path(@system), :method => "get", :class => "btn btn-info"%>
@@ -66,6 +63,7 @@
     <div class = "delete-section-button">
     <%= button_to "Criar subsistema", new_system_subsystem_path(@system), :method => "get", :class => "btn btn-success" %>
     </div>
+    </center>
   </div>
 <%end%>
 
@@ -135,10 +133,11 @@
     <div class="span3 list-item">
       <div class="name"><%= link_to subsystem.name, subsystem %></div>
       <div class="content"><span class="percentage-number"><strong><%= subsystem.completed %>%</strong></span> completo</div>
+      <div class="content"><b>Investimento: </b><%= number_to_currency(subsystem.price, :unit => "R$") %></div>
       <hr>
       <div class="content"><strong>HH:</strong> <%= subsystem.hh %></div>
       <div class="content"><strong>Porcentagem:</strong> <%= subsystem.percentage %>%</div>
-      <div class="content"><strong>Valor:</strong><%= number_to_currency(subsystem.price, :unit => "R$") %></div>
+      <div class="content"><strong>Valor:</strong><%= number_to_currency(subsystem.value, :unit => "R$") %></div>
       <br>
     </div>
   <%end%>

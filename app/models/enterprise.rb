@@ -1,21 +1,25 @@
 class Enterprise < ActiveRecord::Base
   attr_accessible :hh, :name, :percentage, :price, :program_id, :value, :weight
   belongs_to :program
-  has_many :systems, :dependent => :destroy
+  has_many :areas, :dependent => :destroy
 
+
+  #retorna o investimento feito em dado empreendimento
   def price
   	value = 0
-  	self.systems.each do |system|
-  		value= value + system.price
+  	self.areas.each do |area|
+  		value= value + area.price
   	end
   	value
   end
 
+  # METODOS QUE RETORNAM OS PONDERADORES (HOMEM*HORA, PORCENTAGEM E VALOR)
+  
   def hh
     value = 0
-    self.systems.each do |system|
-      if system.hh != nil then
-        value = value + system.hh
+    self.areas.each do |area|
+      if area.hh != nil then
+        value = value + area.hh
       end
     end
     value
@@ -23,9 +27,9 @@ class Enterprise < ActiveRecord::Base
 
   def percentage
     value = 0
-    self.systems.each do |system|
-      if system.percentage != nil
-        value= value + system.percentage
+    self.areas.each do |area|
+      if area.percentage != nil
+        value= value + area.percentage
       end
     end
     value
@@ -33,38 +37,41 @@ class Enterprise < ActiveRecord::Base
 
   def value
     value = 0
-    self.systems.each do |system|
-      if system.value != nil then
-        value= value + system.value
+    self.areas.each do |area|
+      if area.value != nil then
+        value= value + area.value
       end
     end
     value
   end
 
+  # retorna a quantidade planejada de dado empreendimento (soma das qtds planejadas dos sistemas)
   def planned_quantity
     pq = 0
-    if self.systems.empty?
+    if self.areas.empty?
       0
     else
-      self.systems.each do |system|
-        pq = pq + system.planned_quantity
+      self.areas.each do |area|
+        pq = pq + area.planned_quantity
       end
     end
     pq
   end
 
+  # retorna a quantidade realizada de dado empreendimento (soma das qtds realizadas dos sistemas)
   def real_quantity
     rq = 0
-    if self.systems.empty?
+    if self.areas.empty?
       0
     else
-      self.systems.each do |system|
-        rq = rq + system.real_quantity
+      self.areas.each do |area|
+        rq = rq + area.real_quantity
       end
     end
     rq
   end
 
+  # retorna a porcentagem completa de um empreendimento
   def completed
     if self.planned_quantity == nil || self.real_quantity == nil
       return 0
@@ -72,8 +79,10 @@ class Enterprise < ActiveRecord::Base
       return 0
     else
       completed = 0
-      self.systems.each do |system|
-        completed = completed + (system.real_quantity*100/system.planned_quantity)*system.weight_variable(weight)
+      self.areas.each do |area|
+        unless area.planned_quantity == 0
+          completed = completed + (area.real_quantity*100/area.planned_quantity)*area.weight_variable(weight)
+        end
       end
       (completed/mult).round 
     end

@@ -68,4 +68,23 @@ class SubsystemsController < ApplicationController
       end
     end
   end
+
+  def report
+    @subsystem = Subsystem.find(params[:subsystem_id])
+    @subsubsystems = Array.new
+    @subsystem.subsubsystems.each do |subsubsystem|
+      @subsubsystems.push(subsubsystem)
+    end
+    @subsubsystems.each do |subsubsystem1|
+      @subsubsystems.each do |subsubsystem2|
+        if subsubsystem1 != subsubsystem2
+          if subsubsystem1.name == subsubsystem2.name
+            subsubsystem1.planned_quantity = subsubsystem1.planned_quantity + subsubsystem2.planned_quantity
+            subsubsystem1.real_quantity = subsubsystem1.real_quantity + subsubsystem2.real_quantity
+            @subsubsystems.delete(subsubsystem2)
+          end
+        end
+      end
+    end
+  end
 end

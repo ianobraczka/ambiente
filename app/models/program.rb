@@ -67,7 +67,9 @@ class Program < ActiveRecord::Base
     else
       completed = 0
       self.enterprises.each do |enterprise|
-        completed = completed + (enterprise.real_quantity*100/enterprise.planned_quantity)*enterprise.weight_variable(weight)
+        unless enterprise.planned_quantity == 0
+          completed = completed + (enterprise.real_quantity*100/enterprise.planned_quantity)*enterprise.weight_variable(weight)
+        end
       end
       (completed/mult).round 
     end
