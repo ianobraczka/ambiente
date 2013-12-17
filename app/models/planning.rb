@@ -27,17 +27,28 @@ class Planning < ActiveRecord::Base
   end
 
   def current_period
-    i = 1
-    if self.periods.first.quantity == nil 
-      return self.periods.first
-    else
-      while i <= self.periods.count
-        if self.periods.find(i).quantity == nil
-          return self.periods.find(i-1)
-        end
-        i = i+1
+    self.periods.each do |period|
+       if period.quantity == nil then
+        return period
       end
     end
+    return self.periods.last
+  end
+
+  def status_period
+    pperiod = self.periods.first
+    self.periods.each do |period|
+      if period == self.periods.last
+        return period
+      else
+        if period == current_period
+          break
+        else
+          pperiod = period
+        end
+      end
+    end
+    return pperiod
   end
 
   def quantity_percentage

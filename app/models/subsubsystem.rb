@@ -38,6 +38,10 @@ class Subsubsystem < ActiveRecord::Base
     current_planning.current_period
   end
 
+  def status_period
+    current_planning.status_period
+  end
+
   def weight_variable (weight)
     if weight == 1 then
       mult = self.value
