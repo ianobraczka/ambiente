@@ -61,7 +61,7 @@
 
 <%= button_to "Gerar relatório", subsystem_report_path(@subsystem), :class => "btn", :method => "get" %>
 
-<% if !@system.has_desagregation? && @system.price == 0 then %>
+<% if !@subsystem.has_desagregation? && @subsystem.price == 0 then %>
   <br>
   <div class="alert alert-error">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -132,6 +132,9 @@
 <%end %>
 
 <% if @subsystem.has_desagregation? then %>
+<div class = "delete-section-button">
+    <%= button_to "Criar subsubsistema", new_subsystem_subsubsystem_path(@subsystem), :method => "get", :class => "btn btn-success" %>
+    </div>
 
   <h2 class="area-subtitle">SUBSUBSISTEMAS</h2>
 

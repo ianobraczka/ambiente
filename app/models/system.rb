@@ -1,5 +1,5 @@
 class System < ActiveRecord::Base
-  attr_accessible :enterprise_id, :hh, :name, :percentage, :price, :total_quantity, :unity, :value, :area_id, :weight
+  attr_accessible :enterprise_id, :current_planning_id, :hh, :name, :percentage, :price, :total_quantity, :unity, :value, :area_id, :weight
   belongs_to :area
   has_many :subsystems, :dependent => :destroy
   has_many :plannings, as: :plannable
@@ -13,7 +13,11 @@ class System < ActiveRecord::Base
   end
 
   def current_planning
-    self.plannings.last
+    if self.plannings.length == 1 then 
+      return self.plannings.first
+    else
+      return Planning.find(self.current_planning_id)
+    end
   end
 
   def current_period

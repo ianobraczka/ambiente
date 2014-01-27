@@ -6,6 +6,7 @@ class CreatePeriods < ActiveRecord::Migration
       t.float :planned_quantity
       t.date :begin_date
       t.date :end_date
+      t.float :planned_quantity
 
       t.timestamps
     end

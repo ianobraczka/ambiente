@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131205135925) do
+ActiveRecord::Schema.define(:version => 20140123124048) do
 
   create_table "areas", :force => true do |t|
     t.integer  "enterprise_id"
@@ -115,9 +115,10 @@ ActiveRecord::Schema.define(:version => 20131205135925) do
     t.integer  "hh"
     t.integer  "percentage"
     t.float    "value"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
     t.integer  "weight"
+    t.integer  "current_planning_id"
   end
 
   create_table "subsystems", :force => true do |t|
@@ -129,9 +130,10 @@ ActiveRecord::Schema.define(:version => 20131205135925) do
     t.integer  "hh"
     t.integer  "percentage"
     t.float    "value"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
     t.integer  "weight"
+    t.integer  "current_planning_id"
   end
 
   create_table "systems", :force => true do |t|
@@ -145,11 +147,12 @@ ActiveRecord::Schema.define(:version => 20131205135925) do
     t.integer  "hh"
     t.integer  "percentage"
     t.float    "value"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
     t.boolean  "has_desagragations"
     t.integer  "enterprise_id"
     t.integer  "weight"
+    t.integer  "current_planning_id"
   end
 
   create_table "users", :force => true do |t|

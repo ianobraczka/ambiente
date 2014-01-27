@@ -1,5 +1,5 @@
 class Subsubsystem < ActiveRecord::Base
-  attr_accessible :hh, :name, :percentage, :price, :subsystem_id, :total_quantity, :unity, :value, :weight
+  attr_accessible :hh, :name, :current_planning_id, :percentage, :price, :subsystem_id, :total_quantity, :unity, :value, :weight
   belongs_to :subsystem
   has_many :plannings, :as => :plannable
 
@@ -31,7 +31,11 @@ class Subsubsystem < ActiveRecord::Base
   end
 
   def current_planning
-    self.plannings.last
+    if self.plannings.length == 1 then 
+      return self.plannings.first
+    else
+      return Planning.find(self.current_planning_id)
+    end
   end
 
   def current_period

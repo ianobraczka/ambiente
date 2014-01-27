@@ -55,4 +55,8 @@ class Planning < ActiveRecord::Base
     (real_quantity/planned_quantity)*100
   end
 
+  def date_string
+    init_date.to_s
+  end
+
 end

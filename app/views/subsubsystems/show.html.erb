@@ -96,7 +96,26 @@
     </div>
     </center>
     <br>
+    <br>
     <center><%= button_to "Cadastrar planejamento", new_subsubsystem_planning_path(@subsubsystem), :method => "get", :class => "btn btn-success" %></center>
     <br>
 <%end%>
+<%= form_for(@subsubsystem) do |f| %>
+    <% if @subsubsystem.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@subsubsystem.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+        <ul>
+        <% @subsubsystem.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="content"><strong><%= f.label "Escolha o planejamento" %></strong></div>
+    <div class="content"><%= f.collection_select(:subsubsystem, :current_planning_id, @subsubsystem.plannings, :id, :date_string, prompt: true) %></div>
+    <center><div class="content"><%= f.submit "Escolher", :class => "btn btn-success" %></div></center>
+    <br>
+  <% end %>
 <br><br><br>
