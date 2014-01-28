@@ -13,7 +13,7 @@
   <div class="span3 list-item">
 
     <div class="name"><%= link_to system.name, system %></div>
-    <div class="content"><b>Empreendimento:</b> <%=link_to system.enterprise.name, system.enterprise %></div>
+    <div class="content"><b>Área:</b> <%=link_to system.area.name, system.area %></div>
     <hr>
     <div class="content"><span class="percentage-number"><strong><%= system.completed %>%</span> completo</div></strong>
     <div class="content"><b>Investimento:</b> <%= number_to_currency(system.price, :unit => "R$") %></div>

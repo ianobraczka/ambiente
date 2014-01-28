@@ -5,19 +5,11 @@ class System < ActiveRecord::Base
   has_many :plannings, as: :plannable
 
   def has_desagregation?
-  	if self.subsystems.empty? then
-  		return false
-  	else
-  		return true
-    end
+    not self.subsystems.empty?
   end
 
   def current_planning
-    if self.plannings.length == 1 then 
-      return self.plannings.first
-    else
-      return Planning.find(self.current_planning_id)
-    end
+      Planning.find(self.current_planning_id)
   end
 
   def current_period

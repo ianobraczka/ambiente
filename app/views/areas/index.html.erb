@@ -12,15 +12,20 @@
 <% @areas.each do |area| %>
 
   <div class="span3 list-item">
-
     <div class="name"><%=link_to area.name, area %></div>
-    <div class="content"><b>Preço:</b> <%= number_to_currency(area.price, :unit => "R$") %></div>
-    <div class="content"><span class="percentage-number"><b><%= area.completed %>%</b></span> completa</div>
+    <div class="content"><b>Programa:</b> <%= link_to area.program.name, area.program %></div>
+    <hr>
+    <div class="content"><span class="percentage-number"><strong><%= area.completed %>%</span> completo</div></strong>
+    <div class="content"><b>Investimento:</b> <%= number_to_currency(area.price, :unit => "R$") %></div>
+    <hr>
+    <div class="content"><b>HH:</b> <%= area.hh %></div>
+    <div class="content"><b>Valor:</b> <%= number_to_currency(area.value, :unit => "R$") %></div>
+    <div class="content"><b>Porcentagem:</b> <%= area.percentage %></div>
     <br>
-    <div class="delete-button"><%= button_to "Deletar", area, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse sistema?' }, :class => "btn btn-danger" %></div>
-
+    <div class="delete-button">
+      <%= button_to "Deletar", area, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse empreendimento?' }, :class => "btn btn-danger" %>
+    </div>
   </div>
-
 <% end %>
 </div>
 </div>

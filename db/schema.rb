@@ -76,8 +76,12 @@ ActiveRecord::Schema.define(:version => 20140123124048) do
     t.integer  "system_id"
     t.integer  "subsystem_id"
     t.integer  "subsubsystem_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.date     "period_begin"
+    t.date     "period_end"
+    t.float    "quantity"
+    t.float    "planned_quantity"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.string   "plannable_type"
     t.integer  "plannable_id"
     t.date     "init_date"

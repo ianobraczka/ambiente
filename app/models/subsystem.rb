@@ -14,11 +14,7 @@ class Subsystem < ActiveRecord::Base
   end
 
   def current_planning
-    if self.plannings.length == 1 then 
-      return self.plannings.first
-    else
-      return Planning.find(self.current_planning_id)
-    end
+      Planning.find(self.current_planning_id)
   end
 
   def current_period

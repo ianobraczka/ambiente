@@ -72,6 +72,9 @@ class PlanningsController < ApplicationController
         format.json { render json: @planning.errors, status: :unprocessable_entity }
       end
     end
+
+    @plannable.current_planning_id = @planning.id
+    @plannable.save
   end
 
   def find_plannable
