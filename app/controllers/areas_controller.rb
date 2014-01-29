@@ -1,6 +1,5 @@
 class AreasController < ApplicationController
 
-
   @@enterprise_id = 1
 
   def index

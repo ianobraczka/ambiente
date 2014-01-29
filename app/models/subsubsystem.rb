@@ -14,22 +14,15 @@ class Subsubsystem < ActiveRecord::Base
 	end
 
 	def real_quantity
-		if !self.plannings.empty?
-			self.plannings.map(&:real_quantity).sum
-		else
-			0
-		end
+		self.plannings.empty? ? 0 : self.plannings.map(&:real_quantity).sum
 	end
 
 	def completed
-		if self.real_quantity == nil then
-			qp = 0
-		elsif self.planned_quantity != 0 then
-			qp = ((self.real_quantity/self.planned_quantity)*100)
-		elsif self.planned_quantity == 0 then
-			qp = 0
+		if self.real_quantity == nil or self.planned_quantity == 0 then
+			return 0
 		end
-		qp.round
+
+		((self.real_quantity/self.planned_quantity)*100).round
 	end
 
 	def planned_quantity
