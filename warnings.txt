@@ -1,0 +1,6 @@
+Seed completo. Faça o seguinte para atualizar seu banco:
+	bundle exec rake db:drop db:create db:migrate db:seed
+
+precisa fechar o servidor antes.
+
+(se der seed direto dará erro)

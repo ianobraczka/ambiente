@@ -1,5 +1,5 @@
 class Area < ActiveRecord::Base
-  attr_accessible :name, :price, :weight
+  attr_accessible :name, :price, :weight, :enterprise_id
   has_many :subareas, :dependent => :destroy
   belongs_to :enterprise
   has_many :systems
