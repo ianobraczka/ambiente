@@ -32,7 +32,8 @@ class Planning < ActiveRecord::Base
         return period
       end
     end
-    return self.periods.last
+    
+    self.periods.last
   end
 
   def status_period
@@ -48,7 +49,7 @@ class Planning < ActiveRecord::Base
         end
       end
     end
-    return pperiod
+    pperiod
   end
 
   def quantity_percentage

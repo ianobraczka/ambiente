@@ -9,7 +9,7 @@ class Area < ActiveRecord::Base
   def price
   	value = 0
   	self.systems.each do |system|
-  		value= value + system.price
+  		value = value + system.price
   	end
   	value
   end
@@ -49,9 +49,7 @@ class Area < ActiveRecord::Base
   # retorna a quantidade planejada de dado empreendimento (soma das qtds planejadas dos sistemas)
   def planned_quantity
     pq = 0
-    if self.systems.empty?
-      0
-    else
+    unless self.systems.empty?
       self.systems.each do |system|
         pq = pq + system.planned_quantity
       end
@@ -62,9 +60,7 @@ class Area < ActiveRecord::Base
   # retorna a quantidade realizada de dado empreendimento (soma das qtds realizadas dos sistemas)
   def real_quantity
     rq = 0
-    if self.systems.empty?
-      0
-    else
+    unless self.systems.empty?
       self.systems.each do |system|
         rq = rq + system.real_quantity
       end
