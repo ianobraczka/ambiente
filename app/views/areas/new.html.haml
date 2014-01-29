@@ -1,0 +1,10 @@
+%br/
+%span.small_font
+  = link_to @area.enterprise.program.name, @area.enterprise.program
+  > #{link_to @area.enterprise.name, @area.enterprise} >
+%span.medium_font Nova área:
+%br/
+%br/
+= render 'form'
+%br/
+= link_to 'Cancelar', controller: "areas"

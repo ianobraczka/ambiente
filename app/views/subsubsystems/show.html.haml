@@ -1,0 +1,147 @@
+.history-container
+  ←
+  \#{link_to @subsubsystem.subsystem.system.area.enterprise.program.name, @subsubsystem.subsystem.system.area.enterprise.program}
+  ←
+  \#{link_to @subsubsystem.subsystem.system.area.enterprise.name, @subsubsystem.subsystem.system.area.enterprise}
+  ←
+  \#{link_to @subsubsystem.subsystem.system.area.name, @subsubsystem.subsystem.system.area}
+  ←
+  \#{link_to @subsubsystem.subsystem.system.name, @subsubsystem.subsystem.system}
+  ←
+  \#{link_to @subsubsystem.subsystem.name, @subsubsystem.subsystem}
+#edit-and-delete-section-buttons-container
+  .edit-section-button= button_to 'Editar', edit_subsubsystem_path(@subsubsystem), :class => "btn"
+  .delete-section-button= button_to "Deletar subsubsistema", @subsubsystem, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse subsubsistema?' }, :class => "btn btn-danger"
+%h1.area-title= @subsubsystem.name
+.list-item.section-details
+  %br/
+  .content
+    %span.percentage-number
+      %b
+        = @subsubsystem.completed
+        \%
+    completo
+  .content
+    %b Investimento:
+    = number_to_currency(@subsubsystem.price, :unit => "R$")
+  %hr/
+  .content
+    %b Quant. total planejada:
+    = @subsubsystem.planned_quantity
+    = @subsubsystem.unity
+  .content
+    %b Quant. total realizada:
+    = @subsubsystem.real_quantity
+    = @subsubsystem.unity
+  %hr/
+  .content
+    %b HH:
+    = @subsubsystem.hh
+  .content
+    %b Valor:
+    = number_to_currency(@subsubsystem.value, :unit => "R$")
+  .content
+    %b Porcentagem:
+    = @subsubsystem.percentage
+    \%
+  %br/
+%br/
+- if !@subsubsystem.plannings.empty?
+  %hr/
+  %br/
+  %span.medium_font
+    Planejamento atual:
+    %br/
+    %br/
+  .row
+    - @subsubsystem.current_planning.periods.each do |period|
+      .span4.list-item
+        .name
+          = period.number
+          o período
+        - if @subsubsystem.current_planning.periods.first.quantity != nil
+          .content
+            Data de início:
+            %span.date
+              = period.begin_date.to_formatted_s(:rfc822)
+          .content
+            Data de término:
+            %span.date
+              = period.end_date.to_formatted_s(:rfc822)
+          %hr/
+        .content
+          Quant. prevista no período: #{period.planned_quantity} #{@subsubsystem.unity} (
+          %span.percentage-number>
+            = (period.planned_quantity*100/@subsubsystem.planned_quantity).round
+            \%
+          )
+        - if period.quantity != nil
+          .content
+            Quant. realizada no período: #{period.real_quantity} #{@subsubsystem.unity} (
+            %span.percentage-number>
+              = (period.real_quantity*100/@subsubsystem.planned_quantity).round
+              \%
+            )
+          %hr/
+          .content
+            Quant. prev. até o período: #{period.planned_until_period} #{@subsubsystem.unity} (
+            %span.percentage-number>
+              = (period.planned_until_period*100/@subsubsystem.planned_quantity).round
+              \%
+            )
+          .content
+            Quant. real. até o período: #{period.real_until_period} #{@subsubsystem.unity} (
+            %span.percentage-number>
+              = (period.real_until_period*100/@subsubsystem.planned_quantity).round
+              \%
+            )
+          %br/
+        - if @subsubsystem.current_period.quantity == nil && @subsubsystem.current_period == period
+          = form_for(@subsubsystem.current_period) do |f|
+            - if @subsubsystem.current_period.errors.any?
+              #error_explanation
+                %h2
+                  = pluralize(@subsubsystem.current_period.errors.count, "error")
+                  prohibited this product from being saved:
+                %ul
+                  - @subsubsystem.current_period.errors.full_messages.each do |msg|
+                    %li= msg
+            %hr/
+            .content
+              %center
+                %span.very_small_font Quant. realizada:
+                %br/
+                %br/
+                = f.number_field :quantity
+                %br/
+                = f.submit "Entrar", :class => "btn btn-success"
+  %br/
+  = button_to "Novo planejamento", new_subsubsystem_planning_path(@subsubsystem), :method => "get", :class => "btn btn-success"
+- else
+  %br/
+  .alert.alert-error
+    %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+    %center
+      %strong Esse subsubsistema ainda não possui planejamento
+  %br/
+  %br/
+  %center= button_to "Cadastrar planejamento", new_subsubsystem_planning_path(@subsubsystem), :method => "get", :class => "btn btn-success"
+  %br/
+= form_for(@subsubsystem) do |f|
+  - if @subsubsystem.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@subsubsystem.errors.count, "error")
+        prohibited this product from being saved:
+      %ul
+        - @subsubsystem.errors.full_messages.each do |msg|
+          %li= msg
+  .content
+    %strong= f.label "Escolha o planejamento"
+  .content= f.collection_select(:subsubsystem, :current_planning_id, @subsubsystem.plannings, :id, :date_string, prompt: true)
+  %center
+    .content= f.submit "Escolher", :class => "btn btn-success"
+  %br/
+%br/
+%br/
+%br/

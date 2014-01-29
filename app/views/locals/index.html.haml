@@ -1,0 +1,28 @@
+%h1 Locais
+%br/
+- if @locals.empty? then
+  %strong O Ambiente ainda não possui nenhum local. Para criar um, vá em alguma subárea e crie a partir dela.
+  %br/
+%br/
+- @locals.each do |local|
+  %tr
+    %td
+      %h4= local.name
+    %td
+      Programa: #{link_to local.subarea.name, local.subarea}
+  %br/
+  %td
+    Preço: #{local.price}
+  %br/
+  %td
+    HH: #{local.hh}
+  %br/
+  %td
+    \%: #{local.percentage}
+  %br/
+  %td
+    $: #{local.value}
+  %p
+  %td= button_to "Deletar", local, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse local?' }
+  %br/
+%br/

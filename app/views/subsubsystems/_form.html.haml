@@ -1,0 +1,43 @@
+= form_for(@subsubsystem) do |f|
+  - if @subsubsystem.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@subsubsystem.errors.count, "error")
+        prohibited this product from being saved:
+      %ul
+        - @subsubsystem.errors.full_messages.each do |msg|
+          %li= msg
+  .row
+    .span3
+      %strong/
+      %h5
+        Dados:
+      %br/
+      .field
+        = f.label "Nome"
+        = f.text_field :name
+      .field
+        = f.label "Preço (em reais)"
+        = f.number_field :price
+      .field
+        = f.label "Unidade"
+        = f.text_field :unity
+    .span3
+      %strong/
+      %h5
+        Ponderadores:
+      %br/
+      .field
+        = f.label "hh"
+        = f.number_field :hh
+      .field
+        = f.label "Porcentagem (%)"
+        = f.number_field :percentage
+      .field
+        = f.label "Valor (em reais)"
+        = f.number_field :value
+    %br/
+  %br/
+  %br/
+  .actions
+    = f.submit "OK", class: "btn btn-success"

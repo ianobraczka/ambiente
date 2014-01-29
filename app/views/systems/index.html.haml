@@ -1,0 +1,34 @@
+%h1.area-title SISTEMAS
+%br/
+- if @systems.empty? then
+  %strong O Ambiente ainda não possui nenhum sistema cadastrado. Para criar um, vá em algum empreendimento e crie a partir dele.
+  %br/
+%br/
+- @systems.each do |system|
+  .span3.list-item
+    .name= link_to system.name, system
+    .content
+      %b Área:
+      = link_to system.area.name, system.area
+    %hr/
+    .content
+      %span.percentage-number
+        %strong
+          = system.completed
+          \%
+      completo
+    .content
+      %b Investimento:
+      = number_to_currency(system.price, :unit => "R$")
+    %hr/
+    .content
+      %b HH:
+      = system.hh
+    .content
+      %b Porcentagem:
+      = system.percentage
+    .content
+      %b Valor:
+      = number_to_currency(system.value, :unit => "R$")
+    %br/
+    .delete-button= button_to "Deletar", system, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse sistema?' }, :class => "btn btn-danger"

@@ -1,0 +1,141 @@
+.history-container
+  ←
+  \#{link_to @system.area.enterprise.program.name, @system.area.enterprise.program}
+  ←
+  \#{link_to @system.area.enterprise.name, @system.area.enterprise}
+  ←
+  \#{link_to @system.area.name, @system.area}
+#edit-and-delete-section-buttons-container
+  .edit-section-button= button_to 'Editar', edit_system_path(@system) , :class => "btn"
+  .delete-section-button= button_to "Deletar sistema", @system, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse sistema?' }, :class => "btn btn-danger"
+.area-title= @system.name
+.list-item.section-details
+  %br/
+  .content
+    %strong
+      %span.percentage-number
+        = @system.completed
+        \%
+    completo
+  .content
+    %b Investimento:
+    = number_to_currency(@system.price, :unit => "R$")
+  %hr/
+  .content
+    %b HH:
+    = @system.hh
+  .content
+    %b Valor:
+    = number_to_currency(@system.value, :unit => "R$")
+  .content
+    %b Porcentagem:
+    = @system.percentage
+    \%
+  %hr/
+  = form_for(@system) do |f|
+    - if @system.errors.any?
+      #error_explanation
+        %h2
+          = pluralize(@system.errors.count, "error")
+          prohibited this product from being saved:
+        %ul
+          - @system.errors.full_messages.each do |msg|
+            %li= msg
+    .content
+      %strong= f.label "Escolha o ponderador"
+    .content= f.select :weight, options_for_select([["Valor", 1], ["HH", 2], ["Porcentagem", 3]], @system.weight)
+    %center
+      .content= f.submit "Ponderar", :class => "btn btn-success"
+    %br/
+= button_to "Gerar relatório", system_report_path(@system), :class => "btn", :method => "get"
+- if !@system.has_desagregation? && @system.price == 0 then
+  %br/
+  .alert.alert-error
+    %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+    %strong/
+    %center
+      Esse sistema não possui nenhum subsistema cadastrado. Para prosseguir, voce deve escolher se ele possui subsistemas ou se é o nível mais desagregado:
+  %br/
+  %center
+    #choose-system-type-buttons
+      .edit-section-button
+        = button_to "É o nível mais desagregado", edit_system_path(@system), :method => "get", :class => "btn btn-info"
+      .delete-section-button
+        = button_to "Criar subsistema", new_system_subsystem_path(@system), :method => "get", :class => "btn btn-success"
+- if !@system.has_desagregation? && @system.price != 0 then
+  - if !@system.plannings.empty?
+    %hr/
+    %span.medium_font
+      Planejamento:
+      %br/
+      %br/
+    .row
+      - @system.current_planning.periods.each do |period|
+        .span4.list-item
+          .name
+            = period.number
+            o período
+          .content
+            Quant. planejada no período: #{period.planned_quantity} #{@system.unity}
+          - if period.quantity != nil
+            .content
+              Quant. realizada no período: #{period.real_quantity} #{@system.unity}
+          - if @system.current_period.quantity == nil && @system.current_period == period
+            = form_for(@system.current_period) do |f|
+              - if @system.current_period.errors.any?
+                #error_explanation
+                  %h2
+                    = pluralize(@system.current_period.errors.count, "error")
+                    prohibited this product from being saved:
+                  %ul
+                    - @system.current_period.errors.full_messages.each do |msg|
+                      %li= msg
+              %hr/
+              .content
+                %center
+                  %span.very_small_font Quant. realizada:
+                  %br/
+                  %br/
+                  = f.number_field :quantity
+                  %br/
+                  = f.submit "Entrar", :class => "btn btn-success"
+  - else
+    %br/
+    .alert.alert-error
+      %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+      %center
+        %strong Esse sistema ainda não possui planejamento
+    %br/
+    %center= button_to "Cadastrar planejamento", new_system_planning_path(@system), :method => "get", :class => "btn btn-success"
+    %br/
+- if @system.has_desagregation? then
+  %hr/
+  .right-aligned-create-button-container
+    = button_to "Criar subsistema", new_system_subsystem_path(@system), :method => "get", :class => "btn btn-success"
+  %h2.area-subtitle SUBSISTEMAS
+  .row
+    - @system.subsystems.each do |subsystem|
+      .span3.list-item
+        .name= link_to subsystem.name, subsystem
+        .content
+          %span.percentage-number
+            %strong
+              = subsystem.completed
+              \%
+          completo
+        .content
+          %b Investimento:
+          = number_to_currency(subsystem.price, :unit => "R$")
+        %hr/
+        .content
+          %strong HH:
+          = subsystem.hh
+        .content
+          %strong Porcentagem:
+          = subsystem.percentage
+          \%
+        .content
+          %strong Valor:
+          = number_to_currency(subsystem.value, :unit => "R$")
+        %br/
+%br/

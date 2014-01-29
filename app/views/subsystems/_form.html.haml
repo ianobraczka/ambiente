@@ -1,0 +1,15 @@
+= form_for(@subsystem) do |f|
+  - if @subsystem.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@subsystem.errors.count, "error")
+        prohibited this subsystem from being saved:
+      %ul
+        - @subsystem.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label "Nome"
+    = f.text_field :name
+  %br/
+  .actions
+    = f.submit "OK", class: "btn btn-success"

@@ -1,0 +1,56 @@
+%h1= @subarea.name
+%p
+  %h4
+    Preço: R$ #{@subarea.price}
+%br/
+- if @subarea.locals.empty? && @subarea.systems.empty?
+  Essa subarea nao tem sistemas ou locais!
+  \#{button_to "criar local", new_subarea_local_path(@subarea), :method => "get"}
+  \#{button_to "criar sistema", new_subarea_system_path(@subarea), :method => "get"}
+- if @subarea.locals.empty? && !(@subarea.systems.empty?)
+  %p
+    %b Sistemas:
+    %br/
+    %br/
+  %p
+    = @subarea.systems.each do |system|
+      %strong= link_to system.name, system
+      %br/
+      Porcentagem: #{system.percentage}%
+      %br/
+      Valor: R$#{system.value}
+      %br/
+      HH: #{system.hh}
+      %br/
+      %br/
+      %br/
+    %br/
+    %br/
+    %b
+      = button_to "novo sistema", new_subarea_system_path(@subarea), :method => "get"
+  %br/
+- if @subarea.systems.empty? && !(@subarea.locals.empty?)
+  %p
+    %b Locais:
+    %br/
+    %br/
+  %p
+    = @subarea.locals.each do |local|
+      %strong= link_to local.name, local
+      %br/
+      Porcentagem: #{local.percentage}%
+      %br/
+      Valor: R$#{local.value}
+      %br/
+      HH: #{local.hh}
+      %br/
+      %br/
+      %br/
+    %br/
+    %br/
+    %b
+      = button_to "novo local", new_subarea_local_path(@subarea), :method => "get"
+  %br/
+= link_to 'Editar', edit_subarea_path(@subarea)
+|
+\#{link_to 'Voltar para subareas', subareas_path}

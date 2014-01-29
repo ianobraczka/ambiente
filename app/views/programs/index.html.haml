@@ -1,0 +1,26 @@
+#programs
+  .area-title
+    %h1 PROGRAMAS
+  - if @programs.empty? then
+    %br/
+    .alert.alert-error
+      %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+      %strong O sistema ainda não possui nenhum programa cadastrado.
+  .row
+    - @programs.each do |program|
+      .span3.list-item
+        .name= link_to program.name, program
+        .content
+          %span.percentage-number
+            %strong
+              = program.completed
+              \%
+          completo
+        .content
+          %strong Investimento:
+          = number_to_currency(program.price, :unit => "R$")
+        %br/
+        .delete-button
+          = button_to "Deletar", program, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse programa?' }, :class => "btn btn-danger"
+  .create-button
+    = button_to 'Novo Programa', "programs/new", :method => "get", :class => "btn btn-success"

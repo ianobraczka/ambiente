@@ -37,9 +37,7 @@ class Program < ActiveRecord::Base
 
   def planned_quantity
     pq = 0
-    if self.enterprises.empty?
-      0
-    else
+    unless self.enterprises.empty?
       self.enterprises.each do |enterprise|
         pq = pq + enterprise.planned_quantity
       end
@@ -50,8 +48,6 @@ class Program < ActiveRecord::Base
   def real_quantity
     rq = 0
     if self.enterprises.empty?
-      0
-    else
       self.enterprises.each do |enterprise|
         rq = rq + enterprise.real_quantity
       end
@@ -94,8 +90,5 @@ class Program < ActiveRecord::Base
       mult = self.percentage
     end
     mult
-  end
-
-
-  
+  end  
 end

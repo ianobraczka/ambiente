@@ -48,9 +48,7 @@ class Enterprise < ActiveRecord::Base
   # retorna a quantidade planejada de dado empreendimento (soma das qtds planejadas dos sistemas)
   def planned_quantity
     pq = 0
-    if self.areas.empty?
-      0
-    else
+    unless self.areas.empty?
       self.areas.each do |area|
         pq = pq + area.planned_quantity
       end
@@ -61,9 +59,7 @@ class Enterprise < ActiveRecord::Base
   # retorna a quantidade realizada de dado empreendimento (soma das qtds realizadas dos sistemas)
   def real_quantity
     rq = 0
-    if self.areas.empty?
-      0
-    else
+    unless self.areas.empty?
       self.areas.each do |area|
         rq = rq + area.real_quantity
       end
