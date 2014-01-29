@@ -1,0 +1,36 @@
+%h1.area-title ÁREAS
+- if @areas.empty? then
+  %br/
+  .alert.alert-error
+    %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+    %strong O sistema ainda não possui nenhuma área cadastrada.
+%br/
+- @areas.each do |area|
+  .span3.list-item
+    .name= link_to area.name, area
+    .content
+      %b Programa:
+      = link_to area.program.name, area.program
+    %hr/
+    .content
+      %span.percentage-number
+        %strong
+          = area.completed
+          \%
+      completo
+    .content
+      %b Investimento:
+      = number_to_currency(area.price, :unit => "R$")
+    %hr/
+    .content
+      %b HH:
+      = area.hh
+    .content
+      %b Valor:
+      = number_to_currency(area.value, :unit => "R$")
+    .content
+      %b Porcentagem:
+      = area.percentage
+    %br/
+    .delete-button
+      = button_to "Deletar", area, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse empreendimento?' }, :class => "btn btn-danger"

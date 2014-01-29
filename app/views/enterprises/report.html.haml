@@ -1,0 +1,63 @@
+%h1.area-title
+  Relatório de #{link_to @enterprise.name, @enterprise}
+%br/
+%br/
+%span.small_font
+  .content
+    %strong Investimento total:
+    = number_to_currency(@enterprise.price, :unit => "R$")
+%br/
+%span.small_font
+  .content
+    %strong
+      %font{:color => "red"}
+        = @enterprise.completed
+        \%
+      completo
+%br/
+%hr/
+%br/
+%span.medium_font SUBSUBSISTEMAS:
+%br/
+%br/
+%br/
+%br/
+- @subsubsystems.each do |subsubsystem|
+  %span.small_font
+    %strong= subsubsystem.name
+  %br/
+  %br/
+  - if subsubsystem.current_planning != nil
+    %span.very_small_font
+      Quantidade prevista no período: #{subsubsystem.current_period.planned_quantity} #{subsubsystem.unity} (
+      %font{:color => "red"}>
+        = (subsubsystem.current_period.planned_quantity*100/subsubsystem.planned_quantity).round
+        \%
+      )
+    %br/
+    %span.very_small_font
+      Quantidade realizada no período: #{subsubsystem.current_period.real_quantity} #{subsubsystem.unity} (
+      %font{:color => "red"}>
+        = (subsubsystem.current_period.real_quantity*100/subsubsystem.planned_quantity).round
+        \%
+      )
+    %br/
+    %span.very_small_font
+      Quantidade prevista até período: #{subsubsystem.current_period.planned_until_period} #{subsubsystem.unity} (
+      %font{:color => "red"}>
+        = (subsubsystem.current_period.planned_until_period*100/subsubsystem.planned_quantity).round
+        \%
+      )
+    %br/
+    %span.very_small_font
+      Quantidade realizada até período: #{subsubsystem.current_period.real_until_period} #{subsubsystem.unity} (
+      %font{:color => "red"}>
+        = (subsubsystem.current_period.real_until_period*100/subsubsystem.planned_quantity).round
+        \%
+      )
+    %br/
+  - else
+    %span.very_small_font
+      %i Esse subsubsistema ainda não possui nenhum período cadastrado.
+  %br/
+  %br/

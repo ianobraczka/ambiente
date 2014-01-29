@@ -1,0 +1,31 @@
+= form_for(@subsystem) do |f|
+  - if @subsystem.errors.any?
+    #error_explanation
+      %h2
+        = pluralize(@subsystem.errors.count, "error")
+        prohibited this product from being saved:
+      %ul
+        - @subsystem.errors.full_messages.each do |msg|
+          %li= msg
+  .field
+    = f.label "Preço (em reais)"
+    = f.number_field :price
+  .field
+    = f.label "Unidade"
+    = f.text_field :unity
+  %br/
+  %strong/
+  %h5
+    Ponderadores:
+  .field
+    = f.label "HH"
+    = f.number_field :hh
+  .field
+    = f.label "Valor (em reais)"
+    = f.number_field :value
+  .field
+    = f.label "Porcentagem"
+    = f.number_field :percentage
+  %br/
+  .actions
+    = f.submit "OK"

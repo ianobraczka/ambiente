@@ -1,0 +1,24 @@
+%h1 Programas
+%br/
+%br/
+- @programs.each do |program|
+  %tr
+    %td
+      Nome: #{program.name}
+  %br/
+  %td
+    Preço: #{program.price}
+  %br/
+  %td
+    HH: #{program.hh}
+  %br/
+  %td
+    \%: #{program.percentage}
+  %br/
+  %td
+    $: #{program.value}
+  %br/
+  %br/
+  %br/
+= link_to 'Novo Programa', new_program_path
+%br/

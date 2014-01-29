@@ -1,0 +1,71 @@
+#programs-show
+  #edit-and-delete-section-buttons-container
+    .edit-section-button= button_to 'Editar', edit_program_path(@program), :class => "btn"
+    .delete-section-button= button_to "Deletar programa", @program, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse programa?' }, :class => "btn btn-danger"
+  %h1.area-title= @program.name
+  .list-item.section-details
+    %br/
+    .content
+      %span.percentage-number
+        %strong
+          = @program.completed
+          \%
+      completo
+    .content
+      %strong Investimento:
+      = number_to_currency(@program.price, :unit => "R$")
+    %br/
+  .list-item.section-details
+    %br/
+    = form_for(@program) do |f|
+      - if @program.errors.any?
+        #error_explanation
+          %h2
+            = pluralize(@program.errors.count, "error")
+            prohibited this product from being saved:
+          %ul
+            - @program.errors.full_messages.each do |msg|
+              %li= msg
+      .content
+        %strong Escolha o ponderador
+      .content= f.select :weight, options_for_select([["Valor", 1], ["HH", 2], ["Porcentagem", 3]], @program.weight)
+      .content.weight-button= f.submit "Ponderar", :class => "btn btn-success"
+      %br/
+  = button_to "Gerar relatório", program_report_path(@program), :class => "btn", :method => "get"
+  %hr/
+  .right-aligned-create-button-container
+    = button_to "Criar empreendimento", new_program_enterprise_path(@program), :method => "get", :class => "btn btn-success"
+  %h2.area-subtitle EMPREENDIMENTOS
+  - if @program.enterprises.empty? then
+    %br/
+    .alert.alert-error
+      %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+      %center
+        %strong Este programa ainda não possui nenhum empreendimento cadastrado!
+  - if !(@program.enterprises.empty?) then
+    .row
+      - @program.enterprises.each do |enterprise|
+        .span3.list-item
+          .name= link_to enterprise.name, enterprise
+          .content
+            %span.percentage-number
+              %strong
+                = enterprise.completed
+                \%
+            completo
+          .content
+            %strong Investimento:
+            = number_to_currency(enterprise.price, :unit => "R$")
+          %hr/
+          .content
+            %strong HH:
+            = enterprise.hh
+          .content
+            %strong Valor:
+            = number_to_currency(enterprise.value, :unit => "R$")
+          .content
+            %strong Porcentagem:
+            = enterprise.percentage
+            \%
+          %br/
+%br/

@@ -1,0 +1,36 @@
+%h2.area-title EMPREENDIMENTOS
+- if @enterprises.empty? then
+  .alert.alert-error
+    %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+    %strong O sistema ainda não possui empreendimentos. Para criar um, vá em um programa e crie a partir dele.
+.row
+  - @enterprises.each do |enterprise|
+    .span3.list-item
+      .name= link_to enterprise.name, enterprise
+      .content
+        %b Programa:
+        = link_to enterprise.program.name, enterprise.program
+      %hr/
+      .content
+        %span.percentage-number
+          %strong
+            = enterprise.completed
+            \%
+        completo
+      .content
+        %b Investimento:
+        = number_to_currency(enterprise.price, :unit => "R$")
+      %hr/
+      .content
+        %b HH:
+        = enterprise.hh
+      .content
+        %b Valor:
+        = number_to_currency(enterprise.value, :unit => "R$")
+      .content
+        %b Porcentagem:
+        = enterprise.percentage
+      %br/
+      .delete-button
+        = button_to "Deletar", enterprise, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse empreendimento?' }, :class => "btn btn-danger"
+%br/

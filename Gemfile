@@ -7,6 +7,8 @@ gem 'rails', '3.2.13'
 
 gem 'pg'
 
+gem 'haml-rails', '0.4'
+
 gem 'therubyracer'
 
 gem 'devise', '1.4.7'
@@ -41,3 +43,5 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'debugger'
+
+gem "erb2haml", :group => :development

@@ -1,0 +1,83 @@
+.history-container
+  ←
+  \#{link_to @enterprise.program.name, @enterprise.program}
+#edit-and-delete-section-buttons-container
+  .edit-section-button= button_to 'Editar', edit_enterprise_path(@enterprise), :class => "btn"
+  .edit-section-button= button_to "Deletar empreendimento", @enterprise, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse empreendimento?' }, :class => "btn btn-danger"
+.area-title= @enterprise.name
+.list-item.section-details
+  %br/
+  .content
+    %strong
+      %span.percentage-number
+        = @enterprise.completed
+        \%
+      completo
+  .content
+    %b Investimento:
+    = number_to_currency(@enterprise.price, :unit => "R$")
+  %hr/
+  .content
+    %b HH:
+    = @enterprise.hh
+  .content
+    %b Valor:
+    = number_to_currency(@enterprise.value, :unit => "R$")
+  .content
+    %b Porcentagem:
+    = @enterprise.percentage
+    \%
+  %hr/
+  = form_for(@enterprise) do |f|
+    - if @enterprise.errors.any?
+      #error_explanation
+        %h2
+          = pluralize(@enterprise.errors.count, "error")
+          prohibited this product from being saved:
+        %ul
+          - @enterprise.errors.full_messages.each do |msg|
+            %li= msg
+    .content= f.label "Escolha o ponderador"
+    .content= f.select :weight, options_for_select([["Valor", 1], ["HH", 2], ["Porcentagem", 3]], @enterprise.weight)
+    %center
+      .content= f.submit "Ponderar", :class => "btn btn-success"
+    %br/
+= button_to "Gerar relatório", enterprise_report_path(@enterprise), :class => "btn", :method => "get"
+%hr/
+.right-aligned-create-button-container
+  = button_to "Criar área", new_enterprise_area_path(@enterprise), :method => "get", :class => "btn btn-success"
+%h2.area-subtitle ÁREAS
+- if @enterprise.areas.empty? then
+  %br/
+  .alert.alert-error
+    %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+    %center
+      %strong Este empreendimento ainda não possui nenhuma área cadastrada!
+- if !(@enterprise.areas.empty?) then
+  .row
+    - @enterprise.areas.each do |area|
+      .span3.list-item
+        .name= link_to area.name, area
+        .content
+          %span.percentage-number>
+            %b
+              = area.completed
+              \%
+          completo
+        .content
+          %b Investimento:
+          = number_to_currency(area.price, :unit => "R$")
+        %hr/
+        .content
+          %b HH:
+          = area.hh
+        .content
+          %b Valor:
+          = number_to_currency(area.value, :unit => "R$")
+        .content
+          %b Porcentagem:
+          = area.percentage
+          \%
+        %br/
+%br/
+%br/

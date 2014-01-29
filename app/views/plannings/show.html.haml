@@ -1,0 +1,33 @@
+%br/
+%center
+  %span.medium_font
+    = @planning.plannable.plannings.count
+    º período
+  %span.small_font
+    de #{link_to @planning.plannable.name, @planning.plannable}
+  %br/
+  %br/
+  %br/
+  %span.small_font
+    Quantidade planejada no período:
+    %font{:color => "red"}
+      = @planning.planned_quantity
+      = @planning.plannable.unity
+    %br/
+    %br/
+    Quantidade realizada:
+    %font{:color => "red"}
+      = @planning.quantity
+      = @planning.plannable.unity
+    (#{@planning.quantity_percentage}% do planejado)
+    %br/
+    %br/
+    %br/
+    Início do período:
+    %font{:color => "red"}
+      = @planning.period_begin.to_formatted_s(:rfc822)
+    %br/
+    %br/
+    Fim do período:
+    %font{:color => "red"}
+      = @planning.period_end.to_formatted_s(:rfc822)

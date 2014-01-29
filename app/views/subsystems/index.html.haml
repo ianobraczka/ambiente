@@ -1,0 +1,34 @@
+%h1.area-title SUBSISTEMAS
+%br/
+- if @subsystems.empty? then
+  %strong O Ambiente ainda não possui nenhum subsistema. Para criar um, vá em algum sistema e crie a partir dele.
+  %br/
+%br/
+- @subsystems.each do |subsystem|
+  .span3.list-item
+    .name= link_to subsystem.name, subsystem
+    .content
+      %b Sistema:
+      = link_to subsystem.system.name, subsystem.system
+    %hr/
+    .content
+      %span.percentage-number
+        %strong
+          = subsystem.completed
+          \%
+      completo
+    .content
+      %b Investimento:
+      = number_to_currency(subsystem.price, :unit => "R$")
+    %hr/
+    .content
+      %b HH:
+      = subsystem.hh
+    .content
+      %b Porcentagem:
+      = subsystem.percentage
+    .content
+      %b Valor:
+      = number_to_currency(subsystem.value, :unit => "R$")
+    %br/
+    .delete-button= button_to "Deletar", subsystem, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse sistema?' }, :class => "btn btn-danger"

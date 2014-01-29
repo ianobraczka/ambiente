@@ -1,0 +1,28 @@
+%h1 Subáreas
+%br/
+- if @subareas.empty? then
+  %strong O Ambiente ainda não possui nenhuma subárea. Para criar uma, vá em alguma área e crie a partir dela.
+  %br/
+%br/
+- @subareas.each do |subarea|
+  %tr
+    %td
+      %h4= subarea.name
+    %td
+      Área: #{link_to subarea.area.name, subarea.area}
+  %br/
+  %td
+    Preço: #{subarea.price}
+  %br/
+  %td
+    HH: #{subarea.hh}
+  %br/
+  %td
+    \%: #{subarea.percentage}
+  %br/
+  %td
+    $: #{subarea.value}
+  %p
+  %td= button_to "Deletar", subarea, method: :delete, data: { confirm: 'Tem certeza que quer deletar essa subarea?' }
+  %br/
+%br/

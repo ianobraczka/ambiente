@@ -1,0 +1,107 @@
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}
+    %meta{:content => "IE=Edge,chrome=1", "http-equiv" => "X-UA-Compatible"}
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
+  %title = content_for?(:title) ? yield(:title) : "Ambiente"
+  = csrf_meta_tags
+  %script{:src => "//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js", :type => "text/javascript"}
+  = stylesheet_link_tag "application", :media => "all"
+  = favicon_link_tag 'favicon.ico', :rel => 'shortcut icon'
+  %body
+    %script{:src => "js/bootstrap.min.js"}
+    .navbar.navbar-fixed-top
+      .navbar-inner
+        .container
+          %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.brand{:href => "/programs"}= image_tag("logo_ambiental.png", :width => "146pt", :height => "35pt", :alt => "Logo Ambiente", :width => "90px")
+          .container.nav-collapse{"pull-right" => ""}
+            %ul.nav
+              %li= link_to "Ajuda", "/help"
+              %li.dropdown
+                %a#fran_drop.dropdown-toggle{"data-toggle" => "dropdown", :href => ""}
+                  Entidades
+                  %b.caret
+                %ul.dropdown-menu{:arialabledby => "fran_drop", :role => "menu"}
+                  %li= link_to "Programas", "/programs"
+                  %li= link_to "Empreendimentos", "/enterprises"
+                  %li= link_to "Áreas", "/areas"
+                  %li= link_to "Sistemas", "/systems"
+                  %li= link_to "Subsistemas", "/subsystems"
+                  %li= link_to "Subsubsistemas", "/subsubsystems"
+    #sidebar
+      %ul#top-level
+        - @programs.each do |program|
+          %li
+            %h5
+              - unless program.enterprises.empty?
+                = link_to image_tag("disclosure-indicator-open.png"), "#", :toggle_id => "program-#{program.id}", :status => "open", :class => "disclosure-indicator"
+              = link_to program.name, program
+          %li{:id => "program-#{program.id}"}
+            %ul
+              - program.enterprises.each do |enterprise|
+                %li
+                  %h5
+                    - unless enterprise.areas.empty?
+                      = link_to image_tag("disclosure-indicator-open.png"), "#", :toggle_id => "enterprise-#{enterprise.id}", :status => "open", :class => "disclosure-indicator"
+                    = link_to enterprise.name, enterprise
+                %li{:id => "enterprise-#{enterprise.id}"}
+                  %ul
+                    - enterprise.areas.each do |area|
+                      %li
+                        %h5
+                          - unless area.systems.empty?
+                            = link_to image_tag("disclosure-indicator-open.png"), "#", :toggle_id => "area-#{area.id}", :status => "open", :class => "disclosure-indicator"
+                          = link_to area.name, area
+                      %li{:id => "area-#{area.id}"}
+                        %ul
+                          - area.systems.each do |system|
+                            %li
+                              %h5
+                                - unless system.subsystems.empty?
+                                  = link_to image_tag("disclosure-indicator-open.png"), "#", :toggle_id => "system-#{system.id}", :status => "open", :class => "disclosure-indicator"
+                                = link_to system.name, system
+                            %li{:id => "system-#{system.id}"}
+                              %ul{:id => "program-#{program.id}"}
+                                - system.subsystems.each do |subsystem|
+                                  %li
+                                    %h5
+                                      - unless subsystem.subsubsystems.empty?
+                                        = link_to image_tag("disclosure-indicator-open.png"), "#", :toggle_id => "subsystem-#{subsystem.id}", :status => "open", :class => "disclosure-indicator"
+                                      = link_to subsystem.name, subsystem
+                                  %li{:id => "subsystem-#{subsystem.id}"}
+                                    %ul
+                                      - subsystem.subsubsystems.each do |subsubsystem|
+                                        %li
+                                          %h5= link_to subsubsystem.name, subsubsystem
+    .container
+      .row
+        .span12
+          = bootstrap_flash
+          - #if user_signed_in?
+            = yield
+            - if 1 < 0# else
+              .alert.alert-error
+                %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+                %strong Para continuar você precisa se logar.
+              %center
+                %br
+                = form_for("user", :url => user_session_path) do |f|
+                  .field
+                    %span.small_font Email
+                    %br
+                    = f.text_field :email
+                  .field
+                    %span.small_font Senha
+                    %br
+                    = f.password_field :password
+                  .field
+                    = f.check_box :remember_me
+                    Lembrar senha
+                  %br
+                  .actions
+                    = f.submit "Entrar", :class => "btn btn-success"
+      = javascript_include_tag "application"

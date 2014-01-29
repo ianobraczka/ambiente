@@ -1,0 +1,71 @@
+.history-container
+  ←
+  \#{link_to @area.enterprise.program.name, @area.enterprise.program}
+  ←
+  \#{link_to @area.enterprise.name, @area.enterprise}
+#edit-and-delete-section-buttons-container
+  .edit-section-button= button_to 'Editar', edit_area_path(@area), :class => "btn"
+  .delete-section-button= button_to "Deletar área", @area, method: :delete, data: { confirm: 'Tem certeza que quer deletar essa área?' }, :class => "btn btn-danger"
+%h1.area-title= @area.name
+.list-item.section-details
+  %br/
+  .content
+    %b Investimento:
+    = number_to_currency(@area.price, :unit => "R$")
+  .content
+    %span.percentage-number
+      %b
+        = @area.completed
+        \%
+    completa
+  %hr/
+  = form_for(@area) do |f|
+    - if @area.errors.any?
+      #error_explanation
+        %h2
+          = pluralize(@area.errors.count, "error")
+          prohibited this product from being saved:
+        %ul
+          - @area.errors.full_messages.each do |msg|
+            %li= msg
+    .content
+      %strong= f.label "Escolha o ponderador"
+    .content= f.select :weight, options_for_select([["Valor", 1], ["HH", 2], ["Porcentagem", 3]], @area.weight)
+    %center
+      .content= f.submit "Ponderar", :class => "btn btn-success"
+    %br/
+%br/
+= button_to "Gerar relatório", area_report_path(@area), :class => "btn", :method => "get"
+%hr/
+.right-aligned-create-button-container
+  = button_to "Criar sistema", new_area_system_path(@area), :method => "get", :class => "btn btn-success"
+%h2.area-subtitle SISTEMAS
+- if @area.systems.empty? then
+  .alert.alert-error
+    %button.close{"data-dismiss" => "alert", :type => "button"} &times;
+    %center
+      %strong Esta área ainda não foi possui nenhum sistema!
+- if !(@area.systems.empty?) then
+  - @area.systems.each do |system|
+    .span3.list-item
+      .name= link_to system.name, system
+      .content
+        %b Investimento:
+        = number_to_currency(system.price, :unit => "R$")
+      .content
+        %span.percentage-number
+          = system.completed
+          \%
+        completo
+      %hr/
+      .content
+        %b HH:
+        = system.hh
+      .content
+        %b Valor:
+        = number_to_currency(system.value, :unit => "R$")
+      .content
+        %b Porcentagem:
+        = system.percentage
+        \%
+      %br/
