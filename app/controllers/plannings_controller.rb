@@ -2,6 +2,7 @@ class PlanningsController < ApplicationController
 
   @@plannable_id = 1
   @@plannable_type = " "
+  @@past_periods_array = Array.new
 
   def index
     @plannings = Planning.all
@@ -40,20 +41,20 @@ class PlanningsController < ApplicationController
     end
   end
 
-
   def new
     @plannable = find_plannable
     @planning = @plannable.plannings.build
     @@plannable_id = @plannable.id
     @@plannable_type = @plannable.class.to_s
-    binding.pry
-    if !@plannable.plannings.empty?
+
+    unless @plannable.plannings.length == 1 &&  @plannable.plannings.first == @planning
       @plannable.current_planning.periods.each do |period|
-        @planning.periods.build(params[:period])
+        if period.quantity != nil
+          @planning.periods.build(params[period])
+        end
       end
     end
     6.times { @planning.periods.build }
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @planning }

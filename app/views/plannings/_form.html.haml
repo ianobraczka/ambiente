@@ -12,14 +12,26 @@
     = f.label "Data de início:"
     = f.date_select :input_date, :order => [:day, :month, :year], :start_year => Date.current.year
   %br/
+
+  - cnt = 1
+  - @plannable.current_planning.periods.each do |period|
+    - if period.quantity != nil
+      = "Quantidade planejada no #{cnt}º período: #{period.planned_quantity}"
+      %br/
+      = "Quantidade realizada no #{cnt}º período: #{period.quantity}"
+      %br/
+      %br/
+      - cnt = cnt+1
+
+  %br/
+
   #period-fields-container
-    - i = 1
     = f.fields_for :periods do |builder|
       #period-not-to-be-removed
-        = builder.label :planned_quantity, "Quantidade planejada no " + i.to_s + "º período"
+        = builder.label :planned_quantity, "Quantidade planejada no " + cnt.to_s + "º período"
         = builder.number_field :planned_quantity, :id => "planned-quantity"
         %br/
-      - i = i+1
+      - cnt = cnt+1
   = link_to "Adicionar período", "#", :id => "add-period"
   |
   \#{link_to "Remover período", "#", :id => "remove-period"}
