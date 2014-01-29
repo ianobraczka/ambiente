@@ -46,12 +46,13 @@ class PlanningsController < ApplicationController
     @planning = @plannable.plannings.build
     @@plannable_id = @plannable.id
     @@plannable_type = @plannable.class.to_s
-    binding.pry
-    if !@plannable.plannings.empty?
+
+    unless @plannable.plannings.length == 1 && @plannable.plannings.first == @planning
       @plannable.current_planning.periods.each do |period|
         @planning.periods.build(params[:period])
       end
     end
+
     6.times { @planning.periods.build }
 
     respond_to do |format|
@@ -69,6 +70,7 @@ class PlanningsController < ApplicationController
       @plannable = System.find(@@plannable_id)
     end
     @planning = @plannable.plannings.build(params[:planning])
+    @planning.input_date = Date.current
     respond_to do |format|
       if @planning.save
         format.html { redirect_to @plannable }
