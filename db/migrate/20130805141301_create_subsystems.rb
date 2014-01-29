@@ -3,12 +3,12 @@ class CreateSubsystems < ActiveRecord::Migration
     create_table :subsystems do |t|
       t.integer :system_id
       t.string :name
-      t.float :price
+      t.float :price, :default => 0
       t.float :total_quantity
       t.string :unity
-      t.integer :hh
-      t.integer :percentage
-      t.float :value
+      t.integer :hh, :default => 0
+      t.integer :percentage, :default => 0
+      t.float :value, :default => 0
       t.belongs_to :system
 
       t.timestamps

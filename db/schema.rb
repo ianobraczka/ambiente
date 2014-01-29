@@ -113,14 +113,14 @@ ActiveRecord::Schema.define(:version => 20140123124048) do
   create_table "subsubsystems", :force => true do |t|
     t.integer  "subsystem_id"
     t.string   "name"
-    t.float    "price"
+    t.float    "price",               :default => 0.0
     t.float    "total_quantity"
     t.string   "unity"
-    t.integer  "hh"
-    t.integer  "percentage"
-    t.float    "value"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.integer  "hh",                  :default => 0
+    t.integer  "percentage",          :default => 0
+    t.float    "value",               :default => 0.0
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.integer  "weight"
     t.integer  "current_planning_id"
   end
@@ -128,15 +128,15 @@ ActiveRecord::Schema.define(:version => 20140123124048) do
   create_table "subsystems", :force => true do |t|
     t.integer  "system_id"
     t.string   "name"
-    t.float    "price"
+    t.float    "price",               :default => 0.0
     t.float    "total_quantity"
     t.string   "unity"
-    t.integer  "hh"
-    t.integer  "percentage"
-    t.float    "value"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
-    t.integer  "weight"
+    t.integer  "hh",                  :default => 0
+    t.integer  "percentage",          :default => 0
+    t.float    "value",               :default => 0.0
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+    t.integer  "weight",              :default => 0
     t.integer  "current_planning_id"
   end
 
@@ -145,17 +145,17 @@ ActiveRecord::Schema.define(:version => 20140123124048) do
     t.integer  "subarea_id"
     t.integer  "local_id"
     t.string   "name"
-    t.float    "price"
+    t.float    "price",               :default => 0.0
     t.float    "total_quantity"
     t.string   "unity"
-    t.integer  "hh"
-    t.integer  "percentage"
-    t.float    "value"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.integer  "hh",                  :default => 0
+    t.integer  "percentage",          :default => 0
+    t.float    "value",               :default => 0.0
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.boolean  "has_desagragations"
     t.integer  "enterprise_id"
-    t.integer  "weight"
+    t.integer  "weight",              :default => 0
     t.integer  "current_planning_id"
   end
 

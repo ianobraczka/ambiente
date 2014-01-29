@@ -34,8 +34,28 @@ Area.create! :name => "Area2E1P2", :enterprise_id => Program.last.enterprises.la
 
 System.delete_all
 
-# System.create! :name => "SystemArea1E1P1", :area_id => Program.first.enterprises.first.areas.first.id
-# System.create! :name => "SystemArea2E1P1", :area_id => Program.first.enterprises.first.areas.first.id
+System.create! :name => "SystemArea1E1P1", :area_id => Program.first.enterprises.first.areas.first.id
+System.create! :name => "SystemArea2E1P1", :area_id => Program.first.enterprises.first.areas.first.id
 
-# System.create! :name => "SystemArea1E1P2", :area_id => Program.last.enterprises.last.areas.last.id
-# System.create! :name => "SystemArea2E1P2", :area_id => Program.last.enterprises.last.areas.last.id
+System.create! :name => "SystemArea1E1P2", :area_id => Program.last.enterprises.last.areas.last.id
+System.create! :name => "SystemArea2E1P2", :area_id => Program.last.enterprises.last.areas.last.id
+
+#subsystems
+
+Subsystem.delete_all
+
+Subsystem.create! :name => "SubSystemArea1E1P1", :system_id => Program.first.enterprises.first.areas.first.systems.first.id
+Subsystem.create! :name => "SubSystemArea2E1P1", :system_id => Program.first.enterprises.first.areas.first.systems.first.id
+
+Subsystem.create! :name => "SubSystemArea1E1P2", :system_id => Program.last.enterprises.last.areas.last.systems.last.id
+Subsystem.create! :name => "SubSystemArea2E1P2", :system_id => Program.last.enterprises.last.areas.last.systems.last.id
+
+#subsubsystems
+
+Subsubsystem.delete_all
+
+Subsubsystem.create! :name => "SubsubSystemArea1E1P1", :subsystem_id => Program.first.enterprises.first.areas.first.systems.first.subsystems.first.id
+Subsubsystem.create! :name => "SubsubSystemArea2E1P1", :subsystem_id => Program.first.enterprises.first.areas.first.systems.first.subsystems.first.id
+
+Subsubsystem.create! :name => "SubsubSystemArea1E1P2", :subsystem_id => Program.last.enterprises.last.areas.last.systems.last.subsystems.last.id
+Subsubsystem.create! :name => "SubsubSystemArea2E1P2", :subsystem_id => Program.last.enterprises.last.areas.last.systems.last.subsystems.last.id
