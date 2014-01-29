@@ -46,7 +46,13 @@ class PlanningsController < ApplicationController
     @planning = @plannable.plannings.build
     @@plannable_id = @plannable.id
     @@plannable_type = @plannable.class.to_s
-    8.times { @planning.periods.build }
+    binding.pry
+    if !@plannable.plannings.empty?
+      @plannable.current_planning.periods.each do |period|
+        @planning.periods.build(params[:period])
+      end
+    end
+    6.times { @planning.periods.build }
 
     respond_to do |format|
       format.html # new.html.erb

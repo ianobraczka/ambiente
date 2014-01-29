@@ -113,9 +113,12 @@
       </div>
     <% end %>
 
+
+    <% if true == false %>
     <div class="content"><strong><%= f.label "Escolha o planejamento" %></strong></div>
     <div class="content"><%= f.collection_select(:subsubsystem, :current_planning_id, @subsubsystem.plannings, :id, :date_string, prompt: true) %></div>
     <center><div class="content"><%= f.submit "Escolher", :class => "btn btn-success" %></div></center>
     <br>
+  <% end %>
   <% end %>
 <br><br><br>
