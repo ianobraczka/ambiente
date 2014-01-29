@@ -16,40 +16,21 @@ class System < ActiveRecord::Base
     current_planning.current_period
   end
       
-  def price
-    subsystems = self.subsystems
-    if subsystems.empty?
-      self.attributes["price"]
-    else
-      self.subsystems.map(&:price).sum
-    end
+  def price    
+    self.subsystems.empty? ? self.attributes["price"] : self.subsystems.map(&:price).sum
   end
 
   def hh
-    subsystems = self.subsystems
-    if subsystems.empty?
-      self.attributes["hh"]
-    else
-      self.subsystems.map(&:hh).sum
-    end
+    self.subsystems.empty? ? self.attributes["hh"] : self.subsystems.map(&:hh).sum
   end
 
   def percentage
-    subsystems = self.subsystems
-    if subsystems.empty?
-      self.attributes["percentage"]
-    else
-      self.subsystems.map(&:percentage).sum
-    end
+    self.subsystems.empty? ? self.attributes["percentage"] : self.subsystems.map(&:percentage).sum
   end
 
 
   def value
-    subsystems = self.subsystems
-    if subsystems.empty? 
-      self.attributes["value"] 
-    else
-      self.subsystems.map(&:value).sum
+    self.subsystems.empty? ? self.attributes["value"] : self.subsystems.map(&:value).sum
     end
   end
 

@@ -47,13 +47,14 @@ class PlanningsController < ApplicationController
     @@plannable_id = @plannable.id
     @@plannable_type = @plannable.class.to_s
 
-    unless @plannable.plannings.length == 1 &&  @plannable.plannings.first == @planning
+    unless @plannable.plannings.length == 1 && @plannable.plannings.first == @planning
       @plannable.current_planning.periods.each do |period|
         if period.quantity != nil
           @planning.periods.build(params[period])
         end
       end
     end
+
     6.times { @planning.periods.build }
     respond_to do |format|
       format.html # new.html.erb
@@ -70,6 +71,7 @@ class PlanningsController < ApplicationController
       @plannable = System.find(@@plannable_id)
     end
     @planning = @plannable.plannings.build(params[:planning])
+    @planning.input_date = Date.current
     respond_to do |format|
       if @planning.save
         format.html { redirect_to @plannable }
