@@ -1,6 +1,6 @@
 class Planning < ActiveRecord::Base
   attr_accessor :_destroy
-  attr_accessible :subsubsystem_id, :subsystem_id, :system_id, :plannable_type, :plannable_id, :input_date, :periods_attributes, :_destroy, :init_date
+  attr_accessible :subsubsystem_id, :current_planning_id, :subsystem_id, :system_id, :plannable_type, :plannable_id, :input_date, :periods_attributes, :_destroy, :init_date
   has_many :periods, :dependent => :destroy, :order => :id
   belongs_to :plannable, polymorphic: true
   accepts_nested_attributes_for :periods, :reject_if => lambda { |a| a[:planned_quantity].blank? }, :allow_destroy => true

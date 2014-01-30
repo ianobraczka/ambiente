@@ -46,7 +46,7 @@ class PlanningsController < ApplicationController
     @planning = @plannable.plannings.build
     @@plannable_id = @plannable.id
     @@plannable_type = @plannable.class.to_s
-
+    
     unless @plannable.plannings.length == 1 && @plannable.plannings.first == @planning
       @plannable.current_planning.periods.each do |period|
         if period.quantity != nil
@@ -55,7 +55,11 @@ class PlanningsController < ApplicationController
       end
     end
 
+      
     6.times { @planning.periods.build }
+
+    binding.pry
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @planning }
