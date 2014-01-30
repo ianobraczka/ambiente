@@ -13,6 +13,8 @@ gem 'therubyracer'
 
 gem 'devise', '1.4.7'
 
+gem 'paperclip', '~>3.4.2'
+
 gem 'superfish-rails'
 
 gem 'pry'

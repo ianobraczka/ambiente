@@ -49,6 +49,7 @@ class ProgramsController < ApplicationController
   end
 
   def create
+    binding.pry
     @program = Program.new(params[:program])
     @program.weight = 1
     respond_to do |format|

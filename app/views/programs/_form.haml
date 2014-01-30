@@ -1,4 +1,4 @@
-= form_for(@program) do |f|
+= form_for(@program, :multipart => true) do |f|
   - if @program.errors.any?
     #error_explanation
       %h2
@@ -10,6 +10,8 @@
   .field
     = f.label "Nome"
     = f.text_field :name
+    %br
+    = file_field :image, "Foto"
   %br
     .actions
       = f.submit "OK", class: "btn btn-success"
