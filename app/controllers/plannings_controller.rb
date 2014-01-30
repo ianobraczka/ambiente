@@ -32,7 +32,7 @@ class PlanningsController < ApplicationController
 
     respond_to do |format|
       if @planning.update_attributes(params[:planning])
-        format.html { redirect_to @planning, notice: 'Planejamento atualizado!' }
+        format.html { redirect_to @plannable, notice: 'Planejamento atualizado!' }
         format.json { head :no_content }
       else
         format.html { render action: "Editar" }
@@ -47,17 +47,16 @@ class PlanningsController < ApplicationController
     @@plannable_id = @plannable.id
     @@plannable_type = @plannable.class.to_s
     
+    @@past_periods_array.clear
+
     unless @plannable.plannings.length == 1 && @plannable.plannings.first == @planning
       @plannable.current_planning.periods.each do |period|
         if period.quantity != nil
-          @planning.periods.build(params[period])
+          @@past_periods_array.push(period)
         end
       end
-    end
-
-      
+    end      
     6.times { @planning.periods.build }
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @planning }
@@ -91,6 +90,10 @@ class PlanningsController < ApplicationController
 
     @plannable.current_planning_id = @planning.id
     @plannable.save
+
+    @planning.periods = @@past_periods_array + @planning.periods
+    @planning.save
+
   end
 
   def find_plannable
