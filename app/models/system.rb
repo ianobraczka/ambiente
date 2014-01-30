@@ -9,13 +9,13 @@ class System < ActiveRecord::Base
   end
 
   def current_planning
-      Planning.find(self.current_planning_id)
+    Planning.find(self.current_planning_id)
   end
 
   def current_period
     current_planning.current_period
   end
-      
+
   def price    
     self.subsystems.empty? ? self.attributes["price"] : self.subsystems.map(&:price).sum
   end
@@ -31,8 +31,8 @@ class System < ActiveRecord::Base
 
   def value
     self.subsystems.empty? ? self.attributes["value"] : self.subsystems.map(&:value).sum
-    end
   end
+
 
   def planned_quantity
     pq = 0

@@ -54,8 +54,8 @@ Subsystem.create! :name => "SubSystemArea2E1P2", :system_id => Program.last.ente
 
 Subsubsystem.delete_all
 
-Subsubsystem.create! :name => "SubsubSystemArea1E1P1", :subsystem_id => Program.first.enterprises.first.areas.first.systems.first.subsystems.first.id
-Subsubsystem.create! :name => "SubsubSystemArea2E1P1", :subsystem_id => Program.first.enterprises.first.areas.first.systems.first.subsystems.first.id
+Subsubsystem.create! :name => "SubsubSystemArea1E1P1", :subsystem_id => Program.first.enterprises.first.areas.first.systems.first.subsystems.first.id, :current_planing_id => 1
+Subsubsystem.create! :name => "SubsubSystemArea2E1P1", :subsystem_id => Program.first.enterprises.first.areas.first.systems.first.subsystems.first.id, :current_planing_id => 1
 
-Subsubsystem.create! :name => "SubsubSystemArea1E1P2", :subsystem_id => Program.last.enterprises.last.areas.last.systems.last.subsystems.last.id
-Subsubsystem.create! :name => "SubsubSystemArea2E1P2", :subsystem_id => Program.last.enterprises.last.areas.last.systems.last.subsystems.last.id
+Subsubsystem.create! :name => "SubsubSystemArea1E1P2", :subsystem_id => Program.last.enterprises.last.areas.last.systems.last.subsystems.last.id, :current_planing_id => 1
+Subsubsystem.create! :name => "SubsubSystemArea2E1P2", :subsystem_id => Program.last.enterprises.last.areas.last.systems.last.subsystems.last.id, :current_planing_id => 1

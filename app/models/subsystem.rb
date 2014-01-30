@@ -84,7 +84,7 @@ class Subsystem < ActiveRecord::Base
     aq = 0
     if self.subsubsystems.empty?
       self.plannings.each do |planning| 
-        aq = aq + planning.quantity
+        aq = aq + planning.real_quantity
       end
     else
       self.subsubsystems.each do |subsubsystem|

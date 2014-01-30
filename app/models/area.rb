@@ -3,15 +3,15 @@ class Area < ActiveRecord::Base
   has_many :subareas, :dependent => :destroy
   belongs_to :enterprise
   has_many :systems
- 	
+
   #retorna a quantidade de investimento em certa area (soma dos investimentos dos sistemas que ela possui)
- 	 #retorna o investimento feito em dado empreendimento
-  def price
-  	value = 0
-  	self.systems.each do |system|
-  		value = value + system.price
-  	end
-  	value
+ 	#retorna o investimento feito em dado empreendimento
+   def price
+     value = 0
+     self.systems.each do |system|
+      value += system.price
+    end
+    value
   end
 
   # METODOS QUE RETORNAM OS PONDERADORES (HOMEM*HORA, PORCENTAGEM E VALOR)
@@ -20,7 +20,7 @@ class Area < ActiveRecord::Base
     value = 0
     self.systems.each do |system|
       if system.hh != nil then
-        value = value + system.hh
+        value += system.hh
       end
     end
     value
@@ -30,7 +30,7 @@ class Area < ActiveRecord::Base
     value = 0
     self.systems.each do |system|
       if system.percentage != nil
-        value= value + system.percentage
+        value += system.percentage
       end
     end
     value
@@ -40,7 +40,7 @@ class Area < ActiveRecord::Base
     value = 0
     self.systems.each do |system|
       if system.value != nil then
-        value= value + system.value
+        value += system.value
       end
     end
     value

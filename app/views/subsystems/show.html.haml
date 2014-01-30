@@ -119,7 +119,7 @@
     %center= button_to "Cadastrar planejamento", new_subsystem_planning_path(@subsystem), :method => "get", :class => "btn btn-success"
     %br/
 - if @subsystem.has_desagregation? then
-  .delete-section-button
+  .right-aligned-create-button-container
     = button_to "Criar subsubsistema", new_subsystem_subsubsystem_path(@subsystem), :method => "get", :class => "btn btn-success"
   %h2.area-subtitle SUBSUBSISTEMAS
   .row
