@@ -58,8 +58,6 @@ class PlanningsController < ApplicationController
       
     6.times { @planning.periods.build }
 
-    binding.pry
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @planning }
@@ -74,7 +72,12 @@ class PlanningsController < ApplicationController
     elsif @@plannable_type == "System"
       @plannable = System.find(@@plannable_id)
     end
+    
     @planning = @plannable.plannings.build(params[:planning])
+    @planning = @plannable.plannings.build(params[:planning])
+
+    binding.pry
+
     @planning.input_date = Date.current
     respond_to do |format|
       if @planning.save

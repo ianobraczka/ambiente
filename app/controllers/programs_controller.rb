@@ -41,6 +41,7 @@ class ProgramsController < ApplicationController
 
   def new
     @program = Program.new
+    @program_media = ProgramMedia.new
 
     respond_to do |format|
       format.html # new.html.erb

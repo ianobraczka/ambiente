@@ -3,6 +3,8 @@ class Program < ActiveRecord::Base
   has_many :enterprises, :dependent => :destroy
   has_one :baseline
 
+  has_many :program_images
+
   def price
   	value = 0
   	self.enterprises.each do |enterprise|
