@@ -3,7 +3,7 @@ class Program < ActiveRecord::Base
   has_many :enterprises, :dependent => :destroy
   has_one :baseline
 
-  has_many :program_images
+  has_many :medias, :as => :mediable
 
   def price
   	value = 0

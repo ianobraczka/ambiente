@@ -4,6 +4,8 @@ class Area < ActiveRecord::Base
   belongs_to :enterprise
   has_many :systems
 
+  has_many :medias, :as => :mediable
+
   #retorna a quantidade de investimento em certa area (soma dos investimentos dos sistemas que ela possui)
  	#retorna o investimento feito em dado empreendimento
    def price

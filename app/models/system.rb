@@ -4,6 +4,8 @@ class System < ActiveRecord::Base
   has_many :subsystems, :dependent => :destroy
   has_many :plannings, as: :plannable
 
+  has_many :medias, :as => :mediable
+
   def has_desagregation?
     not self.subsystems.empty?
   end
