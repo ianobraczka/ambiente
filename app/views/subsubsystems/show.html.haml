@@ -70,29 +70,27 @@
                     = period.end_date.to_formatted_s(:rfc822)
                 %hr
               .content
-                Quant. prevista no período: #{period.planned_quantity} #{@subsubsystem.unity} (
-                %span.percentage-number>
-                  = (period.planned_quantity*100/@subsubsystem.planned_quantity).round
-                  \%
-                )
+                Quant. prevista no período: #{period.planned_quantity} #{@subsubsystem.unity}
               - if period.quantity != nil
                 .content
                   Quant. realizada no período: #{period.real_quantity} #{@subsubsystem.unity} (
                   %span.percentage-number>
-                    = (period.real_quantity*100/@subsubsystem.planned_quantity).round
+                    - if @subsubsystem.planned_quantity != 0
+                      = (period.quantity*100/period.planned_quantity).round
+                    - else
+                      0
                     \%
                   )
                 %hr
                   .content
-                    Quant. prev. até o período: #{period.planned_until_period} #{@subsubsystem.unity} (
-                    %span.percentage-number>
-                      = (period.planned_until_period*100/@subsubsystem.planned_quantity).round
-                      \%
-                    )
+                    Quant. prev. até o período: #{period.planned_until_period} #{@subsubsystem.unity}
                   .content
                     Quant. real. até o período: #{period.real_until_period} #{@subsubsystem.unity} (
                     %span.percentage-number>
-                      = (period.real_until_period*100/@subsubsystem.planned_quantity).round
+                      - unless @subsubsystem.planned_quantity == 0
+                        = (period.real_until_period*100/@subsubsystem.planned_quantity).round
+                      - else
+                        0
                       \%
                     )
                   %br
@@ -115,6 +113,7 @@
                             = f.number_field :quantity
                             %br= f.submit "Entrar", :class => "btn btn-success"
         %br
+          = button_to "Editar planejamento", edit_subsubsystem_planning_path(@subsubsystem), :method => "get", :class => "btn btn-success"
           = button_to "Novo planejamento", new_subsubsystem_planning_path(@subsubsystem), :method => "get", :class => "btn btn-success"
   - else
     %br

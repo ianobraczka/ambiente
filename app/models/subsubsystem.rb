@@ -28,6 +28,11 @@ class Subsubsystem < ActiveRecord::Base
     end
 
     def planned_quantity
+
+        # if self.plannings.length > 0
+        #     Planning.find(self.current_planning_id).planned_quantity
+        # end
+        # 0
         pq = 0
         self.plannings.each do |planning|
             pq = pq + planning.planned_quantity
@@ -36,7 +41,9 @@ class Subsubsystem < ActiveRecord::Base
     end
 
     def current_planning
-        Planning.find(self.current_planning_id)
+        if self.current_planning_id
+            Planning.find(self.current_planning_id)
+        end
     end
 
     def current_period

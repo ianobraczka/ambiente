@@ -41,7 +41,6 @@ class ProgramsController < ApplicationController
 
   def new
     @program = Program.new
-    @program_media = ProgramMedia.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -50,7 +49,6 @@ class ProgramsController < ApplicationController
   end
 
   def create
-    binding.pry
     @program = Program.new(params[:program])
     @program.weight = 1
     respond_to do |format|

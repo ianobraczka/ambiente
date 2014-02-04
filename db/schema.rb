@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140203165542) do
+ActiveRecord::Schema.define(:version => 20140203174347) do
 
   create_table "areas", :force => true do |t|
     t.integer  "enterprise_id"
@@ -49,6 +49,17 @@ ActiveRecord::Schema.define(:version => 20140203165542) do
     t.integer  "weight"
   end
 
+  create_table "images", :force => true do |t|
+    t.integer  "imageable_id"
+    t.string   "imagiable_type"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
+  end
+
   create_table "locals", :force => true do |t|
     t.integer  "subarea_id"
     t.string   "name"
@@ -58,17 +69,6 @@ ActiveRecord::Schema.define(:version => 20140203165542) do
     t.float    "value"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-  end
-
-  create_table "media", :force => true do |t|
-    t.integer  "mediable_id"
-    t.string   "mediable_type"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
   end
 
   create_table "periods", :force => true do |t|
@@ -97,11 +97,6 @@ ActiveRecord::Schema.define(:version => 20140203165542) do
     t.integer  "plannable_id"
     t.date     "init_date"
     t.date     "input_date"
-  end
-
-  create_table "program_media", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "programs", :force => true do |t|

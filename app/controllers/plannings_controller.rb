@@ -15,6 +15,7 @@ class PlanningsController < ApplicationController
 
   def edit
     @planning = Planning.find(params[:id])
+    @plannable = @planning.plannable
   end
 
   def destroy
@@ -32,7 +33,7 @@ class PlanningsController < ApplicationController
 
     respond_to do |format|
       if @planning.update_attributes(params[:planning])
-        format.html { redirect_to @plannable, notice: 'Planejamento atualizado!' }
+        format.html { redirect_to @planning.plannable, notice: 'Planejamento atualizado!' }
         format.json { head :no_content }
       else
         format.html { render action: "Editar" }
@@ -73,9 +74,6 @@ class PlanningsController < ApplicationController
     end
     
     @planning = @plannable.plannings.build(params[:planning])
-    @planning = @plannable.plannings.build(params[:planning])
-
-    binding.pry
 
     @planning.input_date = Date.current
     respond_to do |format|

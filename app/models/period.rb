@@ -46,10 +46,10 @@ def real_until_period
   quant = 0
   self.planning.periods.each do |period|
     if self == period
-      quant = quant + self.real_quantity
+      quant = quant + self.quantity
       return quant
     end
-    quant = quant + period.real_quantity
+    quant = quant + period.quantity
   end
 end
 

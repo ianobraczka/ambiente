@@ -1,10 +1,14 @@
-Ambiente::Application.routes.draw do
+Ambiente::Application.routes.draw  do
 
   devise_for :users do
     get '/users/sign_out' => 'devise/sessions#destroy'
   end
 
   resources :plannings
+  
+  resources :images
+
+  resources :programs, :has_many => :medias
 
   resources :programs do
     get "report"
@@ -195,5 +199,5 @@ Ambiente::Application.routes.draw do
   match "areas" => "areas#index"
 
   root :to => "programs#index"
-  
+
 end
