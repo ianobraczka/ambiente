@@ -1,5 +1,10 @@
 %h2
-  Editando entrada do período #{@plannable.plannings.count+1}
+	Editando entradas do planejamento
 %br/
-= render 'form'
+
+%p
+	%i
+		Para remover um item do planejamento, basta deixar sua quantidade planejada em branco.
+
+= render 'form_edit'
 = link_to 'Cancelar', controller: "systems"

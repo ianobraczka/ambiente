@@ -13,7 +13,7 @@
       completo
     .content
       %strong Investimento:
-      = number_to_currency(@program.price, :unit => "R$")
+      = number_to_currency(@program.price, :unit => "R$", :separator => ",", :delimiter => ".")
     %br/
   .list-item.section-details
     %br/

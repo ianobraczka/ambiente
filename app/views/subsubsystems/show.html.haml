@@ -57,8 +57,7 @@
           - @subsubsystem.current_planning.periods.each do |period|
             .span4.list-item
               .name
-                = period.number
-                o período
+                = "#{period.number}o período"
               - if @subsubsystem.current_planning.periods.first.quantity != nil
                 .content
                   Data de início:
@@ -88,7 +87,7 @@
                     Quant. real. até o período: #{period.real_until_period} #{@subsubsystem.unity} (
                     %span.percentage-number>
                       - unless @subsubsystem.planned_quantity == 0
-                        = (period.real_until_period*100/@subsubsystem.planned_quantity).round
+                        = period.made_until_period.round
                       - else
                         0
                       \%
@@ -113,7 +112,8 @@
                             = f.number_field :quantity
                             %br= f.submit "Entrar", :class => "btn btn-success"
         %br
-          = button_to "Editar planejamento", edit_subsubsystem_planning_path(@subsubsystem), :method => "get", :class => "btn btn-success"
+          /= binding.pry
+          = link_to "Editar planejamento", "/subsubsystems/#{@subsubsystem.id}/plannings/#{@subsubsystem.current_planning_id}/edit", :method => "get", :class => "btn btn-success"
           = button_to "Novo planejamento", new_subsubsystem_planning_path(@subsubsystem), :method => "get", :class => "btn btn-success"
   - else
     %br

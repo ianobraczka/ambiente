@@ -45,12 +45,26 @@ end
 def real_until_period
   quant = 0
   self.planning.periods.each do |period|
+    quant = quant + period.quantity
     if self == period
-      quant = quant + self.quantity
       return quant
     end
-    quant = quant + period.quantity
   end
+end
+
+def made_until_period
+  quant = 0
+  expected = 0
+  self.planning.periods.each do |period|
+    quant += period.quantity
+    expected += period.planned_quantity
+
+    if self == period
+      break
+    end
+  end
+
+  (quant/expected)*100
 end
 
 def planned_until_period

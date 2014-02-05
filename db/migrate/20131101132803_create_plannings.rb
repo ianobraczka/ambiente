@@ -8,7 +8,7 @@ class CreatePlannings < ActiveRecord::Migration
       t.date :period_end
       t.float :quantity
       t.float :planned_quantity
-
+      t.boolean :editable, :default => true
       t.timestamps
     end
   end

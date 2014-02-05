@@ -29,8 +29,13 @@
   #period-fields-container
     = f.fields_for :periods do |builder|
       #period-not-to-be-removed
-        = builder.label :planned_quantity, "Quantidade planejada no " + cnt.to_s + "º período"
+        %b
+          = "#{cnt.to_s} período"
+        = builder.label :planned_quantity, "Quantidade planejada no #{cnt.to_s}º período"
         = builder.number_field :planned_quantity, :id => "planned-quantity"
+        = builder.label :quantity, "Quantidade realizada no #{cnt.to_s}º período"
+        = builder.number_field :quantity, :id => "quantity"
+        %br/
         %br/
       - cnt = cnt+1
   = link_to "Adicionar período", "#", :class => "add-period", :id => cnt.to_s
