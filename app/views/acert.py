@@ -9,19 +9,21 @@ for d in dirs:
 		arq = os.listdir(path + "/" + d)
 
 		for a in arq:
-			print a
 			if a.count(".html.haml") > 0:
-				f = open(a, "r")
+				f = open(path + "/" + d + "/" + a, "r")
 				lines = f.readlines()
 				f.close()
 				mudou = False
-				for l in lines:
-					if l.count(":unit => \"R$\")") > 0:
+				for l in range(len(lines)):
+					if lines[l].count(":unit => \"R$\")") > 0:
 						mudou = True
-						l.replace(":unit => \"R$\")", ":unit => \"R$\", :separator => \",\", :delimiter => \".\")")
+						print lines[l]
+						lines[l] = lines[l].replace(')', ', :separator => ",", :delimiter => ".")')
+						print lines[l]
 
 				if mudou:
-					f = open(a, "w")
+					print path + "/" + d + "/" + a
+					f = open(path + "/" + d + "/" + a, "w")
 					for l in lines:
 						f.write(l)
 					f.close()

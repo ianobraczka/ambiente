@@ -5,7 +5,7 @@
 %span.small_font
   .content
     %strong Investimento total:
-    = number_to_currency(@program.price, :unit => "R$")
+    = number_to_currency(@program.price, :unit => "R$", :separator => ",", :delimiter => ".")
 %br/
 %span.small_font
   .content

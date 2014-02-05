@@ -20,14 +20,14 @@
       completo
     .content
       %b Investimento:
-      = number_to_currency(area.price, :unit => "R$")
+      = number_to_currency(area.price, :unit => "R$", :separator => ",", :delimiter => ".")
     %hr/
     .content
       %b HH:
       = area.hh
     .content
       %b Valor:
-      = number_to_currency(area.value, :unit => "R$")
+      = number_to_currency(area.value, :unit => "R$", :separator => ",", :delimiter => ".")
     .content
       %b Porcentagem:
       = area.percentage

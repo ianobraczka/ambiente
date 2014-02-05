@@ -19,7 +19,7 @@
       completo
     .content
       %b Investimento:
-      = number_to_currency(system.price, :unit => "R$")
+      = number_to_currency(system.price, :unit => "R$", :separator => ",", :delimiter => ".")
     %hr/
     .content
       %b HH:
@@ -29,6 +29,6 @@
       = system.percentage
     .content
       %b Valor:
-      = number_to_currency(system.value, :unit => "R$")
+      = number_to_currency(system.value, :unit => "R$", :separator => ",", :delimiter => ".")
     %br/
     .delete-button= button_to "Deletar", system, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse sistema?' }, :class => "btn btn-danger"

@@ -19,7 +19,7 @@
       completo
     .content
       %b Investimento:
-      = number_to_currency(subsubsystem.price, :unit => "R$")
+      = number_to_currency(subsubsystem.price, :unit => "R$", :separator => ",", :delimiter => ".")
     %hr/
     .content
       %b HH:
@@ -30,5 +30,5 @@
       \%
     .content
       %b Valor:
-      = number_to_currency(subsubsystem.value, :unit => "R$")
+      = number_to_currency(subsubsystem.value, :unit => "R$", :separator => ",", :delimiter => ".")
     .delete-button= button_to "Deletar", subsubsystem, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse sistema?' }, :class => "btn btn-danger"

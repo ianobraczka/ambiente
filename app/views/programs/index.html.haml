@@ -18,7 +18,7 @@
           completo
         .content
           %strong Investimento:
-          = number_to_currency(program.price, :unit => "R$")
+          = number_to_currency(program.price, :unit => "R$", :separator => ",", :delimiter => ".")
         %br/
         .delete-button
           = button_to "Deletar", program, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse programa?' }, :class => "btn btn-danger"

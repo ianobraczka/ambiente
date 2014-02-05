@@ -23,7 +23,7 @@
       completo
     .content
       %b Investimento:
-      = number_to_currency(@subsubsystem.price, :unit => "R$")
+      = number_to_currency(@subsubsystem.price, :unit => "R$", :separator => ",", :delimiter => ".")
     %hr
       .content
         %b Quant. total planejada:
@@ -39,7 +39,7 @@
           = @subsubsystem.hh
         .content
           %b Valor:
-          = number_to_currency(@subsubsystem.value, :unit => "R$")
+          = number_to_currency(@subsubsystem.value, :unit => "R$", :separator => ",", :delimiter => ".")
         .content
           %b Porcentagem:
           = @subsubsystem.percentage

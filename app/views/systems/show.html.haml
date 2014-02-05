@@ -19,14 +19,14 @@
     completo
   .content
     %b Investimento:
-    = number_to_currency(@system.price, :unit => "R$")
+    = number_to_currency(@system.price, :unit => "R$", :separator => ",", :delimiter => ".")
   %hr/
   .content
     %b HH:
     = @system.hh
   .content
     %b Valor:
-    = number_to_currency(@system.value, :unit => "R$")
+    = number_to_currency(@system.value, :unit => "R$", :separator => ",", :delimiter => ".")
   .content
     %b Porcentagem:
     = @system.percentage
@@ -125,7 +125,7 @@
           completo
         .content
           %b Investimento:
-          = number_to_currency(subsystem.price, :unit => "R$")
+          = number_to_currency(subsystem.price, :unit => "R$", :separator => ",", :delimiter => ".")
         %hr/
         .content
           %strong HH:
@@ -136,6 +136,6 @@
           \%
         .content
           %strong Valor:
-          = number_to_currency(subsystem.value, :unit => "R$")
+          = number_to_currency(subsystem.value, :unit => "R$", :separator => ",", :delimiter => ".")
         %br/
 %br/

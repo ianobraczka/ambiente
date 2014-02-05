@@ -55,14 +55,14 @@
             completo
           .content
             %strong Investimento:
-            = number_to_currency(enterprise.price, :unit => "R$")
+            = number_to_currency(enterprise.price, :unit => "R$", :separator => ",", :delimiter => ".")
           %hr/
           .content
             %strong HH:
             = enterprise.hh
           .content
             %strong Valor:
-            = number_to_currency(enterprise.value, :unit => "R$")
+            = number_to_currency(enterprise.value, :unit => "R$", :separator => ",", :delimiter => ".")
           .content
             %strong Porcentagem:
             = enterprise.percentage

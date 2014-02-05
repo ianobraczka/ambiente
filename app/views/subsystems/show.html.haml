@@ -21,7 +21,7 @@
     completo
   .content
     %b Investimento:
-    = number_to_currency(@subsystem.price, :unit => "R$")
+    = number_to_currency(@subsystem.price, :unit => "R$", :separator => ",", :delimiter => ".")
   - if !@subsystem.has_desagregation?
     .content
       %b Qtd planejada:
@@ -35,7 +35,7 @@
     = @subsystem.hh
   .content
     %b Valor:
-    = number_to_currency(@subsystem.value, :unit => "R$")
+    = number_to_currency(@subsystem.value, :unit => "R$", :separator => ",", :delimiter => ".")
   .content
     %b Porcentagem:
     = @subsystem.percentage
@@ -134,7 +134,7 @@
           completo
         .content
           %b Investimento:
-          = number_to_currency(subsubsystem.price, :unit => "R$")
+          = number_to_currency(subsubsystem.price, :unit => "R$", :separator => ",", :delimiter => ".")
         %hr/
         .content
           %b Quant. estimada:
@@ -154,6 +154,6 @@
           \%
         .content
           %b Valor:
-          = number_to_currency(subsubsystem.value, :unit => "R$")
+          = number_to_currency(subsubsystem.value, :unit => "R$", :separator => ",", :delimiter => ".")
         %br/
 %br/
