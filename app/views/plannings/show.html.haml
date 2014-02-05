@@ -10,13 +10,13 @@
   %br/
   %span.small_font
     Quantidade planejada no período:
-    %font{:color => "red"}
+    %font{:color => "darkblue"}
       = @planning.planned_quantity
       = @planning.plannable.unity
     %br/
     %br/
     Quantidade realizada:
-    %font{:color => "red"}
+    %font{:color => "darkblue"}
       = @planning.quantity
       = @planning.plannable.unity
     (#{@planning.quantity_percentage}% do planejado)
@@ -24,10 +24,10 @@
     %br/
     %br/
     Início do período:
-    %font{:color => "red"}
+    %font{:color => "darkblue"}
       = @planning.period_begin.to_formatted_s(:rfc822)
     %br/
     %br/
     Fim do período:
-    %font{:color => "red"}
+    %font{:color => "darkblue"}
       = @planning.period_end.to_formatted_s(:rfc822)

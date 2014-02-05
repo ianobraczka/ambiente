@@ -39,6 +39,10 @@ class PlanningsController < ApplicationController
 					end
 				end
 
+				if @planning.periods.length == 0
+					@planning.delete
+				end
+
 				format.html { redirect_to @planning.plannable, notice: 'Planejamento atualizado!' }
 				format.json { head :no_content }
 			else
