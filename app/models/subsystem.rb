@@ -1,10 +1,11 @@
 class Subsystem < ActiveRecord::Base
-  attr_accessible :hh, :name, :current_planning_id, :percentage, :price, :system_id, :total_quantity, :unity, :value, :weight
+  attr_accessible :hh, :name, :current_planning_id, :percentage, :price, :system_id, :total_quantity, :unity, :value, :weight, :image
+  has_attached_file :image
   belongs_to :system
   has_many :subsubsystems, :dependent => :destroy
   has_many :plannings, as: :plannable
 
-  has_many :medias, :as => :mediable
+ 
   
   def has_desagregation?
   	if self.subsubsystems.empty? then

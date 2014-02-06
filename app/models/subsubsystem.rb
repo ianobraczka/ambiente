@@ -1,9 +1,10 @@
 class Subsubsystem < ActiveRecord::Base
-    attr_accessible :hh, :name, :current_planning_id, :percentage, :price, :subsystem_id, :total_quantity, :unity, :value, :weight
+    attr_accessible :hh, :name, :current_planning_id, :percentage, :price, :subsystem_id, :total_quantity, :unity, :value, :weight, :image
+    has_attached_file :image
     belongs_to :subsystem
     has_many :plannings, :as => :plannable
 
-    has_many :medias, :as => :mediable
+   
 
     def all_plannings
         all = []

@@ -1,5 +1,6 @@
 class Enterprise < ActiveRecord::Base
-  attr_accessible :hh, :name, :percentage, :price, :program_id, :value, :weight
+  attr_accessible :hh, :name, :percentage, :price, :program_id, :value, :weight, :image
+  has_attached_file :image
   belongs_to :program
   has_many :areas, :dependent => :destroy
 

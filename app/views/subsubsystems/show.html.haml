@@ -9,6 +9,9 @@
   \#{link_to @subsubsystem.subsystem.system.name, @subsubsystem.subsystem.system}
   ←
   \#{link_to @subsubsystem.subsystem.name, @subsubsystem.subsystem}
+%center
+  - if @subsubsystem.image.exists?
+    = image_tag @subsubsystem.image.url
 #edit-and-delete-section-buttons-container
   .edit-section-button= button_to 'Editar', edit_subsubsystem_path(@subsubsystem), :class => "btn"
   .delete-section-button= button_to "Deletar subsubsistema", @subsubsystem, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse subsubsistema?' }, :class => "btn btn-danger"

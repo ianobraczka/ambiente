@@ -1,10 +1,9 @@
 class System < ActiveRecord::Base
-  attr_accessible :enterprise_id, :current_planning_id, :hh, :name, :percentage, :price, :total_quantity, :unity, :value, :area_id, :weight
+  attr_accessible :enterprise_id, :current_planning_id, :hh, :name, :percentage, :price, :total_quantity, :unity, :value, :area_id, :weight, :image
+  has_attached_file :image
   belongs_to :area
   has_many :subsystems, :dependent => :destroy
-  has_many :plannings, as: :plannable
-
-  has_many :medias, :as => :mediable
+  has_many :plannings, as: :plannable 
 
   def has_desagregation?
     not self.subsystems.empty?

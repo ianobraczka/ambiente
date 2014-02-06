@@ -1,6 +1,9 @@
 .history-container
   ←
   \#{link_to @enterprise.program.name, @enterprise.program}
+%center
+  - if @enterprise.image.exists?
+    = image_tag @enterprise.image.url
 #edit-and-delete-section-buttons-container
   .edit-section-button= button_to 'Editar', edit_enterprise_path(@enterprise), :class => "btn"
   .edit-section-button= button_to "Deletar empreendimento", @enterprise, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse empreendimento?' }, :class => "btn btn-danger"

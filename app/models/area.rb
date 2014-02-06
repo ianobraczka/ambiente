@@ -1,10 +1,11 @@
 class Area < ActiveRecord::Base
-  attr_accessible :name, :price, :weight, :enterprise_id
+  attr_accessible :name, :price, :weight, :enterprise_id, :image
+  has_attached_file :image
   has_many :subareas, :dependent => :destroy
   belongs_to :enterprise
   has_many :systems
 
-  has_many :medias, :as => :mediable
+ 
 
   #retorna a quantidade de investimento em certa area (soma dos investimentos dos sistemas que ela possui)
  	#retorna o investimento feito em dado empreendimento

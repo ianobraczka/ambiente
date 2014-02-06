@@ -5,6 +5,9 @@
   \#{link_to @system.area.enterprise.name, @system.area.enterprise}
   ←
   \#{link_to @system.area.name, @system.area}
+%center
+  - if @system.image.exists?
+    = image_tag @system.image.url
 #edit-and-delete-section-buttons-container
   .edit-section-button= button_to 'Editar', edit_system_path(@system) , :class => "btn"
   .delete-section-button= button_to "Deletar sistema", @system, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse sistema?' }, :class => "btn btn-danger"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140203174347) do
+ActiveRecord::Schema.define(:version => 20140206191941) do
 
   create_table "areas", :force => true do |t|
     t.integer  "enterprise_id"
@@ -20,9 +20,13 @@ ActiveRecord::Schema.define(:version => 20140203174347) do
     t.integer  "hh"
     t.integer  "percentage"
     t.float    "value"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.integer  "weight"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "areas_systems", :id => false, :force => true do |t|
@@ -44,9 +48,13 @@ ActiveRecord::Schema.define(:version => 20140203174347) do
     t.integer  "hh"
     t.integer  "percentage"
     t.float    "value"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.integer  "weight"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "images", :force => true do |t|
@@ -71,6 +79,17 @@ ActiveRecord::Schema.define(:version => 20140203174347) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "media", :force => true do |t|
+    t.integer  "mediable_id"
+    t.string   "mediable_type"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+  end
+
   create_table "periods", :force => true do |t|
     t.integer  "planning_id"
     t.float    "quantity"
@@ -91,12 +110,13 @@ ActiveRecord::Schema.define(:version => 20140203174347) do
     t.date     "period_end"
     t.float    "quantity"
     t.float    "planned_quantity"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.string   "plannable_type"
     t.integer  "plannable_id"
     t.date     "init_date"
     t.date     "input_date"
+    t.boolean  "editable",         :default => true
   end
 
   create_table "programs", :force => true do |t|
@@ -105,9 +125,13 @@ ActiveRecord::Schema.define(:version => 20140203174347) do
     t.integer  "hh"
     t.integer  "percentage"
     t.float    "value"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.integer  "weight"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "subareas", :force => true do |t|
@@ -134,6 +158,10 @@ ActiveRecord::Schema.define(:version => 20140203174347) do
     t.datetime "updated_at",                           :null => false
     t.integer  "weight"
     t.integer  "current_planning_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "subsystems", :force => true do |t|
@@ -149,6 +177,10 @@ ActiveRecord::Schema.define(:version => 20140203174347) do
     t.datetime "updated_at",                           :null => false
     t.integer  "weight",              :default => 0
     t.integer  "current_planning_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "systems", :force => true do |t|
@@ -168,6 +200,10 @@ ActiveRecord::Schema.define(:version => 20140203174347) do
     t.integer  "enterprise_id"
     t.integer  "weight",              :default => 0
     t.integer  "current_planning_id"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "users", :force => true do |t|

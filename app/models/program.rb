@@ -1,9 +1,9 @@
 class Program < ActiveRecord::Base
-  attr_accessible :name, :price, :value, :hh, :percentage, :weight
+  attr_accessible :name, :price, :value, :hh, :percentage, :weight, :image
+  has_attached_file :image
   has_many :enterprises, :dependent => :destroy
   has_one :baseline
 
-  has_many :medias, :as => :mediable
 
   def price
   	value = 0
