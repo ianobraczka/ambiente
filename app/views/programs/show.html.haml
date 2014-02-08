@@ -2,7 +2,7 @@
   %center
     - if @program.image.exists?
       = image_tag @program.image.url
-#edit-and-delete-section-buttons-container
+  #edit-and-delete-section-buttons-container
     .edit-section-button= button_to 'Editar', edit_program_path(@program), :class => "btn"
     .delete-section-button= button_to "Deletar programa", @program, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse programa?' }, :class => "btn btn-danger"
   %h1.area-title= @program.name

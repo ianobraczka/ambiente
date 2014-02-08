@@ -64,7 +64,7 @@ def made_until_period
     end
   end
 
-  (quant/expected)*100
+  (quant)*100
 end
 
 def planned_until_period
