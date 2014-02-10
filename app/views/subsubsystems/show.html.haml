@@ -36,6 +36,14 @@
         %b Quant. total realizada:
         = @subsubsystem.real_quantity
         = @subsubsystem.unity
+    %hr
+      .content
+        %b Ponderações calculadas:
+        = "Valor: #{(@subsubsystem.value * 100 / @subsubsystem.system_value).round} %"
+        %br
+        = "Porcentagem: #{(@subsubsystem.percentage * 100 / @subsubsystem.system_percentage).round} %"
+        %br
+        = "HH: #{(@subsubsystem.hh * 100 / @subsubsystem.system_hh).round} %"
       %hr
         .content
           %b HH:
@@ -110,6 +118,65 @@
                       \%
                     )
                   %br
+                  %hr
+                  .content
+                    %b
+                      Cálculo do avanço físico ponderado:
+                    %br
+                    %br
+                    - a = period.planned_quantity*100/@subsubsystem.planned_quantity
+                    - b = @subsubsystem.value * 100 / @subsubsystem.system_value
+                    = "Prev. no período:"
+                    %br
+                    = "Valor: #{(a*b/100).round}%"
+                    %br
+                    - c = @subsubsystem.percentage * 100 / @subsubsystem.system_percentage
+                    = "Porcentagem: #{(a*c/100).round}%"
+                    %br
+                    - d = @subsubsystem.hh * 100 / @subsubsystem.system_hh
+                    = "HH: #{(a*d/100).round}%"
+                    %br
+                    %br
+                    %br
+                    - a = (period.planned_until_period/@subsubsystem.planned_quantity)*100
+                    = "Prev. até o período:"
+                    %br
+                    = "Valor: #{(a*b/100).round}%"
+                    %br
+                    - c = @subsubsystem.percentage * 100 / @subsubsystem.system_percentage
+                    = "Porcentagem: #{(a*c/100).round}%"
+                    %br
+                    - d = @subsubsystem.hh * 100 / @subsubsystem.system_hh
+                    = "HH: #{(a*d/100).round}%"
+                    %br
+                    %br
+                    %br
+                    - a = period.quantity*100/@subsubsystem.planned_quantity
+                    = "Realizado no período:"
+                    %br
+                    = "Valor: #{(a*b/100).round}%"
+                    %br
+                    - c = @subsubsystem.percentage * 100 / @subsubsystem.system_percentage
+                    = "Porcentagem: #{(a*c/100).round}%"
+                    %br
+                    - d = @subsubsystem.hh * 100 / @subsubsystem.system_hh
+                    = "HH: #{(a*d/100).round}%"
+                    %br
+                    %br
+                    %br
+                    - a = period.made_until_period/@subsubsystem.planned_quantity
+                    = "Realizado até o período:"
+                    %br
+                    = "Valor: #{(a*b/100).round}%"
+                    %br
+                    - c = @subsubsystem.percentage * 100 / @subsubsystem.system_percentage
+                    = "Porcentagem: #{(a*c/100).round}%"
+                    %br
+                    - d = @subsubsystem.hh * 100 / @subsubsystem.system_hh
+                    = "HH: #{(a*d/100).round}%"
+                    %br
+                    %br
+                    %br
               - if @subsubsystem.current_period.quantity == nil && @subsubsystem.current_period == period
                 = form_for(@subsubsystem.current_period) do |f|
                   - if @subsubsystem.current_period.errors.any?

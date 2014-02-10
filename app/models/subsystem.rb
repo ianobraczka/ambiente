@@ -3,9 +3,7 @@ class Subsystem < ActiveRecord::Base
   has_attached_file :image
   belongs_to :system
   has_many :subsubsystems, :dependent => :destroy
-  has_many :plannings, as: :plannable
-
- 
+  has_many :plannings, as: :plannable 
   
   def has_desagregation?
   	if self.subsubsystems.empty? then

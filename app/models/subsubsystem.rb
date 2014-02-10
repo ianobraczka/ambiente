@@ -4,7 +4,17 @@ class Subsubsystem < ActiveRecord::Base
     belongs_to :subsystem
     has_many :plannings, :as => :plannable
 
-   
+    def system_value
+        System.find(Subsystem.find(subsystem_id).system_id).value * 1.0
+    end
+
+    def system_hh
+        System.find(Subsystem.find(subsystem_id).system_id).hh * 1.0
+    end
+
+    def system_percentage
+        System.find(Subsystem.find(subsystem_id).system_id).percentage * 1.0
+    end
 
     def all_plannings
         all = []
