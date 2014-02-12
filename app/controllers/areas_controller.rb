@@ -25,6 +25,7 @@ class AreasController < ApplicationController
   end
 
   def update
+
     @area = Area.find(params[:id])
 
     respond_to do |format|

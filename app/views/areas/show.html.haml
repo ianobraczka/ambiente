@@ -43,6 +43,7 @@
 .right-aligned-create-button-container
   = button_to "Criar sistema", new_area_system_path(@area), :method => "get", :class => "btn btn-success"
 %h2.area-subtitle SISTEMAS
+Avanço Físico
 - if @area.systems.empty? then
   .alert.alert-error
     %button.close{"data-dismiss" => "alert", :type => "button"} &times;
@@ -52,156 +53,204 @@
   - @area.systems.each do |system|
     .span3.list-item
       .name= link_to system.name, system
+      / .content
+      /   %b Investimento:
+      /   = number_to_currency(system.price, :unit => "R$", :separator => ",", :delimiter => ".")
+      / .content
+      /   %span.percentage-number
+      /     = system.completed
+      /     \%
+      /   completo
+      / %hr/
+      / .content
+      /   %b HH:
+      /   = system.hh
+      / .content
+      /   %b Valor:
+      /   = number_to_currency(system.value, :unit => "R$", :separator => ",", :delimiter => ".")
+      / .content
+      /   %b Porcentagem:
+      /   = system.percentage
+      /   \%
+      / %br/
       .content
-        %b Investimento:
-        = number_to_currency(system.price, :unit => "R$", :separator => ",", :delimiter => ".")
-      .content
-        %span.percentage-number
-          = system.completed
-          \%
-        completo
-      %hr/
-      .content
-        %b HH:
-        = system.hh
-      .content
-        %b Valor:
-        = number_to_currency(system.value, :unit => "R$", :separator => ",", :delimiter => ".")
-      .content
-        %b Porcentagem:
-        = system.percentage
-        \%
-      %br/
-      .content
-        %b
-          Cálculo do avanço físico ponderado:
         %br
         %br
-        Previsto no período:
-        %br
-        - sum = 0
-        - system.subsystems.each do |subsystem|
-          - subsystem.subsubsystems.each do |subsubsystem|
-            - period = subsubsystem.current_planning.periods.where('quantity > 0').last
-            - a = period.planned_quantity*100/subsubsystem.planned_quantity
-            - b = subsubsystem.value * 100 / subsubsystem.system_value
-            - sum += a*b/100
-        %br
-        = "Valor: #{sum.round}%"
-        - sum = 0
-        - system.subsystems.each do |subsystem|
-          - subsystem.subsubsystems.each do |subsubsystem|
-            - period = subsubsystem.current_planning.periods.where('quantity > 0').last
-            - a = period.planned_quantity*100/subsubsystem.planned_quantity
-            - b = subsubsystem.percentage * 100 / subsubsystem.system_percentage
-            - sum += a*b/100
-        %br
-        = "Porcentagem: #{sum.round}%"
-        - sum = 0
-        - system.subsystems.each do |subsystem|
-          - subsystem.subsubsystems.each do |subsubsystem|
-            - period = subsubsystem.current_planning.periods.where('quantity > 0').last
-            - a = period.planned_quantity*100/subsubsystem.planned_quantity
-            - b = subsubsystem.hh * 100 / subsubsystem.system_hh
-            - sum += a*b/100
-        %br
-        = "HH: #{sum.round}%"
-        %br
-        %br
-        %br
-        Previsto até o período:
-        %br
-        - sum = 0
-        - system.subsystems.each do |subsystem|
-          - subsystem.subsubsystems.each do |subsubsystem|
-            - period = subsubsystem.current_planning.periods.where('quantity > 0').last
-            - a = period.planned_until_period*100/subsubsystem.planned_quantity
-            - b = subsubsystem.value * 100 / subsubsystem.system_value
-            - sum += a*b/100
-        %br
-        = "Valor: #{sum.round}%"
-        - sum = 0
-        - system.subsystems.each do |subsystem|
-          - subsystem.subsubsystems.each do |subsubsystem|
-            - period = subsubsystem.current_planning.periods.where('quantity > 0').last
-            - a = period.planned_until_period*100/subsubsystem.planned_quantity
-            - b = subsubsystem.percentage * 100 / subsubsystem.system_percentage
-            - sum += a*b/100
-        %br
-        = "Porcentagem: #{sum.round}%"
-        - sum = 0
-        - system.subsystems.each do |subsystem|
-          - subsystem.subsubsystems.each do |subsubsystem|
-            - period = subsubsystem.current_planning.periods.where('quantity > 0').last
-            - a = period.planned_until_period*100/subsubsystem.planned_quantity
-            - b = subsubsystem.hh * 100 / subsubsystem.system_hh
-            - sum += a*b/100
-        %br
-        = "HH: #{sum.round}%"
-        %br
-        %br
-        %br
-        Realizado no período:
-        %br
-        - sum = 0
-        - system.subsystems.each do |subsystem|
-          - subsystem.subsubsystems.each do |subsubsystem|
-            - period = subsubsystem.current_planning.periods.where('quantity > 0').last
-            - a = period.quantity*100/subsubsystem.planned_quantity
-            - b = subsubsystem.value * 100 / subsubsystem.system_value
-            - sum += a*b/100
-        %br
-        = "Valor: #{sum.round}%"
-        - sum = 0
-        - system.subsystems.each do |subsystem|
-          - subsystem.subsubsystems.each do |subsubsystem|
-            - period = subsubsystem.current_planning.periods.where('quantity > 0').last
-            - a = period.quantity*100/subsubsystem.planned_quantity
-            - b = subsubsystem.percentage * 100 / subsubsystem.system_percentage
-            - sum += a*b/100
-        %br
-        = "Porcentagem: #{sum.round}%"
-        - sum = 0
-        - system.subsystems.each do |subsystem|
-          - subsystem.subsubsystems.each do |subsubsystem|
-            - period = subsubsystem.current_planning.periods.where('quantity > 0').last
-            - a = period.quantity*100/subsubsystem.planned_quantity
-            - b = subsubsystem.hh * 100 / subsubsystem.system_hh
-            - sum += a*b/100
-        %br
-        = "HH: #{sum.round}%"
-        %br
-        %br
-        %br
-        Realizado até o período
-        %br
-        - sum = 0
-        - system.subsystems.each do |subsystem|
-          - subsystem.subsubsystems.each do |subsubsystem|
-            - period = subsubsystem.current_planning.periods.where('quantity > 0').last
-            - a = period.made_until_period/subsubsystem.planned_quantity
-            - b = subsubsystem.value * 100 / subsubsystem.system_value
-            - sum += a*b/100
-        %br
-        = "Valor: #{sum.round}%"
-        - sum = 0
-        - system.subsystems.each do |subsystem|
-          - subsystem.subsubsystems.each do |subsubsystem|
-            - period = subsubsystem.current_planning.periods.where('quantity > 0').last
-            - a = period.made_until_period/subsubsystem.planned_quantity
-            - b = subsubsystem.percentage * 100 / subsubsystem.system_percentage
-            - sum += a*b/100
-        %br
-        = "Porcentagem: #{sum.round}%"
-        - sum = 0
-        - system.subsystems.each do |subsystem|
-          - subsystem.subsubsystems.each do |subsubsystem|
-            - period = subsubsystem.current_planning.periods.where('quantity > 0').last
-            - a = period.made_until_period/subsubsystem.planned_quantity
-            - b = subsubsystem.hh * 100 / subsubsystem.system_hh
-            - sum += a*b/100
-        %br
-        = "HH: #{sum.round}%"
-        %br
+        %small
+          %center
+            No período
+        %table
+          %tr
+            %td{:width => "100px"}
+              %center
+                %b Previsto
+            %td{:width => "100px"}
+              %center
+                %b Realizado
+          %tr
+            %td{:width => "100px"}
+              - sum = 0
+              - system.subsystems.each do |subsystem|
+                - subsystem.subsubsystems.each do |subsubsystem|
+                  - period = subsubsystem.current_planning
+                  - if period
+                    - period = period.periods.where('quantity > 0').last
+                    - a = period.planned_quantity*100/subsubsystem.planned_quantity
+                    - b = subsubsystem.value * 100 / subsubsystem.system_value
+                    - sum += a*b/100
+              - if @area.weight == 1
+                %center
+                  = "#{sum.round}%"
+              - sum = 0
+              - system.subsystems.each do |subsystem|
+                - subsystem.subsubsystems.each do |subsubsystem|
+                  - period = subsubsystem.current_planning
+                  - if period
+                    - period = period.periods.where('quantity > 0').last
+                    - a = period.planned_quantity*100/subsubsystem.planned_quantity
+                    - b = subsubsystem.percentage * 100 / subsubsystem.system_percentage
+                    - sum += a*b/100
+              - if @area.weight == 3
+                %center
+                  = "#{sum.round}%"
+              - sum = 0
+              - system.subsystems.each do |subsystem|
+                - subsystem.subsubsystems.each do |subsubsystem|
+                  - period = subsubsystem.current_planning
+                  - if period
+                    - period = period.periods.where('quantity > 0').last
+                    - a = period.planned_quantity*100/subsubsystem.planned_quantity
+                    - b = subsubsystem.hh * 100 / subsubsystem.system_hh
+                    - sum += a*b/100
+              - if @area.weight == 2
+                %center
+                  = "#{sum.round}%"
+            %td{:width => "100px"}
+              - sum = 0
+              - system.subsystems.each do |subsystem|
+                - subsystem.subsubsystems.each do |subsubsystem|
+                  - period = subsubsystem.current_planning
+                  - if period
+                    - period = period.periods.where('quantity > 0').last
+                    - a = period.quantity*100/subsubsystem.planned_quantity
+                    - b = subsubsystem.value * 100 / subsubsystem.system_value
+                    - sum += a*b/100
+              - if @area.weight == 1
+                %center
+                  = "#{sum.round}%"
+              - sum = 0
+              - system.subsystems.each do |subsystem|
+                - subsystem.subsubsystems.each do |subsubsystem|
+                  - period = subsubsystem.current_planning
+                  - if period
+                    - period = period.periods.where('quantity > 0').last
+                    - a = period.quantity*100/subsubsystem.planned_quantity
+                    - b = subsubsystem.percentage * 100 / subsubsystem.system_percentage
+                    - sum += a*b/100
+              - if @area.weight == 3
+                %center
+                  = "#{sum.round}%"
+              - sum = 0
+              - system.subsystems.each do |subsystem|
+                - subsystem.subsubsystems.each do |subsubsystem|
+                  - period = subsubsystem.current_planning
+                  - if period
+                    - period = period.periods.where('quantity > 0').last
+                    - a = period.quantity*100/subsubsystem.planned_quantity
+                    - b = subsubsystem.hh * 100 / subsubsystem.system_hh
+                    - sum += a*b/100
+              - if @area.weight == 2
+                %center
+                  = "#{sum.round}%"
+        
+        %small
+          %center
+            %br
+            %br
+            Até o período
+        %table
+          %tr
+            %td{:width => "100px"}
+              %center
+                %b Previsto
+            %td{:width => "100px"}
+              %center
+                %b Realizado
+          %tr
+            %td{:width => "100px"}
+              - sum = 0
+              - system.subsystems.each do |subsystem|
+                - subsystem.subsubsystems.each do |subsubsystem|
+                  - period = subsubsystem.current_planning
+                  - if period
+                    - period = period.periods.where('quantity > 0').last
+                    - a = period.planned_until_period*100/subsubsystem.planned_quantity
+                    - b = subsubsystem.value * 100 / subsubsystem.system_value
+                    - sum += a*b/100
+              - if @area.weight == 1
+                %center
+                  = "#{sum.round}%"
+              - sum = 0
+              - system.subsystems.each do |subsystem|
+                - subsystem.subsubsystems.each do |subsubsystem|
+                  - period = subsubsystem.current_planning
+                  - if period
+                    - period = period.periods.where('quantity > 0').last
+                    - a = period.planned_until_period*100/subsubsystem.planned_quantity
+                    - b = subsubsystem.percentage * 100 / subsubsystem.system_percentage
+                    - sum += a*b/100
+              - if @area.weight == 3
+                %center
+                  = "#{sum.round}%"
+              - sum = 0
+              - system.subsystems.each do |subsystem|
+                - subsystem.subsubsystems.each do |subsubsystem|
+                  - period = subsubsystem.current_planning
+                  - if period
+                    - period = period.periods.where('quantity > 0').last
+                    - a = period.planned_until_period*100/subsubsystem.planned_quantity
+                    - b = subsubsystem.hh * 100 / subsubsystem.system_hh
+                    - sum += a*b/100
+              - if @area.weight == 2
+                %center
+                  = "#{sum.round}%"
+            %td{:width => "100px"}
+              - sum = 0
+              - system.subsystems.each do |subsystem|
+                - subsystem.subsubsystems.each do |subsubsystem|
+                  - period = subsubsystem.current_planning
+                  - if period
+                    - period = period.periods.where('quantity > 0').last
+                    - a = period.made_until_period/subsubsystem.planned_quantity
+                    - b = subsubsystem.value * 100 / subsubsystem.system_value
+                    - sum += a*b/100
+              - if @area.weight == 1
+                %center
+                  = "#{sum.round}%"
+              - sum = 0
+              - system.subsystems.each do |subsystem|
+                - subsystem.subsubsystems.each do |subsubsystem|
+                  - period = subsubsystem.current_planning
+                  - if period
+                    - period = period.periods.where('quantity > 0').last
+                    - a = period.made_until_period/subsubsystem.planned_quantity
+                    - b = subsubsystem.percentage * 100 / subsubsystem.system_percentage
+                    - sum += a*b/100
+              - if @area.weight == 3
+                %center
+                  = "#{sum.round}%"
+              - sum = 0
+              - system.subsystems.each do |subsystem|
+                - subsystem.subsubsystems.each do |subsubsystem|
+                  - period = subsubsystem.current_planning
+                  - if period
+                    - period = period.periods.where('quantity > 0').last
+                    - a = period.made_until_period/subsubsystem.planned_quantity
+                    - b = subsubsystem.hh * 100 / subsubsystem.system_hh
+                    - sum += a*b/100
+              - if @area.weight == 2
+                %center
+                  = "#{sum.round}%"
+
         %br
         %br
