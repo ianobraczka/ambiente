@@ -41,7 +41,7 @@
           - @enterprise.errors.full_messages.each do |msg|
             %li= msg
     .content= f.label "Escolha o ponderador"
-    .content= f.select :weight, options_for_select([["Valor", 1], ["HH", 2], ["Porcentagem", 3]], @enterprise.weight)
+    .content= f.select :weight, options_for_select([["Valor", 0], ["HH", 2], ["Porcentagem", 1]], @enterprise.weight)
     %center
       .content= f.submit "Ponderar", :class => "btn btn-success"
     %br/
@@ -58,7 +58,11 @@
       %strong Este empreendimento ainda não possui nenhuma área cadastrada!
 - if !(@enterprise.areas.empty?) then
   .row
+    - data = @enterprise.avanco_fisico_ponderado
+    - period_number = -1
+    - binding.pry
     - @enterprise.areas.each do |area|
+      - period_number += 1
       .span3.list-item
         .name= link_to area.name, area
         .content
@@ -82,5 +86,46 @@
           = area.percentage
           \%
         %br/
-%br/
-%br/
+        .content
+          %br
+          %br
+          %small
+            %center
+              No período
+          %table
+            %tr
+              %td{:width => "100px"}
+                %center
+                  %b Previsto
+              %td{:width => "100px"}
+                %center
+                  %b Realizado
+            %tr
+              %td{:width => "100px"}
+                %center
+                  = "#{data[0][period_number][@enterprise.weight].round.to_s}%"
+              %td{:width => "100px"}
+                %center
+                  = "#{data[2][period_number][@enterprise.weight].round.to_s}%"
+          %small
+            %center
+              %br
+              %br
+              Até o período
+          %table
+            %tr
+              %td{:width => "100px"}
+                %center
+                  %b Previsto
+              %td{:width => "100px"}
+                %center
+                  %b Realizado
+            %tr
+              %td{:width => "100px"}
+                %center
+                  = "#{data[1][period_number][@enterprise.weight].round.to_s}%"
+              %td{:width => "100px"}
+                %center
+                  = "#{data[3][period_number][@enterprise.weight].round.to_s}%"
+        %br
+        %br

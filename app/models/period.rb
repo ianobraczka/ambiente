@@ -56,7 +56,9 @@ def made_until_period
   quant = 0
   expected = 0
   self.planning.periods.each do |period|
-    quant += period.quantity
+    if period.quantity
+      quant += period.quantity 
+    end
     expected += period.planned_quantity
 
     if self == period

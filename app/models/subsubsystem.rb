@@ -9,9 +9,61 @@ class Subsubsystem < ActiveRecord::Base
             return 
         end
 
+        retorno = []
+        
+        prev_period = []
+        prev_ate_periodo = []
+        real_periodo = []
+        real_ate_periodo = []
         current_planning.periods.each do |period|
+
+            if period.quantity
+
+            #prev no periodo
+
+            a = period.planned_quantity*100/planned_quantity
             
-        end        
+            b = value * 100 / system_value
+            c = percentage * 100 / system_percentage
+            d = hh * 100 / system_hh
+
+            prev_period = [(a*b/100), (a*c/100), (a*d/100)]
+            
+            #real no periodo
+            if period.quantity
+                a = period.quantity * 100 / planned_quantity
+            else
+                a = 0
+            end
+
+            c = percentage * 100 / system_percentage
+            d = hh * 100 / system_hh
+
+            real_periodo = [(a*b/100), (a*c/100), (a*d/100)]
+
+            #prev ate o periodo
+
+            a = (period.planned_until_period/planned_quantity)*100
+            c = percentage * 100 / system_percentage
+            d = hh * 100 / system_hh
+            
+            prev_ate_periodo = [(a*b/100), (a*c/100), (a*d/100)]
+
+            #real ate o periodo
+
+            a = period.made_until_period/planned_quantity
+            c = percentage * 100 / system_percentage
+            d = hh * 100 / system_hh
+            
+            real_ate_periodo = [(a*b/100), (a*c/100), (a*d/100)]
+
+            retorno << [prev_period, prev_ate_periodo, real_periodo, real_ate_periodo]
+        end
+    end
+
+        # Subsubsystem.first.avanco_fisico_ponderado
+
+        return retorno
     end
 
     def system_value
@@ -50,8 +102,10 @@ class Subsubsystem < ActiveRecord::Base
 
     def planned_quantity
         pq = 0
-        self.plannings.each do |planning|
-            pq = pq + planning.planned_quantity
+        if self.plannings
+            self.plannings.each do |planning|
+                pq = pq + planning.planned_quantity
+            end
         end
         pq
     end
@@ -71,15 +125,14 @@ class Subsubsystem < ActiveRecord::Base
     end
 
     def weight_variable (weight)
-        if weight == 1 then
-            mult = self.value
-        elsif weight == 2 then
-            mult = self.hh
-        elsif weight == 3 then
-            mult = self.percentage
-        end
-        mult
-    end
-
+        if weight == 0 then
+          mult = self.value
+      elsif weight == 2 or weight == 3 then
+          mult = self.hh
+      elsif weight == 1 then
+          mult = self.percentage
+      end
+      mult
+  end
 
 end

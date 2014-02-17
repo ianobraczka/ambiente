@@ -33,7 +33,7 @@
             %li= msg
     .content
       %strong= f.label "Escolha o ponderador"
-    .content= f.select :weight, options_for_select([["Valor", 1], ["HH", 2], ["Porcentagem", 3]], @area.weight)
+    .content= f.select :weight, options_for_select([["Valor", 0], ["HH", 2], ["Porcentagem", 1]], @area.weight)
     %center
       .content= f.submit "Ponderar", :class => "btn btn-success"
     %br/
@@ -74,6 +74,7 @@ Avanço Físico
       /   \%
       / %br/
       .content
+        - period_number = -1
         %br
         %br
         %small
@@ -88,81 +89,13 @@ Avanço Físico
               %center
                 %b Realizado
           %tr
+            - data = system.avanco_fisico_ponderado
             %td{:width => "100px"}
-              - sum = 0
-              - system.subsystems.each do |subsystem|
-                - subsystem.subsubsystems.each do |subsubsystem|
-                  - period = subsubsystem.current_planning
-                  - if period
-                    - period = period.periods.where('quantity > 0').last
-                    - a = period.planned_quantity*100/subsubsystem.planned_quantity
-                    - b = subsubsystem.value * 100 / subsubsystem.system_value
-                    - sum += a*b/100
-              - if @area.weight == 1
-                %center
-                  = "#{sum.round}%"
-              - sum = 0
-              - system.subsystems.each do |subsystem|
-                - subsystem.subsubsystems.each do |subsubsystem|
-                  - period = subsubsystem.current_planning
-                  - if period
-                    - period = period.periods.where('quantity > 0').last
-                    - a = period.planned_quantity*100/subsubsystem.planned_quantity
-                    - b = subsubsystem.percentage * 100 / subsubsystem.system_percentage
-                    - sum += a*b/100
-              - if @area.weight == 3
-                %center
-                  = "#{sum.round}%"
-              - sum = 0
-              - system.subsystems.each do |subsystem|
-                - subsystem.subsubsystems.each do |subsubsystem|
-                  - period = subsubsystem.current_planning
-                  - if period
-                    - period = period.periods.where('quantity > 0').last
-                    - a = period.planned_quantity*100/subsubsystem.planned_quantity
-                    - b = subsubsystem.hh * 100 / subsubsystem.system_hh
-                    - sum += a*b/100
-              - if @area.weight == 2
-                %center
-                  = "#{sum.round}%"
+              %center
+                = "#{data[0][@area.weight].round.to_s}%"
             %td{:width => "100px"}
-              - sum = 0
-              - system.subsystems.each do |subsystem|
-                - subsystem.subsubsystems.each do |subsubsystem|
-                  - period = subsubsystem.current_planning
-                  - if period
-                    - period = period.periods.where('quantity > 0').last
-                    - a = period.quantity*100/subsubsystem.planned_quantity
-                    - b = subsubsystem.value * 100 / subsubsystem.system_value
-                    - sum += a*b/100
-              - if @area.weight == 1
-                %center
-                  = "#{sum.round}%"
-              - sum = 0
-              - system.subsystems.each do |subsystem|
-                - subsystem.subsubsystems.each do |subsubsystem|
-                  - period = subsubsystem.current_planning
-                  - if period
-                    - period = period.periods.where('quantity > 0').last
-                    - a = period.quantity*100/subsubsystem.planned_quantity
-                    - b = subsubsystem.percentage * 100 / subsubsystem.system_percentage
-                    - sum += a*b/100
-              - if @area.weight == 3
-                %center
-                  = "#{sum.round}%"
-              - sum = 0
-              - system.subsystems.each do |subsystem|
-                - subsystem.subsubsystems.each do |subsubsystem|
-                  - period = subsubsystem.current_planning
-                  - if period
-                    - period = period.periods.where('quantity > 0').last
-                    - a = period.quantity*100/subsubsystem.planned_quantity
-                    - b = subsubsystem.hh * 100 / subsubsystem.system_hh
-                    - sum += a*b/100
-              - if @area.weight == 2
-                %center
-                  = "#{sum.round}%"
-        
+              %center
+                = "#{data[2][@area.weight].round.to_s}%"
         %small
           %center
             %br
@@ -178,79 +111,10 @@ Avanço Físico
                 %b Realizado
           %tr
             %td{:width => "100px"}
-              - sum = 0
-              - system.subsystems.each do |subsystem|
-                - subsystem.subsubsystems.each do |subsubsystem|
-                  - period = subsubsystem.current_planning
-                  - if period
-                    - period = period.periods.where('quantity > 0').last
-                    - a = period.planned_until_period*100/subsubsystem.planned_quantity
-                    - b = subsubsystem.value * 100 / subsubsystem.system_value
-                    - sum += a*b/100
-              - if @area.weight == 1
-                %center
-                  = "#{sum.round}%"
-              - sum = 0
-              - system.subsystems.each do |subsystem|
-                - subsystem.subsubsystems.each do |subsubsystem|
-                  - period = subsubsystem.current_planning
-                  - if period
-                    - period = period.periods.where('quantity > 0').last
-                    - a = period.planned_until_period*100/subsubsystem.planned_quantity
-                    - b = subsubsystem.percentage * 100 / subsubsystem.system_percentage
-                    - sum += a*b/100
-              - if @area.weight == 3
-                %center
-                  = "#{sum.round}%"
-              - sum = 0
-              - system.subsystems.each do |subsystem|
-                - subsystem.subsubsystems.each do |subsubsystem|
-                  - period = subsubsystem.current_planning
-                  - if period
-                    - period = period.periods.where('quantity > 0').last
-                    - a = period.planned_until_period*100/subsubsystem.planned_quantity
-                    - b = subsubsystem.hh * 100 / subsubsystem.system_hh
-                    - sum += a*b/100
-              - if @area.weight == 2
-                %center
-                  = "#{sum.round}%"
+              %center
+                = "#{data[1][@area.weight].round.to_s}%"
             %td{:width => "100px"}
-              - sum = 0
-              - system.subsystems.each do |subsystem|
-                - subsystem.subsubsystems.each do |subsubsystem|
-                  - period = subsubsystem.current_planning
-                  - if period
-                    - period = period.periods.where('quantity > 0').last
-                    - a = period.made_until_period/subsubsystem.planned_quantity
-                    - b = subsubsystem.value * 100 / subsubsystem.system_value
-                    - sum += a*b/100
-              - if @area.weight == 1
-                %center
-                  = "#{sum.round}%"
-              - sum = 0
-              - system.subsystems.each do |subsystem|
-                - subsystem.subsubsystems.each do |subsubsystem|
-                  - period = subsubsystem.current_planning
-                  - if period
-                    - period = period.periods.where('quantity > 0').last
-                    - a = period.made_until_period/subsubsystem.planned_quantity
-                    - b = subsubsystem.percentage * 100 / subsubsystem.system_percentage
-                    - sum += a*b/100
-              - if @area.weight == 3
-                %center
-                  = "#{sum.round}%"
-              - sum = 0
-              - system.subsystems.each do |subsystem|
-                - subsystem.subsubsystems.each do |subsubsystem|
-                  - period = subsubsystem.current_planning
-                  - if period
-                    - period = period.periods.where('quantity > 0').last
-                    - a = period.made_until_period/subsubsystem.planned_quantity
-                    - b = subsubsystem.hh * 100 / subsubsystem.system_hh
-                    - sum += a*b/100
-              - if @area.weight == 2
-                %center
-                  = "#{sum.round}%"
-
-        %br
-        %br
+              %center
+                = "#{data[3][@area.weight].round.to_s}%"
+      %br
+      %br

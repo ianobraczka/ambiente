@@ -54,7 +54,7 @@
           - @subsystem.errors.full_messages.each do |msg|
             %li= msg
     .content= f.label "Escolha o ponderador"
-    .content= f.select :weight, options_for_select([["Valor", 1], ["HH", 2], ["Porcentagem", 3]], @subsystem.weight)
+    .content= f.select :weight, options_for_select([["Valor", 0], ["HH", 2], ["Porcentagem", 1]], @subsystem.weight)
     %center
       .content
         = f.submit "Ponderar", :class => "btn btn-success"
@@ -159,8 +159,46 @@
           %b Valor:
           = number_to_currency(subsubsystem.value, :unit => "R$", :separator => ",", :delimiter => ".")
         %br/
-        %br/
-        %br/
-        %br/
-        %br/
-        %br/
+
+        - period_number = -1
+        %br
+        %br
+        %small
+          %center
+            No período
+        %table
+          %tr
+            %td{:width => "100px"}
+              %center
+                %b Previsto
+            %td{:width => "100px"}
+              %center
+                %b Realizado
+          %tr
+            - data = subsubsystem.avanco_fisico_ponderado
+            %td{:width => "100px"}
+              %center
+                = "#{data.last[0][@subsystem.weight].to_s}%"
+            %td{:width => "100px"}
+              %center
+                = "#{data.last[2][@subsystem.weight].to_s}%"
+        %small
+          %center
+            %br
+            %br
+            Até o período
+        %table
+          %tr
+            %td{:width => "100px"}
+              %center
+                %b Previsto
+            %td{:width => "100px"}
+              %center
+                %b Realizado
+          %tr
+            %td{:width => "100px"}
+              %center
+                = "#{data.last[1][@subsystem.weight].to_s}%"
+            %td{:width => "100px"}
+              %center
+                = "#{data.last[3][@subsystem.weight].to_s}%"

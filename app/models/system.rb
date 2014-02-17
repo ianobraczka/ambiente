@@ -5,6 +5,23 @@ class System < ActiveRecord::Base
   has_many :subsystems, :dependent => :destroy
   has_many :plannings, as: :plannable 
 
+  def avanco_fisico_ponderado
+
+    base = [[0 ,0 , 0],[0 ,0 , 0],[0 ,0 , 0],[0 ,0 , 0]]
+    subsystems.each do |sub|
+      data =  sub.avanco_fisico_ponderado
+
+      for i in 0..data.length - 1
+        for j in 0..data[i].length - 1
+          base[i][j] += data[i][j]
+        end
+      end
+
+    end
+
+    base
+  end
+
   def has_desagregation?
     not self.subsystems.empty?
   end
@@ -28,7 +45,6 @@ class System < ActiveRecord::Base
   def percentage
     self.subsystems.empty? ? self.attributes["percentage"] : self.subsystems.map(&:percentage).sum
   end
-
 
   def value
     self.subsystems.empty? ? self.attributes["value"] : self.subsystems.map(&:value).sum
@@ -79,36 +95,36 @@ class System < ActiveRecord::Base
           completed = completed + (subsystem.real_quantity*100/subsystem.planned_quantity)*subsystem.weight_variable(weight)
         end
       end
-      (completed/mult).round
+      return (completed/mult).round
     end
   end
 
   def chosen
-    if self.weight == 1 then
+    if self.weight == 0 then
       mult = self.value
     elsif self.weight == 2 then
       mult = self.hh
-    elsif self.weight == 3 then
+    elsif self.weight == 1 then
       mult = self.percentage
     end
   end
 
   def weight_variable (weight)
-    if weight == 1 then
+    if weight == 0 then
       mult = self.value
-    elsif weight == 2 then
+    elsif weight == 2 or weight == 3 then
       mult = self.hh
-    elsif weight == 3 then
+    elsif weight == 1 then
       mult = self.percentage
     end
   end
 
   def mult
-    if weight == 1 then
+    if weight == 0 then
       mult = self.value
-    elsif weight == 2 then
+    elsif weight == 2 or weight == 3 then
       mult = self.hh
-    elsif weight == 3 then
+    elsif weight == 1 then
       mult = self.percentage
     end
     mult

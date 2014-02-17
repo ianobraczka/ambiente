@@ -1,3 +1,5 @@
+- content_for :title, "#{@subsubsystem.subsystem.name} > #{@subsubsystem.name}"
+
 .history-container
   ←
   \#{link_to @subsubsystem.subsystem.system.area.enterprise.program.name, @subsubsystem.subsystem.system.area.enterprise.program}
@@ -56,6 +58,21 @@
           = @subsubsystem.percentage
           \%
         %br
+    = form_for(@subsubsystem) do |f|
+      - if @subsubsystem.errors.any?
+        #error_explanation
+          %h2
+            = pluralize(@subsubsystem.errors.count, "error")
+            prohibited this product from being saved:
+          %ul
+            - @subsubsystem.errors.full_messages.each do |msg|
+              %li= msg
+      .content= f.label "Escolha o ponderador"
+      .content= f.select :weight, options_for_select([["Valor", 0], ["HH", 2], ["Porcentagem", 1]], @subsubsystem.weight)
+      %center
+        .content
+          = f.submit "Ponderar", :class => "btn btn-success"
+      %br/
 %br
   - if !@subsubsystem.plannings.empty?
     %hr
@@ -65,7 +82,9 @@
           %br
             %br/
         .row
+          - period_number = -1
           - @subsubsystem.current_planning.periods.each do |period|
+            - period_number += 1
             .span4.list-item
               .name
                 = "#{period.number}o período"
@@ -120,63 +139,47 @@
                   %br
                   %hr
                   .content
-                    %b
-                      Cálculo do avanço físico ponderado:
                     %br
                     %br
-                    - a = period.planned_quantity*100/@subsubsystem.planned_quantity
-                    - b = @subsubsystem.value * 100 / @subsubsystem.system_value
-                    = "Prev. no período:"
-                    %br
-                    = "Valor: #{(a*b/100).round}%"
-                    %br
-                    - c = @subsubsystem.percentage * 100 / @subsubsystem.system_percentage
-                    = "Porcentagem: #{(a*c/100).round}%"
-                    %br
-                    - d = @subsubsystem.hh * 100 / @subsubsystem.system_hh
-                    = "HH: #{(a*d/100).round}%"
-                    %br
-                    %br
-                    %br
-                    - a = (period.planned_until_period/@subsubsystem.planned_quantity)*100
-                    = "Prev. até o período:"
-                    %br
-                    = "Valor: #{(a*b/100).round}%"
-                    %br
-                    - c = @subsubsystem.percentage * 100 / @subsubsystem.system_percentage
-                    = "Porcentagem: #{(a*c/100).round}%"
-                    %br
-                    - d = @subsubsystem.hh * 100 / @subsubsystem.system_hh
-                    = "HH: #{(a*d/100).round}%"
-                    %br
-                    %br
-                    %br
-                    - a = period.quantity*100/@subsubsystem.planned_quantity
-                    = "Realizado no período:"
-                    %br
-                    = "Valor: #{(a*b/100).round}%"
-                    %br
-                    - c = @subsubsystem.percentage * 100 / @subsubsystem.system_percentage
-                    = "Porcentagem: #{(a*c/100).round}%"
-                    %br
-                    - d = @subsubsystem.hh * 100 / @subsubsystem.system_hh
-                    = "HH: #{(a*d/100).round}%"
-                    %br
-                    %br
-                    %br
-                    - a = period.made_until_period/@subsubsystem.planned_quantity
-                    = "Realizado até o período:"
-                    %br
-                    = "Valor: #{(a*b/100).round}%"
-                    %br
-                    - c = @subsubsystem.percentage * 100 / @subsubsystem.system_percentage
-                    = "Porcentagem: #{(a*c/100).round}%"
-                    %br
-                    - d = @subsubsystem.hh * 100 / @subsubsystem.system_hh
-                    = "HH: #{(a*d/100).round}%"
-                    %br
-                    %br
-                    %br
+                    %small
+                      %center
+                        No período
+                    %table
+                      %tr
+                        %td{:width => "100px"}
+                          %center
+                            %b Previsto
+                        %td{:width => "100px"}
+                          %center
+                            %b Realizado
+                      %tr
+                        - data = @subsubsystem.avanco_fisico_ponderado
+                        %td{:width => "100px"}
+                          %center
+                            = "#{data[period_number][0][@subsubsystem.weight].round.to_s}%"
+                        %td{:width => "100px"}
+                          %center
+                            = "#{data[period_number][2][@subsubsystem.weight].round.to_s}%"
+                    %small
+                      %center
+                        %br
+                        %br
+                        Até o período
+                    %table
+                      %tr
+                        %td{:width => "100px"}
+                          %center
+                            %b Previsto
+                        %td{:width => "100px"}
+                          %center
+                            %b Realizado
+                      %tr
+                        %td{:width => "100px"}
+                          %center
+                            = "#{data[period_number][1][@subsubsystem.weight].round.to_s}%"
+                        %td{:width => "100px"}
+                          %center
+                            = "#{data[period_number][3][@subsubsystem.weight].round.to_s}%"
               - if @subsubsystem.current_period.quantity == nil && @subsubsystem.current_period == period
                 = form_for(@subsubsystem.current_period) do |f|
                   - if @subsubsystem.current_period.errors.any?

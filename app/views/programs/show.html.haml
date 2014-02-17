@@ -31,7 +31,7 @@
               %li= msg
       .content
         %strong Escolha o ponderador
-      .content= f.select :weight, options_for_select([["Valor", 1], ["HH", 2], ["Porcentagem", 3]], @program.weight)
+      .content= f.select :weight, options_for_select([["Valor", 0], ["HH", 2], ["Porcentagem", 1]], @program.weight)
       .content.weight-button= f.submit "Ponderar", :class => "btn btn-success"
       %br/
   = button_to "Gerar relatório", program_report_path(@program), :class => "btn", :method => "get"

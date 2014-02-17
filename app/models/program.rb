@@ -76,7 +76,7 @@ class Program < ActiveRecord::Base
   def chosen
     if self.weight == 1 then
       mult = self.value
-    elsif weight == 2 then
+    elsif weight == 2 or weight == 3 then
       mult = self.hh
     elsif weight == 3 then
       mult = self.percentage
@@ -84,9 +84,9 @@ class Program < ActiveRecord::Base
   end
   
   def mult
-    if weight == 1 then
+    if weight == 0 then
       mult = self.value
-    elsif weight == 2 then
+    elsif weight == 2 or weight == 3 then
       mult = self.hh
     elsif weight == 3 then
       mult = self.percentage
