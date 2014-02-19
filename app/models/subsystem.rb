@@ -5,6 +5,24 @@ class Subsystem < ActiveRecord::Base
 	has_many :subsubsystems, :dependent => :destroy
 	has_many :plannings, as: :plannable 
 
+	def financeiro
+		v = 0
+		v2 = 0
+		subsubsystems.each do |subsub|
+			subsub.current_planning.periods.each do |period|
+				if period.value_real > 0
+					v += period.value_planned
+					v2 += period.value_real
+				end
+			end
+		end
+
+		puts v
+		puts v2
+
+		puts v2/v
+	end
+
 	def avanco_fisico_ponderado
 
 		base = [[0 ,0 , 0],[0 ,0 , 0],[0 ,0 , 0],[0 ,0 , 0]]

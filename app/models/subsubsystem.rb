@@ -1,8 +1,14 @@
+# Subsubsystem.first.avanco_fisico_ponderado
+
 class Subsubsystem < ActiveRecord::Base
     attr_accessible :hh, :name, :current_planning_id, :percentage, :price, :subsystem_id, :total_quantity, :unity, :value, :weight, :image
     has_attached_file :image
     belongs_to :subsystem
     has_many :plannings, :as => :plannable
+
+    def financeiro        
+
+    end
 
     def avanco_fisico_ponderado
         unless current_planning
@@ -10,7 +16,7 @@ class Subsubsystem < ActiveRecord::Base
         end
 
         retorno = []
-        
+
         prev_period = []
         prev_ate_periodo = []
         real_periodo = []
@@ -19,49 +25,40 @@ class Subsubsystem < ActiveRecord::Base
 
             if period.quantity
 
-            #prev no periodo
+                a = period.planned_quantity*100/planned_quantity
 
-            a = period.planned_quantity*100/planned_quantity
-            
-            b = value * 100 / system_value
-            c = percentage * 100 / system_percentage
-            d = hh * 100 / system_hh
+                b = value * 100 / system_value
+                c = percentage * 100 / system_percentage
+                d = hh * 100 / system_hh
 
-            prev_period = [(a*b/100), (a*c/100), (a*d/100)]
-            
-            #real no periodo
-            if period.quantity
-                a = period.quantity * 100 / planned_quantity
-            else
-                a = 0
+                prev_period = [(a*b/100), (a*c/100), (a*d/100)]
+                if period.quantity
+                    a = period.quantity * 100 / planned_quantity
+                else
+                    a = 0
+                end
+
+                c = percentage * 100 / system_percentage
+                d = hh * 100 / system_hh
+
+                real_periodo = [(a*b/100), (a*c/100), (a*d/100)]
+
+                a = (period.planned_until_period/planned_quantity)*100
+                c = percentage * 100 / system_percentage
+                d = hh * 100 / system_hh
+
+                prev_ate_periodo = [(a*b/100), (a*c/100), (a*d/100)]
+
+                a = period.made_until_period/planned_quantity
+                c = percentage * 100 / system_percentage
+                d = hh * 100 / system_hh
+
+                real_ate_periodo = [(a*b/100), (a*c/100), (a*d/100)]
+
+                retorno << [prev_period, prev_ate_periodo, real_periodo, real_ate_periodo]
             end
-
-            c = percentage * 100 / system_percentage
-            d = hh * 100 / system_hh
-
-            real_periodo = [(a*b/100), (a*c/100), (a*d/100)]
-
-            #prev ate o periodo
-
-            a = (period.planned_until_period/planned_quantity)*100
-            c = percentage * 100 / system_percentage
-            d = hh * 100 / system_hh
-            
-            prev_ate_periodo = [(a*b/100), (a*c/100), (a*d/100)]
-
-            #real ate o periodo
-
-            a = period.made_until_period/planned_quantity
-            c = percentage * 100 / system_percentage
-            d = hh * 100 / system_hh
-            
-            real_ate_periodo = [(a*b/100), (a*c/100), (a*d/100)]
-
-            retorno << [prev_period, prev_ate_periodo, real_periodo, real_ate_periodo]
         end
-    end
 
-        # Subsubsystem.first.avanco_fisico_ponderado
 
         return retorno
     end

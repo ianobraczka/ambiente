@@ -107,6 +107,11 @@
                     0
                   \%
                 )
+                %br
+                %br
+                Valor previsto no período: #{period.value_planned}
+                %br
+                %br
               - if period.quantity != nil
                 .content
                   Quant. realizada no período: #{period.real_quantity} #{@subsubsystem.unity} (
@@ -117,6 +122,11 @@
                       0
                     \%
                   )
+                  %br
+                  %br
+                  Valor realizado no período: #{period.value_real}
+                  %br
+                  %br
                 %hr
                   .content
                     Quant. prev. até o período: #{period.planned_until_period} #{@subsubsystem.unity} (
@@ -127,6 +137,11 @@
                         0
                       \%
                     )
+                    %br
+                    %br
+                    Valor prev. até o período: #{period.planned_until_period_value}
+                    %br
+                    %br
                   .content
                     Quant. real. até o período: #{period.real_until_period} #{@subsubsystem.unity} (
                     %span.percentage-number>
@@ -136,6 +151,12 @@
                         0
                       \%
                     )
+
+                    %br
+                    %br
+                    Valor real. até o período: #{period.real_until_period_value}
+                    %br
+                    %br
                   %br
                   %hr
                   .content
@@ -195,9 +216,13 @@
                       %center
                         %span.very_small_font Quant. realizada:
                         %br
-                          %br
-                            = f.number_field :quantity
-                            %br= f.submit "Entrar", :class => "btn btn-success"
+                        %br
+                        = f.number_field :quantity
+                        %br
+                        %br
+                        %span.very_small_font Valor realizado:
+                        = f.number_field :value_real
+                        %br= f.submit "Entrar", :class => "btn btn-success"
         %br
           /= binding.pry
           = link_to "Editar planejamento", "/subsubsystems/#{@subsubsystem.id}/plannings/#{@subsubsystem.current_planning_id}/edit", :method => "get", :class => "btn btn-success"

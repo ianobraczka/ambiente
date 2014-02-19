@@ -21,6 +21,10 @@
         %br/
         = "Quantidade realizada no #{cnt}º período: #{period.quantity}"
         %br/
+        = "Valor planejado no #{cnt}º período: #{period.value_planned}"
+        %br/
+        = "Valor realizado no #{cnt}º período: #{period.value_real}"
+        %br/
         %br/
         - cnt = cnt+1
 
@@ -35,6 +39,10 @@
         = builder.number_field :planned_quantity, :id => "planned-quantity"
         = builder.label :quantity, "Quantidade realizada no #{cnt.to_s}º período"
         = builder.number_field :quantity, :id => "quantity"
+        = builder.label :value_planned, "Valor planejado no #{cnt.to_s}º período"
+        = builder.number_field :value_planned, :id => "value_planned"
+        = builder.label :value_real, "Valor realizado o #{cnt.to_s}º período"
+        = builder.number_field :value_real, :id => "value_real"
         %br/
         %br/
       - cnt = cnt+1
