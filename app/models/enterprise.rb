@@ -6,77 +6,95 @@ class Enterprise < ActiveRecord::Base
 	belongs_to :program
 	has_many :areas, :dependent => :destroy
 
-	def avanco_fisico_ponderado
+
+  def financeiro
+    v = 0
+    v2 = 0
+    areas.each do |area|
+      data = area.financeiro
+      v += data["value_planned"]
+      v2 += data["value_real"]
+    end
+
+    r = Hash.new
+
+    r["value_planned"] = v
+    r["value_real"] = v2
+
+    r
+  end
+
+  def avanco_fisico_ponderado
 
 
-		previstoNoPeriodo = []
-		realizadoNoPeriodo = []
-		realizadoAtePeriodo = []
-		previstoAtePeriodo = []
-		
-		countArea = -1
+    previstoNoPeriodo = []
+    realizadoNoPeriodo = []
+    realizadoAtePeriodo = []
+    previstoAtePeriodo = []
+    
+    countArea = -1
 
-		areas.count.times do 
-			previstoNoPeriodo << [0,0,0]
-			previstoAtePeriodo << [0,0,0]
-			realizadoNoPeriodo << [0,0,0]
-			realizadoAtePeriodo << [0,0,0]
-		end
+    areas.count.times do 
+     previstoNoPeriodo << [0,0,0]
+     previstoAtePeriodo << [0,0,0]
+     realizadoNoPeriodo << [0,0,0]
+     realizadoAtePeriodo << [0,0,0]
+   end
 
-		base = []
+   base = []
 
-		areas.each do |area|
-				
-			countArea += 1
+   areas.each do |area|
+    
+     countArea += 1
 
-			ponderadoresGerais = [area.value, area.percentage, area.hh]
-			
-			avancoArea = area.avanco_fisico_ponderado
-			
-			ponderadoresSystem = []
-			
-			area.systems.each do |system|
-				ponderadoresSystem = [system.value, system.percentage, system.hh]
+     ponderadoresGerais = [area.value, area.percentage, area.hh]
+     
+     avancoArea = area.avanco_fisico_ponderado
+     
+     ponderadoresSystem = []
+     
+     area.systems.each do |system|
+      ponderadoresSystem = [system.value, system.percentage, system.hh]
 
-				avancoSystem = system.avanco_fisico_ponderado
-
-
-				for i in 0..2
-					previstoNoPeriodo[countArea][i] += (ponderadoresSystem[i].to_f/ponderadoresGerais[i].to_f)*avancoSystem[0][i].to_f
-				end
-
-				for i in 0..2
-					previstoAtePeriodo[countArea][i] += (ponderadoresSystem[i].to_f/ponderadoresGerais[i].to_f)*avancoSystem[1][i].to_f
-				end
-
-				for i in 0..2
-					realizadoNoPeriodo[countArea][i] += (ponderadoresSystem[i].to_f*avancoSystem[2][i].to_f)/ponderadoresGerais[i].to_f
-				end
-
-				for i in 0..2
-					realizadoAtePeriodo[countArea][i] += (ponderadoresSystem[i].to_f*avancoSystem[3][i].to_f)/ponderadoresGerais[i].to_f
-				end
-				
-			end
-		end
-
-		base << previstoNoPeriodo
-		base << previstoAtePeriodo
-		base << realizadoNoPeriodo
-		base << realizadoAtePeriodo
+      avancoSystem = system.avanco_fisico_ponderado
 
 
+      for i in 0..2
+       previstoNoPeriodo[countArea][i] += (ponderadoresSystem[i].to_f/ponderadoresGerais[i].to_f)*avancoSystem[0][i].to_f
+     end
 
-		for i in 0..base.length - 1
-			for j in 0..base[i].length - 1
-				for k in 0..base[i][j].length - 1
-					base[i][j][k] = base[i][j][k].round
-				end
-			end
-		end
+     for i in 0..2
+       previstoAtePeriodo[countArea][i] += (ponderadoresSystem[i].to_f/ponderadoresGerais[i].to_f)*avancoSystem[1][i].to_f
+     end
 
-		base
-	end
+     for i in 0..2
+       realizadoNoPeriodo[countArea][i] += (ponderadoresSystem[i].to_f*avancoSystem[2][i].to_f)/ponderadoresGerais[i].to_f
+     end
+
+     for i in 0..2
+       realizadoAtePeriodo[countArea][i] += (ponderadoresSystem[i].to_f*avancoSystem[3][i].to_f)/ponderadoresGerais[i].to_f
+     end
+     
+   end
+ end
+
+ base << previstoNoPeriodo
+ base << previstoAtePeriodo
+ base << realizadoNoPeriodo
+ base << realizadoAtePeriodo
+
+
+
+ for i in 0..base.length - 1
+   for j in 0..base[i].length - 1
+    for k in 0..base[i][j].length - 1
+     base[i][j][k] = base[i][j][k].round
+   end
+ end
+end
+
+base
+end
 
 
   #retorna o investimento feito em dado empreendimento

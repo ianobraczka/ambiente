@@ -5,6 +5,23 @@ class Program < ActiveRecord::Base
   has_one :baseline
 
 
+  def financeiro
+    v = 0
+    v2 = 0
+    enterprises.each do |enterprise|
+      data = enterprise.financeiro
+      v += data["value_planned"]
+      v2 += data["value_real"]
+    end
+
+    r = Hash.new
+
+    r["value_planned"] = v
+    r["value_real"] = v2
+
+    r
+  end
+
   def price
   	value = 0
   	self.enterprises.each do |enterprise|

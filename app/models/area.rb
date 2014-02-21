@@ -5,22 +5,40 @@ class Area < ActiveRecord::Base
 	belongs_to :enterprise
 	has_many :systems
 
-	def avanco_fisico_ponderado
 
-		base = [[0 ,0 , 0],[0 ,0 , 0],[0 ,0 , 0],[0 ,0 , 0]]
-		systems.each do |system|
-			data =  system.avanco_fisico_ponderado
+  def financeiro
+    v = 0
+    v2 = 0
+    systems.each do |system|
+      data = system.financeiro
+      v += data["value_planned"]
+      v2 += data["value_real"]
+    end
 
-			for i in 0..data.length - 1
-				for j in 0..data[i].length - 1
-					base[i][j] += data[i][j]
-				end
-			end
+    r = Hash.new
 
-		end
+    r["value_planned"] = v
+    r["value_real"] = v2
 
-		base
-	end
+    r
+  end
+
+  def avanco_fisico_ponderado
+
+    base = [[0 ,0 , 0],[0 ,0 , 0],[0 ,0 , 0],[0 ,0 , 0]]
+    systems.each do |system|
+     data =  system.avanco_fisico_ponderado
+
+     for i in 0..data.length - 1
+      for j in 0..data[i].length - 1
+       base[i][j] += data[i][j]
+     end
+   end
+
+ end
+
+ base
+end
 
   #retorna a quantidade de investimento em certa area (soma dos investimentos dos sistemas que ela possui)
  	#retorna o investimento feito em dado empreendimento

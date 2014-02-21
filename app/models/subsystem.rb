@@ -9,18 +9,17 @@ class Subsystem < ActiveRecord::Base
 		v = 0
 		v2 = 0
 		subsubsystems.each do |subsub|
-			subsub.current_planning.periods.each do |period|
-				if period.value_real > 0
-					v += period.value_planned
-					v2 += period.value_real
-				end
-			end
+			data = subsub.financeiro
+			v += data["value_planned"]
+			v2 += data["value_real"]
 		end
 
-		puts v
-		puts v2
+		r = Hash.new
 
-		puts v2/v
+		r["value_planned"] = v
+		r["value_real"] = v2
+
+		r
 	end
 
 	def avanco_fisico_ponderado

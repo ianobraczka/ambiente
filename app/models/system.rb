@@ -5,6 +5,24 @@ class System < ActiveRecord::Base
   has_many :subsystems, :dependent => :destroy
   has_many :plannings, as: :plannable 
 
+
+  def financeiro
+    v = 0
+    v2 = 0
+    subsystems.each do |subsub|
+      data = subsub.financeiro
+      v += data["value_planned"]
+      v2 += data["value_real"]
+    end
+
+    r = Hash.new
+
+    r["value_planned"] = v
+    r["value_real"] = v2
+
+    r
+  end
+
   def avanco_fisico_ponderado
 
     base = [[0 ,0 , 0],[0 ,0 , 0],[0 ,0 , 0],[0 ,0 , 0]]

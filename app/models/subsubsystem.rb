@@ -1,13 +1,23 @@
-# Subsubsystem.first.avanco_fisico_ponderado
-
 class Subsubsystem < ActiveRecord::Base
     attr_accessible :hh, :name, :current_planning_id, :percentage, :price, :subsystem_id, :total_quantity, :unity, :value, :weight, :image
     has_attached_file :image
     belongs_to :subsystem
     has_many :plannings, :as => :plannable
 
-    def financeiro        
+    def financeiro
+        v = v2 = 0
+        current_planning.periods.each do |period|
+            v += period.value_planned
+            if period.value_real
+                v2 += period.value_real
+            end
+        end
+        r = Hash.new
 
+        r["value_planned"] = v
+        r["value_real"] = v2
+
+        r
     end
 
     def avanco_fisico_ponderado
@@ -108,9 +118,9 @@ class Subsubsystem < ActiveRecord::Base
     end
 
     def current_planning
-        if self.current_planning_id
-            Planning.find_by_id(self.current_planning_id)
-        end
+        return Planning.find_by_id(self.current_planning_id) if self.current_planning_id
+
+        nil
     end
 
     def current_period
