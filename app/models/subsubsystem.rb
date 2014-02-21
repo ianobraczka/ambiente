@@ -141,5 +141,4 @@ class Subsubsystem < ActiveRecord::Base
       end
       mult
   end
-
 end
