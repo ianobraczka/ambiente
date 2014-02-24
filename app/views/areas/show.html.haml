@@ -7,6 +7,7 @@
   - if @area.image.exists?
     = image_tag @area.image.url
 #edit-and-delete-section-buttons-container
+  .edit-section-button= link_to 'Album', "/album/view_album?model=area&id=#{@area.id}", :class => "btn"
   .edit-section-button= button_to 'Editar', edit_area_path(@area), :class => "btn"
   .delete-section-button= button_to "Deletar área", @area, method: :delete, data: { confirm: 'Tem certeza que quer deletar essa área?' }, :class => "btn btn-danger"
 %h1.area-title= @area.name

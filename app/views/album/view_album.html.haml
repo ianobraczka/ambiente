@@ -1,0 +1,25 @@
+%center
+	Adicionar mais imagens: 
+	= form_for @album, :url => "/album/view_album", :html => { :multipart => true } do |form|
+		= form.file_field :image
+		= form.hidden_field "model_origin", :value => @model_origin
+		= form.hidden_field "model_id", :value => @model_id
+		= form.submit "OK", :class => "btn btn-success"
+
+%center
+	%b
+		= @model_origin.camelize.constantize.find(@model_id).name
+		%br
+		
+- if @current_album.length > 0
+	- @current_album.each do |a|
+		= image_tag a.image.url #, :size => '260x180'
+		%br
+		.delete-section-button
+			#center
+				= link_to 'Deletar imagem', "/album/delete_image?model=#{a.model_origin}&id=#{a.model_id}&album_id=#{a.id}", :class => "btn"
+		%br
+		%br
+		%br
+- else
+	Não temos imagem, poxa vida. =\

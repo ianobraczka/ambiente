@@ -1,170 +1,174 @@
 Ambiente::Application.routes.draw  do
 
-  devise_for :users do
-    get '/users/sign_out' => 'devise/sessions#destroy'
-  end
+	devise_for :users do
+		get '/users/sign_out' => 'devise/sessions#destroy'
+	end
 
-  resources :plannings
-  
-  resources :images
+	get "album/view_album"
+	get "album/delete_image"
+	post "album/view_album"
 
-  resources :programs, :has_many => :medias
+	resources :plannings
+	
+	resources :images
 
-  resources :programs do
-    get "report"
-  end
+	resources :programs, :has_many => :medias
 
-  resources :enterprises do
-    get "report"
-  end
+	resources :programs do
+		get "report"
+	end
 
-  resources :areas do
-    get "report"
-  end
+	resources :enterprises do
+		get "report"
+	end
 
-  resources :systems do
-    get "report"
-  end
+	resources :areas do
+		get "report"
+	end
 
-  resources :subsystems do
-    get "report"
-  end
+	resources :systems do
+		get "report"
+	end
 
-  get "baselines_controller/index"
+	resources :subsystems do
+		get "report"
+	end
 
-  get "plannings/new"
+	get "baselines_controller/index"
 
-  get "plannings/create"
+	get "plannings/new"
 
-  get "plannings/index"
+	get "plannings/create"
 
-  get "plannings/show"
+	get "plannings/index"
 
-  get "plannings/destroy"
+	get "plannings/show"
 
-  get "plannings/edit"
+	get "plannings/destroy"
 
-  get "areas/index"
+	get "plannings/edit"
 
-  get "areas/show"
+	get "areas/index"
 
-  get "areas/edit"
+	get "areas/show"
 
-  get "areas/create"
+	get "areas/edit"
 
-  get "areas/new"
+	get "areas/create"
 
-  get "subareas/index"
+	get "areas/new"
 
-  get "subareas/show"
+	get "subareas/index"
 
-  get "subareas/edit"
+	get "subareas/show"
 
-  get "subareas/create"
+	get "subareas/edit"
 
-  get "subareas/new"
+	get "subareas/create"
 
-  get "locals/index"
+	get "subareas/new"
 
-  get "locals/show"
+	get "locals/index"
 
-  get "locals/edit"
+	get "locals/show"
 
-  get "locals/create"
+	get "locals/edit"
 
-  get "locals/new"
+	get "locals/create"
 
-  get "systems/index"
+	get "locals/new"
 
-  get "systems/show"
+	get "systems/index"
 
-  get "systems/edit"
+	get "systems/show"
 
-  get "systems/create"
+	get "systems/edit"
 
-  get "systems/new"
+	get "systems/create"
 
-  get "systems/edit_price"
+	get "systems/new"
 
-  get "systems/define"
+	get "systems/edit_price"
 
-  post "systems/define"
+	get "systems/define"
 
-  get "subsystems/index"
+	post "systems/define"
 
-  get "subsystems/show"
+	get "subsystems/index"
 
-  get "subsystems/edit"
+	get "subsystems/show"
 
-  get "subsystems/create"
+	get "subsystems/edit"
 
-  get "subsystems/new"
+	get "subsystems/create"
 
-  get "subsubsystems/index"
+	get "subsystems/new"
 
-  get "subsubsystems/show"
+	get "subsubsystems/index"
 
-  get "subsubsystems/edit"
+	get "subsubsystems/show"
 
-  get "subsubsystems/create"
+	get "subsubsystems/edit"
 
-  get "subsubsystems/destroy"
+	get "subsubsystems/create"
 
-  get "enterprises/index"
+	get "subsubsystems/destroy"
 
-  get "enterprises/show"
+	get "enterprises/index"
 
-  get "enterprises/destroy"
+	get "enterprises/show"
 
-  get "enterprises/edit"
+	get "enterprises/destroy"
 
-  get "enterprises/create"
+	get "enterprises/edit"
 
-  get "enterprises/new"
+	get "enterprises/create"
 
-  resources :programs do
-    resources :enterprises
-  end
+	get "enterprises/new"
 
-  resources :enterprises do
-    resources :areas
-  end
+	resources :programs do
+		resources :enterprises
+	end
 
-  resources :subsubsystems
+	resources :enterprises do
+		resources :areas
+	end
 
-  resources :subsystems do
-    resources :subsubsystems
-  end
+	resources :subsubsystems
 
-  resources :systems do
-    resources :subsystems
-  end
+	resources :subsystems do
+		resources :subsubsystems
+	end
 
-  resources :subareas do
-    resources :locals
-  end
+	resources :systems do
+		resources :subsystems
+	end
 
-  resources :areas do
-    resources :systems
-  end
+	resources :subareas do
+		resources :locals
+	end
 
-  resources :systems do
-    resources :plannings
-  end
+	resources :areas do
+		resources :systems
+	end
 
-  resources :subsystems do
-    resources :plannings
-  end
+	resources :systems do
+		resources :plannings
+	end
 
-  resources :subsubsystems do
-    resources :plannings
-  end
+	resources :subsystems do
+		resources :plannings
+	end
 
-  resources :plannings do
-    resources :periods
-  end
+	resources :subsubsystems do
+		resources :plannings
+	end
 
-  resources :periods
+	resources :plannings do
+		resources :periods
+	end
+
+	resources :periods
 
 =begin
   get "program/index"

@@ -11,6 +11,7 @@
   - if @subsystem.image.exists?
     = image_tag @subsystem.image.url
 #edit-and-delete-section-buttons-container
+  .edit-section-button= link_to 'Album', "/album/view_album?model=subsystem&id=#{@subsystem.id}", :class => "btn"
   .edit-section-button= button_to 'Editar', edit_subsystem_path(@subsystem), :class => "btn"
   .delete-section-button= button_to "Deletar subsistema", @subsystem, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse subsistema?' }, :class => "btn btn-danger"
 %h1.area-title= @subsystem.name

@@ -5,6 +5,7 @@
   - if @enterprise.image.exists?
     = image_tag @enterprise.image.url
 #edit-and-delete-section-buttons-container
+  .edit-section-button= link_to 'Album', "/album/view_album?model=enterprise&id=#{@enterprise.id}", :class => "btn"
   .edit-section-button= button_to 'Editar', edit_enterprise_path(@enterprise), :class => "btn"
   .edit-section-button= button_to "Deletar empreendimento", @enterprise, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse empreendimento?' }, :class => "btn btn-danger"
 .area-title= @enterprise.name
@@ -60,7 +61,6 @@
   .row
     - data = @enterprise.avanco_fisico_ponderado
     - period_number = -1
-    - binding.pry
     - @enterprise.areas.each do |area|
       - period_number += 1
       .span3.list-item
