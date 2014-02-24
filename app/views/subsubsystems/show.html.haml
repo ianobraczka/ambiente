@@ -112,7 +112,10 @@
                 #{period.planned_quantity} #{@subsubsystem.unity}
                 %br
                 %spam.percentage-number
-                  = "#{(period.value_planned / @subsubsystem.financeiro["value_planned"] * 100).round}%"
+                  - if @subsubsystem.financeiro["value_planned"] != 0
+                    = "#{(period.value_planned / @subsubsystem.financeiro["value_planned"] * 100).round}%"
+                  -else
+                    = "0%"
                 = number_to_currency(period.value_planned, :unit => "R$", :separator => ",", :delimiter => ".")
                 %br
                 %br
@@ -129,7 +132,10 @@
                   #{period.real_quantity} #{@subsubsystem.unity}
                   %br
                   %spam.percentage-number
+                  - if @subsubsystem.financeiro["value_planned"] != 0
                     = "#{(period.value_real / @subsubsystem.financeiro["value_planned"] * 100).round}%"
+                  -else
+                    = "0%"
                   = number_to_currency(period.value_real, :unit => "R$", :separator => ",", :delimiter => ".")
                   %br
                   %br
@@ -148,7 +154,10 @@
                     #{period.planned_until_period} #{@subsubsystem.unity}
                     %br
                     %spam.percentage-number
+                    - if @subsubsystem.financeiro["value_planned"] != 0
                       = "#{(period.planned_until_period_value / @subsubsystem.financeiro["value_planned"] * 100).round}%"
+                    -else
+                      = "0%"
                     = number_to_currency(period.planned_until_period_value, :unit => "R$", :separator => ",", :delimiter => ".")
                     %br
                     %br
@@ -163,7 +172,10 @@
                     #{period.real_until_period} #{@subsubsystem.unity}
                     %br
                     %spam.percentage-number
+                    - if @subsubsystem.financeiro["value_planned"] != 0
                       = "#{(period.real_until_period_value / @subsubsystem.financeiro["value_planned"] * 100).round}%"
+                    -else
+                      = "0%"
                     = number_to_currency(period.real_until_period_value, :unit => "R$", :separator => ",", :delimiter => ".")
                     %br
                     = "#{number_to_currency((period.real_until_period_value / period.real_until_period), :unit => "R$", :separator => ",", :delimiter => ".")} por unidade."

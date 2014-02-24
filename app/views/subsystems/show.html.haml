@@ -178,10 +178,10 @@
             - data = subsubsystem.avanco_fisico_ponderado
             %td{:width => "100px"}
               %center
-                = "#{data.last[0][@subsystem.weight].to_s}%"
+                = "#{data.last[0][@subsystem.weight].round.to_s}%"
             %td{:width => "100px"}
               %center
-                = "#{data.last[2][@subsystem.weight].to_s}%"
+                = "#{data.last[2][@subsystem.weight].round.to_s}%"
         %small
           %center
             %br
@@ -198,7 +198,7 @@
           %tr
             %td{:width => "100px"}
               %center
-                = "#{data.last[1][@subsystem.weight].to_s}%"
+                = "#{data.last[1][@subsystem.weight].round.to_s}%"
             %td{:width => "100px"}
               %center
-                = "#{data.last[3][@subsystem.weight].to_s}%"
+                = "#{data.last[3][@subsystem.weight].round.to_s}%"
