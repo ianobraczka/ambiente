@@ -104,6 +104,8 @@ Ambiente::Application.routes.draw  do
 
 	get "subsystems/new"
 
+	get "subsubsystems/data_for_chart"
+
 	get "subsubsystems/index"
 
 	get "subsubsystems/show"

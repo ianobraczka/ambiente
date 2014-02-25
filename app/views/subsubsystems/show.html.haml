@@ -278,3 +278,9 @@
         = f.select(:current_planning_id, options_for_select(@subsubsystem.all_plannings, "1"))
       %center
         .content= f.submit "Escolher", :class => "btn btn-success"
+
+%center
+  #show_chart
+    = link_to "Gráfico aqui!", "#", :data => "XD"
+%br
+#chart_container
