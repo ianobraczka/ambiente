@@ -141,8 +141,4 @@ class Subsubsystem < ActiveRecord::Base
       end
       mult
   end
-
-  def data_for_chart
-    render :json => [""].as_json 
-  end
 end

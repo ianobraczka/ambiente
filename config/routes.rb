@@ -34,6 +34,8 @@ Ambiente::Application.routes.draw  do
 		get "report"
 	end
 
+	get "ajax/subsub_data"
+
 	get "baselines_controller/index"
 
 	get "plannings/new"
@@ -103,8 +105,6 @@ Ambiente::Application.routes.draw  do
 	get "subsystems/create"
 
 	get "subsystems/new"
-
-	get "subsubsystems/data_for_chart"
 
 	get "subsubsystems/index"
 

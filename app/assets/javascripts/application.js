@@ -31,7 +31,8 @@ function add_fields(link, association, content) {
 
 window.onload = function () {
 	
-	function draw_chart (texto, dados, dados2) {
+	function draw_chart (texto, dados, dados2, dados3, dados4) {
+
 		var chart = new CanvasJS.Chart("chart_container", {            
 			title:{
 				text: texto
@@ -44,41 +45,68 @@ window.onload = function () {
 				dataPoints: dados
 			},
 			{
-				type: "line",
+				type: "column",
 				name: "Second Quarter",
 				dataPoints: dados2
+			},
+			{
+				type: "line",
+				name: "Terceiro Quarter",
+				dataPoints: dados3
+			},
+			{
+				type: "line",
+				name: "Terceiro Quarter",
+				dataPoints: dados4
 			}
 			]
 		});
 
+
+		chart.options.data[0].color = "red";
+		chart.options.data[2].color = "blue";
+		chart.options.data[1].color = "blue";
+		chart.options.data[3].color = "red";
+		
 		chart.render();
 	}
 
 	$('#show_chart').on('click', function (e) {
-			$.get("/subsubsystem/data_for_chart?id=1", function (json) {
-                alert(json);
-            });
-		draw_chart("XD", [
-        { x: 10, y: 71 },
-        { x: 20, y: 55},
-        { x: 30, y: 50 },
-        { x: 40, y: 65 },
-        { x: 50, y: 95 },
-        { x: 60, y: 68 },
-        { x: 70, y: 28 },
-        { x: 80, y: 34 },
-        { x: 90, y: 14}
-        ], [
-        { x: 10, y: 71 },
-        { x: 20, y: 55},
-        { x: 30, y: 50 },
-        { x: 40, y: 65 },
-        { x: 50, y: 95 },
-        { x: 60, y: 68 },
-        { x: 70, y: 28 },
-        { x: 80, y: 34 },
-        { x: 90, y: 14}
-        ])
+		$.get("/ajax/subsub_data?id=1", function (json) {
+			draw_chart("Valores", json[0], json[1], json[2], json[3])
+		});
 		return false;
 	});
+
+	$.get("/ajax/subsub_data?id=1", function (json) {
+		draw_chart("Valores", json[0], json[1], json[2], json[3])
+	});
 }
+/*
+
+data: [ 
+      {
+       type: "column",
+       name: "First Quarter",
+       dataPoints: [
+       { label: "banana", y: 18 },
+       { label: "orange", y: 29 },
+       { label: "apple", y: 40 },                                    
+       { label: "mango", y: 34 },
+       { label: "grape", y: 24 }
+       ]
+     },
+     { //dataSeries - second quarter
+
+      type: "column",
+      name: "Second Quarter",                
+      dataPoints: [
+      { label: "banana", y: 23 },
+      { label: "orange", y: 33 },
+      { label: "apple", y: 48 },                                    
+      { label: "mango", y: 37 },
+      { label: "grape", y: 20 }
+      ]
+    }
+    ]
+*/
