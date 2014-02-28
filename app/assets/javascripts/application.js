@@ -31,7 +31,7 @@ function add_fields(link, association, content) {
 
 window.onload = function () {
 	
-	function draw_chart (texto, dados, dados2, dados3, dados4) {
+	function draw_chart (texto, dados, dados2, dados3, dados4, replanned) {
 
 		var chart = new CanvasJS.Chart("chart_container", {            
 			title:{

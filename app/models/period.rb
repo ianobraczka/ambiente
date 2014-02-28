@@ -1,5 +1,5 @@
 class Period < ActiveRecord::Base
-  attr_accessible :begin_date, :end_date, :planned_quantity, :planning_id, :quantity, :value_planned, :value_real
+  attr_accessible :begin_date, :end_date, :planned_quantity, :planning_id, :quantity, :value_planned, :value_real, :replanned
   belongs_to :planning
 
   def real_quantity
@@ -55,11 +55,16 @@ end
 def real_until_period_value
   value = 0
   self.planning.periods.each do |period|
-    value = value + period.value_real
+    if period.value_real
+      value = value + period.value_real
+    end
+    
     if self == period
       return value
     end
   end
+
+  value
 end
 
 def made_until_period

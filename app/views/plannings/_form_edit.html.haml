@@ -14,19 +14,19 @@
   %br/
 
   - cnt = 1
-  -unless @plannable.plannings.length == 1 && @plannable.plannings.first == @planning
-    - @plannable.current_planning.periods.each do |period|
-      - if period.quantity != nil
-        = "Quantidade planejada no #{cnt}º período: #{period.planned_quantity}"
-        %br/
-        = "Quantidade realizada no #{cnt}º período: #{period.quantity}"
-        %br/
-        = "Valor planejado no #{cnt}º período: #{period.value_planned}"
-        %br/
-        = "Valor realizado no #{cnt}º período: #{period.value_real}"
-        %br/
-        %br/
-        - cnt = cnt+1
+  / -unless @plannable.plannings.length == 1 && @plannable.plannings.first == @planning
+  /   - @plannable.current_planning.periods.each do |period|
+  /     - if period.quantity != nil
+  /       = "Quantidade planejada no #{cnt}º período: #{period.planned_quantity}"
+  /       %br/
+  /       = "Quantidade realizada no #{cnt}º período: #{period.quantity}"
+  /       %br/
+  /       = "Valor planejado no #{cnt}º período: #{period.value_planned}"
+  /       %br/
+  /       = "Valor realizado no #{cnt}º período: #{period.value_real}"
+  /       %br/
+  /       %br/
+  /       - cnt = cnt+1
 
   %br/
 

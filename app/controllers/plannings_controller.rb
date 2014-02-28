@@ -61,56 +61,67 @@ class PlanningsController < ApplicationController
 		@@past_periods_array.clear
 
 		unless @plannable.plannings.length == 1 && @plannable.plannings.first == @planning
-			@plannable.current_planning.periods.each do |period|
-				if period.quantity != nil
-					@@past_periods_array.push(period)
+			if @plannable.current_planning
+				@plannable.current_planning.periods.each do |period|
+					if period.quantity != nil
+						@@past_periods_array.push(period)
+					end
 				end
 			end
 		end      
 		6.times { @planning.periods.build }
+
 		respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @planning }
-  end
-end
-
-def create
-	if @@plannable_type == "Subsubsystem"
-		@plannable = Subsubsystem.find(@@plannable_id)
-	elsif @@plannable_type == "Subsystem"
-		@plannable = Subsystem.find(@@plannable_id)
-	elsif @@plannable_type == "System"
-		@plannable = System.find(@@plannable_id)
-	end
-
-	@planning = @plannable.plannings.build(params[:planning])
-
-	@planning.input_date = Date.current
-	respond_to do |format|
-		if @planning.save
-			format.html { redirect_to @plannable }
-			format.json { render json: @planning, status: :created, location: @plannable }
-		else
-			format.html { render action: "new" }
-			format.json { render json: @planning.errors, status: :unprocessable_entity }
+			format.html
+			format.json { render json: @planning }
 		end
 	end
 
-	@plannable.current_planning_id = @planning.id
-	@plannable.save
-
-	@planning.periods = @@past_periods_array + @planning.periods
-	@planning.save
-
-end
-
-def find_plannable
-	params.each do |name, value|
-		if name =~ /(.+)_id$/
-			return $1.classify.constantize.find(value)
+	def create
+		if @@plannable_type == "Subsubsystem"
+			@plannable = Subsubsystem.find(@@plannable_id)
+		elsif @@plannable_type == "Subsystem"
+			@plannable = Subsystem.find(@@plannable_id)
+		elsif @@plannable_type == "System"
+			@plannable = System.find(@@plannable_id)
 		end
+
+		@planning = @plannable.plannings.build(params[:planning])
+
+		@planning.input_date = Date.current
+		respond_to do |format|
+			if @planning.save
+				format.html { redirect_to @plannable }
+				format.json { render json: @planning, status: :created, location: @plannable }
+			else
+				format.html { render action: "new" }
+				format.json { render json: @planning.errors, status: :unprocessable_entity }
+			end
+		end
+
+		@plannable.current_planning_id = @planning.id
+		@plannable.save
+
+
+		@period_ = @planning.periods.first
+		@period_.replanned = true
+		@period_.save
+
+		@planning.periods.first.replanned = true
+		@planning.periods.first.save!
+
+		@planning.periods = @@past_periods_array + @planning.periods
+		@planning.save
+
 	end
-	nil
-end
+
+	def find_plannable
+		params.each do |name, value|
+			if name =~ /(.+)_id$/
+				return $1.classify.constantize.find(value)
+			end
+		end
+		nil
+	end
 
 end

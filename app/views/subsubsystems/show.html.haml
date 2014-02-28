@@ -84,112 +84,135 @@
             %br/
         .row
           - period_number = -1
-          - @subsubsystem.current_planning.periods.each do |period|
-            - period_number += 1
-            .span4.list-item
-              .name
-                = "#{period.number}o período"
-              - if @subsubsystem.current_planning.periods.first.quantity != nil
+          - if @subsubsystem.current_planning
+            - @subsubsystem.current_planning.periods.each do |period|
+              - period_number += 1
+              .span4.list-item
+                .name
+                  = "#{period.number}o período"
+                - if @subsubsystem.current_planning.periods.first.quantity != nil
+                  .content
+                    Data de início:
+                    %span.date
+                      = period.begin_date.to_formatted_s(:rfc822)
+                  .content
+                    Data de término:
+                    %span.date
+                      = period.end_date.to_formatted_s(:rfc822)
+                  %hr
                 .content
-                  Data de início:
-                  %span.date
-                    = period.begin_date.to_formatted_s(:rfc822)
-                .content
-                  Data de término:
-                  %span.date
-                    = period.end_date.to_formatted_s(:rfc822)
-                %hr
-              .content
-                %center
-                  No período
-                %br
-                Previsto:
-                %br
-                %spam.percentage-number
-                  - if @subsubsystem.planned_quantity != 0
-                    = "#{(period.planned_quantity*100/@subsubsystem.planned_quantity).round}%"
-                  - else
-                    0%
-                #{period.planned_quantity} #{@subsubsystem.unity}
-                %br
-                %spam.percentage-number
-                  - if @subsubsystem.financeiro["value_planned"] != 0
-                    = "#{(period.value_planned / @subsubsystem.financeiro["value_planned"] * 100).round}%"
-                  -else
-                    = "0%"
-                = number_to_currency(period.value_planned, :unit => "R$", :separator => ",", :delimiter => ".")
-                %br
-                %br
-              - if period.quantity != nil
-                .content
-
-                  Realizado:
+                  %center
+                    No período
+                  %br
+                  Previsto:
                   %br
                   %spam.percentage-number
                     - if @subsubsystem.planned_quantity != 0
-                      = "#{(period.quantity*100/@subsubsystem.planned_quantity).round}%"
+                      = "#{(period.planned_quantity*100/@subsubsystem.planned_quantity).round}%"
                     - else
                       0%
-                  #{period.real_quantity} #{@subsubsystem.unity}
+                  #{period.planned_quantity} #{@subsubsystem.unity}
                   %br
                   %spam.percentage-number
-                  - if @subsubsystem.financeiro["value_planned"] != 0
-                    = "#{(period.value_real / @subsubsystem.financeiro["value_planned"] * 100).round}%"
-                  -else
-                    = "0%"
-                  = number_to_currency(period.value_real, :unit => "R$", :separator => ",", :delimiter => ".")
-                  %br
-                  %br
-                %hr
-                  .content
-                    %center
-                      Até o período:
-                    %br
-                    Previsto
-                    %br
-                    %spam.percentage-number
-                      - unless @subsubsystem.planned_quantity == 0
-                        = "#{((period.planned_until_period/@subsubsystem.planned_quantity)*100).round}%"
-                      - else
-                        0%
-                    #{period.planned_until_period} #{@subsubsystem.unity}
-                    %br
-                    %spam.percentage-number
                     - if @subsubsystem.financeiro["value_planned"] != 0
-                      = "#{(period.planned_until_period_value / @subsubsystem.financeiro["value_planned"] * 100).round}%"
+                      = "#{(period.value_planned / @subsubsystem.financeiro["value_planned"] * 100).round}%"
                     -else
                       = "0%"
-                    = number_to_currency(period.planned_until_period_value, :unit => "R$", :separator => ",", :delimiter => ".")
-                    %br
-                    %br
+                  = number_to_currency(period.value_planned, :unit => "R$", :separator => ",", :delimiter => ".")
+                  %br
+                  %br
+                - if period.quantity != nil
                   .content
-                    Realizado
+
+                    Realizado:
                     %br
                     %spam.percentage-number
-                      - unless @subsubsystem.planned_quantity == 0
-                        = "#{(period.made_until_period/@subsubsystem.planned_quantity).round}%"
+                      - if @subsubsystem.planned_quantity != 0
+                        = "#{(period.quantity*100/@subsubsystem.planned_quantity).round}%"
                       - else
                         0%
-                    #{period.real_until_period} #{@subsubsystem.unity}
+                    #{period.real_quantity} #{@subsubsystem.unity}
                     %br
                     %spam.percentage-number
-                    - if @subsubsystem.financeiro["value_planned"] != 0
-                      = "#{(period.real_until_period_value / @subsubsystem.financeiro["value_planned"] * 100).round}%"
+                    - if @subsubsystem.financeiro["value_planned"] and period.value_real
+                      - if @subsubsystem.financeiro["value_planned"] != 0
+                        = "#{(period.value_real / @subsubsystem.financeiro["value_planned"] * 100).round}%"
                     -else
                       = "0%"
-                    = number_to_currency(period.real_until_period_value, :unit => "R$", :separator => ",", :delimiter => ".")
-                    %br
-                    = "#{number_to_currency((period.real_until_period_value / period.real_until_period), :unit => "R$", :separator => ",", :delimiter => ".")} por unidade."
+                    = number_to_currency(period.value_real, :unit => "R$", :separator => ",", :delimiter => ".")
                     %br
                     %br
-                  %br
                   %hr
-                  .content
+                    .content
+                      %center
+                        Até o período:
+                      %br
+                      Previsto
+                      %br
+                      %spam.percentage-number
+                        - unless @subsubsystem.planned_quantity == 0
+                          = "#{((period.planned_until_period/@subsubsystem.planned_quantity)*100).round}%"
+                        - else
+                          0%
+                      #{period.planned_until_period} #{@subsubsystem.unity}
+                      %br
+                      %spam.percentage-number
+                      - if @subsubsystem.financeiro["value_planned"] != 0
+                        = "#{(period.planned_until_period_value / @subsubsystem.financeiro["value_planned"] * 100).round}%"
+                      -else
+                        = "0%"
+                      = number_to_currency(period.planned_until_period_value, :unit => "R$", :separator => ",", :delimiter => ".")
+                      %br
+                      %br
+                    .content
+                      Realizado
+                      %br
+                      %spam.percentage-number
+                        - unless @subsubsystem.planned_quantity == 0
+                          = "#{(period.made_until_period/@subsubsystem.planned_quantity).round}%"
+                        - else
+                          0%
+                      #{period.real_until_period} #{@subsubsystem.unity}
+                      %br
+                      %spam.percentage-number
+                      - if @subsubsystem.financeiro["value_planned"] != 0
+                        = "#{(period.real_until_period_value / @subsubsystem.financeiro["value_planned"] * 100).round}%"
+                      -else
+                        = "0%"
+                      = number_to_currency(period.real_until_period_value, :unit => "R$", :separator => ",", :delimiter => ".")
+                      %br
+                      = "#{number_to_currency((period.real_until_period_value / period.real_until_period), :unit => "R$", :separator => ",", :delimiter => ".")} por unidade."
+                      %br
+                      %br
                     %br
-                    %br
+                    %hr
+                    .content
+                      %br
+                      %br
+                        %small
+                          %center
+                            No período
+                        %table
+                          %tr
+                            %td{:width => "100px"}
+                              %center
+                                %b Previsto
+                            %td{:width => "100px"}
+                              %center
+                                %b Realizado
+                          %tr
+                            - data = @subsubsystem.avanco_fisico_ponderado
+                            %td{:width => "100px"}
+                              %center
+                                = "#{data[period_number][0][@subsubsystem.weight].round.to_s}%"
+                            %td{:width => "100px"}
+                              %center
+                                = "#{data[period_number][2][@subsubsystem.weight].round.to_s}%"
                       %small
                         %center
-                          No período
+                          %br
+                          %br
+                          Até o período
                       %table
                         %tr
                           %td{:width => "100px"}
@@ -199,55 +222,34 @@
                             %center
                               %b Realizado
                         %tr
-                          - data = @subsubsystem.avanco_fisico_ponderado
                           %td{:width => "100px"}
                             %center
-                              = "#{data[period_number][0][@subsubsystem.weight].round.to_s}%"
+                              = "#{data[period_number][1][@subsubsystem.weight].round.to_s}%"
                           %td{:width => "100px"}
                             %center
-                              = "#{data[period_number][2][@subsubsystem.weight].round.to_s}%"
-                    %small
-                      %center
-                        %br
-                        %br
-                        Até o período
-                    %table
-                      %tr
-                        %td{:width => "100px"}
-                          %center
-                            %b Previsto
-                        %td{:width => "100px"}
-                          %center
-                            %b Realizado
-                      %tr
-                        %td{:width => "100px"}
-                          %center
-                            = "#{data[period_number][1][@subsubsystem.weight].round.to_s}%"
-                        %td{:width => "100px"}
-                          %center
-                            = "#{data[period_number][3][@subsubsystem.weight].round.to_s}%"
-              - if @subsubsystem.current_period.quantity == nil && @subsubsystem.current_period == period
-                = form_for(@subsubsystem.current_period) do |f|
-                  - if @subsubsystem.current_period.errors.any?
-                    #error_explanation
-                      %h2
-                        = pluralize(@subsubsystem.current_period.errors.count, "error")
-                        prohibited this product from being saved:
-                      %ul
-                        - @subsubsystem.current_period.errors.full_messages.each do |msg|
-                          %li= msg
-                  %hr
-                    .content
-                      %center
-                        %span.very_small_font Quant. realizada:
-                        %br
-                        %br
-                        = f.number_field :quantity
-                        %br
-                        %br
-                        %span.very_small_font Valor realizado:
-                        = f.number_field :value_real
-                        %br= f.submit "Entrar", :class => "btn btn-success"
+                              = "#{data[period_number][3][@subsubsystem.weight].round.to_s}%"
+                - if @subsubsystem.current_period.quantity == nil && @subsubsystem.current_period == period
+                  = form_for(@subsubsystem.current_period) do |f|
+                    - if @subsubsystem.current_period.errors.any?
+                      #error_explanation
+                        %h2
+                          = pluralize(@subsubsystem.current_period.errors.count, "error")
+                          prohibited this product from being saved:
+                        %ul
+                          - @subsubsystem.current_period.errors.full_messages.each do |msg|
+                            %li= msg
+                    %hr
+                      .content
+                        %center
+                          %span.very_small_font Quant. realizada:
+                          %br
+                          %br
+                          = f.number_field :quantity
+                          %br
+                          %br
+                          %span.very_small_font Valor realizado:
+                          = f.number_field :value_real
+                          %br= f.submit "Entrar", :class => "btn btn-success"
         %br
           /= binding.pry
           = link_to "Editar planejamento", "/subsubsystems/#{@subsubsystem.id}/plannings/#{@subsubsystem.current_planning_id}/edit", :method => "get", :class => "btn btn-success"
