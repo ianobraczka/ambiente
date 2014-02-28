@@ -31,7 +31,9 @@ function add_fields(link, association, content) {
 
 window.onload = function () {
 	
-	function draw_chart (texto, dados, dados2, dados3, dados4, replanned) {
+	function draw_chart (texto, data, replanned) {
+
+		var number = data.length / 2;
 
 		var chart = new CanvasJS.Chart("chart_container", {            
 			title:{
@@ -42,23 +44,43 @@ window.onload = function () {
 			{
 				type: "column",
 				name: "First Quarter",
-				dataPoints: dados
+				dataPoints: data[0]
 			},
 			{
 				type: "column",
 				name: "Second Quarter",
-				dataPoints: dados2
+				dataPoints: data[1]
 			},
 			{
 				type: "line",
 				name: "Terceiro Quarter",
-				dataPoints: dados3
+				dataPoints: data[2]
 			},
 			{
 				type: "line",
 				name: "Terceiro Quarter",
-				dataPoints: dados4
-			}
+				dataPoints: data[3]
+			},
+			{
+				type: "column",
+				name: "First Quarter",
+				dataPoints: data[0+4]
+			},
+			{
+				type: "column",
+				name: "Second Quarter",
+				dataPoints: data[1+4]
+			},
+			{
+				type: "line",
+				name: "Terceiro Quarter",
+				dataPoints: data[2+4]
+			},
+			{
+				type: "line",
+				name: "Terceiro Quarter",
+				dataPoints: data[3+4]
+			},
 			]
 		});
 
@@ -67,6 +89,11 @@ window.onload = function () {
 		chart.options.data[2].color = "blue";
 		chart.options.data[1].color = "blue";
 		chart.options.data[3].color = "red";
+
+		chart.options.data[0+4].color = "yellow";
+		chart.options.data[2+4].color = "green";
+		chart.options.data[1+4].color = "green";
+		chart.options.data[3+4].color = "yellow";
 		
 		chart.render();
 	}
@@ -78,16 +105,16 @@ window.onload = function () {
 
 	$('#show_chart').on('click', function (e) {
 		$.get("/ajax/subsub_data?id="+id, function (json) {
-			draw_chart("Valores", json[0], json[1], json[2], json[3])
+			draw_chart("Valores", json[0], json[1], json[2], json[3], json[4])
 		});
 
 		return false;
-	
+
 	});
 
 	$.get("/ajax/subsub_data?id="+id, function (json) {
 
-		draw_chart("Valores", json[0], json[1], json[2], json[3]);
+		draw_chart("Valores", json[0], json[1]);
 
 	});
 }
