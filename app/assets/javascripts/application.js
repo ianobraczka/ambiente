@@ -71,42 +71,23 @@ window.onload = function () {
 		chart.render();
 	}
 
+	var id = 1;
+	$("#show_chart").find("div").map(function() {
+		id = this.id.split("_")[1];
+	});
+
 	$('#show_chart').on('click', function (e) {
-		$.get("/ajax/subsub_data?id=1", function (json) {
+		$.get("/ajax/subsub_data?id="+id, function (json) {
 			draw_chart("Valores", json[0], json[1], json[2], json[3])
 		});
+
 		return false;
+	
 	});
 
-	$.get("/ajax/subsub_data?id=1", function (json) {
-		draw_chart("Valores", json[0], json[1], json[2], json[3])
+	$.get("/ajax/subsub_data?id="+id, function (json) {
+
+		draw_chart("Valores", json[0], json[1], json[2], json[3]);
+
 	});
 }
-/*
-
-data: [ 
-      {
-       type: "column",
-       name: "First Quarter",
-       dataPoints: [
-       { label: "banana", y: 18 },
-       { label: "orange", y: 29 },
-       { label: "apple", y: 40 },                                    
-       { label: "mango", y: 34 },
-       { label: "grape", y: 24 }
-       ]
-     },
-     { //dataSeries - second quarter
-
-      type: "column",
-      name: "Second Quarter",                
-      dataPoints: [
-      { label: "banana", y: 23 },
-      { label: "orange", y: 33 },
-      { label: "apple", y: 48 },                                    
-      { label: "mango", y: 37 },
-      { label: "grape", y: 20 }
-      ]
-    }
-    ]
-*/
