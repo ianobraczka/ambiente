@@ -26,14 +26,15 @@ class Subsystem < ActiveRecord::Base
 
 		base = [[0 ,0 , 0],[0 ,0 , 0],[0 ,0 , 0],[0 ,0 , 0]]
 		subsubsystems.each do |subsub|
-			data =  subsub.avanco_fisico_ponderado.last
+			if subsub.avanco_fisico_ponderado
+				data = subsub.avanco_fisico_ponderado.last
 
-			for i in 0..data.length - 1
-				for j in 0..data[i].length - 1
-					base[i][j] += data[i][j]
+				for i in 0..data.length - 1
+					for j in 0..data[i].length - 1
+						base[i][j] += data[i][j]
+					end
 				end
 			end
-
 		end
 
 		base
