@@ -4,6 +4,27 @@ class Subsubsystem < ActiveRecord::Base
     belongs_to :subsystem
     has_many :plannings, :as => :plannable
 
+    def resumo
+        cpp = current_planning
+
+        cp = cpp.periods
+
+        cp.each do |c|
+
+            if c.replanned
+                print "s"
+            else
+                print "n"
+            end
+
+            print " - "
+            print c.value_planned
+            print " - "
+            puts c.value_real
+            
+        end
+    end
+
     def financeiro
         v = v2 = 0
         current_planning.periods.each do |period|

@@ -33,8 +33,6 @@ window.onload = function () {
 	
 	function draw_chart (texto, data, replanned) {
 
-		var number = data.length / 2;
-
 		var chart = new CanvasJS.Chart("chart_container", {            
 			title:{
 				text: texto
@@ -43,58 +41,28 @@ window.onload = function () {
 			data: [
 			{
 				type: "column",
-				name: "First Quarter",
 				dataPoints: data[0]
 			},
 			{
 				type: "column",
-				name: "Second Quarter",
 				dataPoints: data[1]
 			},
 			{
-				type: "line",
-				name: "Terceiro Quarter",
+				type: "spline",
 				dataPoints: data[2]
 			},
 			{
-				type: "line",
-				name: "Terceiro Quarter",
+				type: "spline",
 				dataPoints: data[3]
-			},
-			{
-				type: "column",
-				name: "First Quarter",
-				dataPoints: data[0+4]
-			},
-			{
-				type: "column",
-				name: "Second Quarter",
-				dataPoints: data[1+4]
-			},
-			{
-				type: "line",
-				name: "Terceiro Quarter",
-				dataPoints: data[2+4]
-			},
-			{
-				type: "line",
-				name: "Terceiro Quarter",
-				dataPoints: data[3+4]
-			},
+			}
 			]
 		});
 
-
 		chart.options.data[0].color = "red";
-		chart.options.data[2].color = "blue";
 		chart.options.data[1].color = "blue";
-		chart.options.data[3].color = "red";
+		chart.options.data[3].color = "blue";
+		chart.options.data[2].color = "red";
 
-		chart.options.data[0+4].color = "yellow";
-		chart.options.data[2+4].color = "green";
-		chart.options.data[1+4].color = "green";
-		chart.options.data[3+4].color = "yellow";
-		
 		chart.render();
 	}
 
