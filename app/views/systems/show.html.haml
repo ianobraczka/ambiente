@@ -63,7 +63,7 @@
   %center
     #choose-system-type-buttons
       .edit-section-button
-        = button_to "É o nível mais desagregado", edit_system_path(@system), :method => "get", :class => "btn btn-info"
+        /= button_to "É o nível mais desagregado", edit_system_path(@system), :method => "get", :class => "btn btn-info"
       .delete-section-button
         = button_to "Criar subsistema", new_system_subsystem_path(@system), :method => "get", :class => "btn btn-success"
 - if !@system.has_desagregation? && @system.price != 0 then
