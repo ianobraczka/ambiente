@@ -179,10 +179,12 @@
             - data = subsubsystem.avanco_fisico_ponderado
             %td{:width => "100px"}
               %center
-                = "#{data.last[0][@subsystem.weight].round.to_s}%"
+                - if data
+                  = "#{data.last[0][@subsystem.weight].round.to_s}%"
             %td{:width => "100px"}
               %center
-                = "#{data.last[2][@subsystem.weight].round.to_s}%"
+                - if data
+                  = "#{data.last[2][@subsystem.weight].round.to_s}%"
         %small
           %center
             %br
