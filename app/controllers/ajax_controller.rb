@@ -14,28 +14,30 @@ class AjaxController < ApplicationController
 
 		pos = -1
 
-		model.current_planning.periods.each do |period|
-			
-			pos += 1
+		if model.current_planning
+			model.current_planning.periods.each do |period|
+				
+				pos += 1
 
-			if period.replanned
-				replanned << pos
-			end
+				if period.replanned
+					replanned << pos
+				end
 
-			total_prev += period.value_planned
+				total_prev += period.value_planned
 
-			total_real += period.value_real if period.value_real
+				total_real += period.value_real if period.value_real
 
-			unless period.replanned
-				dataP << {"label" => "Planejado", "y" => period.value_planned}
-				dataR << {"label" => "Real", "y" => period.value_real}
-				somaDataP << {"label" => "Total Planejado", "y" => total_prev}
-				somaDataR << {"label" => "Total Real", "y" => total_real}
-			else
-				dataP << {"label" => "Planejado", "y" => period.value_planned}
-				dataR << {"label" => "Real", "y" => period.value_real}
-				somaDataP << {"label" => "Total Planejado", "y" => total_prev}
-				somaDataR << {"label" => "Total Real", "y" => total_real, "indexLabel" => "Replanejado"}
+				unless period.replanned
+					dataP << {"label" => "Planejado", "y" => period.value_planned}
+					dataR << {"label" => "Real", "y" => period.value_real}
+					somaDataP << {"label" => "Total Planejado", "y" => total_prev}
+					somaDataR << {"label" => "Total Real", "y" => total_real}
+				else
+					dataP << {"label" => "Planejado", "y" => period.value_planned}
+					dataR << {"label" => "Real", "y" => period.value_real}
+					somaDataP << {"label" => "Total Planejado", "y" => total_prev}
+					somaDataR << {"label" => "Total Real", "y" => total_real, "indexLabel" => "Replanejado"}
+				end
 			end
 		end
 
