@@ -201,7 +201,9 @@
           %tr
             %td{:width => "100px"}
               %center
-                = "#{data.last[1][@subsystem.weight].round.to_s}%"
+                - if data
+                  = "#{data.last[1][@subsystem.weight].round.to_s}%"
             %td{:width => "100px"}
               %center
-                = "#{data.last[3][@subsystem.weight].round.to_s}%"
+                - if data
+                  = "#{data.last[3][@subsystem.weight].round.to_s}%"
