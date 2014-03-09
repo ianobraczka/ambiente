@@ -32,6 +32,8 @@
       #period-not-to-be-removed
         = builder.label :planned_quantity, "Quantidade planejada no " + cnt.to_s + "º período"
         = builder.number_field :planned_quantity, :id => "planned-quantity"
+        = builder.label :value_planned, "Valor planejado no " + cnt.to_s + "º período"
+        = builder.number_field :value_planned, :id => "value-planned"
         %br/
       - cnt = cnt+1
   = link_to "Adicionar período", "#", :class => "add-period", :id => cnt.to_s
