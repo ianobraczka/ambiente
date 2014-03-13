@@ -132,7 +132,9 @@ class Subsubsystem < ActiveRecord::Base
         pq = 0
         if self.plannings
             self.plannings.each do |planning|
-                pq = pq + planning.planned_quantity
+                if planning.id == self.current_planning_id
+                    pq = pq + planning.planned_quantity
+                end
             end
         end
         pq

@@ -16,7 +16,7 @@
     = image_tag @subsubsystem.image.url
 #edit-and-delete-section-buttons-container
   .edit-section-button= link_to 'Album', "/album/view_album?model=subsubsystem&id=#{@subsubsystem.id}", :class => "btn"
-  .edit-section-button= button_to 'Editar', edit_subsubsystem_path(@subsubsystem), :class => "btn"
+  .edit-section-button= link_to 'Editar', edit_subsubsystem_path(@subsubsystem), :class => "btn"
   .delete-section-button= button_to "Deletar subsubsistema", @subsubsystem, method: :delete, data: { confirm: 'Tem certeza que quer deletar esse subsubsistema?' }, :class => "btn btn-danger"
 %h1.area-title= @subsubsystem.name
 .list-item.section-details
@@ -289,3 +289,29 @@
     = link_to "Gráfico aqui!", "#", :data => "XD"
 %br
 #chart_container
+%br
+%br
+%br
+%br
+%br
+%br
+%br
+%br
+%br
+%br
+%br
+%br
+%br
+%br
+%br
+%br
+%br
+%br
+%br
+%br
+%br
+%br
+%br
+%br
+%br
+#chart_container2

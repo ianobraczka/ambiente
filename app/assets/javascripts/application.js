@@ -66,13 +66,48 @@ window.onload = function () {
 		chart.render();
 	}
 
+	function draw_chart2 (texto, data, replanned) {
+
+		var chart = new CanvasJS.Chart("chart_container2", {            
+			title:{
+				text: texto
+			},
+
+			data: [
+			{
+				type: "column",
+				dataPoints: data[0]
+			},
+			{
+				type: "column",
+				dataPoints: data[1]
+			},
+			{
+				type: "spline",
+				dataPoints: data[2]
+			},
+			{
+				type: "spline",
+				dataPoints: data[3]
+			}
+			]
+		});
+
+		chart.options.data[0].color = "red";
+		chart.options.data[1].color = "blue";
+		chart.options.data[3].color = "blue";
+		chart.options.data[2].color = "red";
+
+		chart.render();
+	}
+
 	var id = 1;
 	$("#show_chart").find("div").map(function() {
 		id = this.id.split("_")[1];
 	});
 
 	$('#show_chart').on('click', function (e) {
-		$.get("/ajax/subsub_data?id="+id, function (json) {
+		$.get("/ajax/subsub_data_finance?id="+id, function (json) {
 			draw_chart("Valores", json[0], json[1], json[2], json[3], json[4])
 		});
 
@@ -82,7 +117,13 @@ window.onload = function () {
 
 	$.get("/ajax/subsub_data?id="+id, function (json) {
 
-		draw_chart("Valores", json[0], json[1]);
+		draw_chart("Financeiro", json[0], json[1]);
+
+	});
+
+	$.get("/ajax/subsub_data_finance?id="+id, function (json) {
+
+		draw_chart2("Físico", json[0], json[1]);
 
 	});
 }

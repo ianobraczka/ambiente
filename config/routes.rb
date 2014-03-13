@@ -35,6 +35,7 @@ Ambiente::Application.routes.draw  do
 	end
 
 	get "ajax/subsub_data"
+	get "ajax/subsub_data_finance"
 
 	get "baselines_controller/index"
 
