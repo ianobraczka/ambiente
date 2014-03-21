@@ -29,9 +29,11 @@ class Subsystem < ActiveRecord::Base
 			if subsub.avanco_fisico_ponderado
 				data = subsub.avanco_fisico_ponderado.last
 
-				for i in 0..data.length - 1
-					for j in 0..data[i].length - 1
-						base[i][j] += data[i][j]
+				if data
+					for i in 0..data.length - 1
+						for j in 0..data[i].length - 1
+							base[i][j] += data[i][j]
+						end
 					end
 				end
 			end
